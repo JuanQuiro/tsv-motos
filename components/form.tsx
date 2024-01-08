@@ -7,21 +7,46 @@ import { z } from 'zod'
 import { FormDataSchema } from '@/lib/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { Select, SelectItem } from '@nextui-org/react'
 
 type Inputs = z.infer<typeof FormDataSchema>
 
+export const animals = [
+  {
+    label: 'Yummy',
+    value: 'Yummy',
+    description: 'The second most popular pet in the world'
+  },
+  {
+    label: 'Ridery',
+    value: 'Ridery',
+    description: 'The most popular pet in the world'
+  },
+  {
+    label: 'PedidiosYa',
+    value: 'PedidiosYa',
+    description: 'The largest land animal'
+  },
+  { label: 'MRW', value: 'MRW', description: 'The king of the jungle' }
+]
+
 const steps = [
   {
-    id: 'Step 1',
-    name: 'Personal Information',
-    fields: ['firstName', 'lastName', 'email']
+    id: 'Paso 1',
+    name: '¿Cual aplicacion trabajas?',
+    fields: ['nombre', 'apellido', 'email']
   },
   {
-    id: 'Step 2',
-    name: 'Address',
-    fields: ['country', 'state', 'city', 'street', 'zip']
+    id: 'Paso 2',
+    name: 'Informacion Personal',
+    fields: ['nombre', 'apellido', 'email']
   },
-  { id: 'Step 3', name: 'Complete' }
+  {
+    id: 'Paso 3',
+    name: 'Dirrecion',
+    fields: ['pais', 'estado', 'ciudad', 'calle', 'zip']
+  },
+  { id: 'Paso 4', name: 'Completado' }
 ]
 
 export default function Form() {
@@ -115,10 +140,34 @@ export default function Form() {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
             <h2 className='text-base font-semibold leading-7 text-gray-900'>
-              Personal Information
+              ¿Cual aplicacion trabajas?
             </h2>
             <p className='mt-1 text-sm leading-6 text-gray-600'>
-              Provide your personal details.
+              Proporcione sus datos personales.
+            </p>
+            <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 '>
+              <Select label='Selecciona la aplicacion' className='max-w-xs'>
+                {animals.map(animal => (
+                  <SelectItem key={animal.value} value={animal.value}>
+                    {animal.label}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+          </motion.div>
+        )}
+
+        {currentStep === 1 && (
+          <motion.div
+            initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <h2 className='text-base font-semibold leading-7 text-gray-900'>
+              Informacion Personal
+            </h2>
+            <p className='mt-1 text-sm leading-6 text-gray-600'>
+              Proporcione sus datos personales.
             </p>
             <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
               <div className='sm:col-span-3'>
@@ -126,7 +175,7 @@ export default function Form() {
                   htmlFor='firstName'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  First name
+                  Nombre
                 </label>
                 <div className='mt-2'>
                   <input
@@ -149,7 +198,7 @@ export default function Form() {
                   htmlFor='lastName'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Last name
+                  Apellido
                 </label>
                 <div className='mt-2'>
                   <input
@@ -172,7 +221,7 @@ export default function Form() {
                   htmlFor='email'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Email address
+                  Email
                 </label>
                 <div className='mt-2'>
                   <input
@@ -193,17 +242,17 @@ export default function Form() {
           </motion.div>
         )}
 
-        {currentStep === 1 && (
+        {currentStep === 2 && (
           <motion.div
             initial={{ x: delta >= 0 ? '50%' : '-50%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
             <h2 className='text-base font-semibold leading-7 text-gray-900'>
-              Address
+              Dirrecion
             </h2>
             <p className='mt-1 text-sm leading-6 text-gray-600'>
-              Address where you can receive mail.
+              Dirección donde puede recibir correo.
             </p>
 
             <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
@@ -212,7 +261,7 @@ export default function Form() {
                   htmlFor='country'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Country
+                  País
                 </label>
                 <div className='mt-2'>
                   <select
@@ -238,7 +287,7 @@ export default function Form() {
                   htmlFor='street'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  Street address
+                  Dirección
                 </label>
                 <div className='mt-2'>
                   <input
@@ -261,7 +310,7 @@ export default function Form() {
                   htmlFor='city'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  City
+                  Ciudad
                 </label>
                 <div className='mt-2'>
                   <input
@@ -284,7 +333,7 @@ export default function Form() {
                   htmlFor='state'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  State / Province
+                  Provincia del estado
                 </label>
                 <div className='mt-2'>
                   <input
@@ -307,7 +356,7 @@ export default function Form() {
                   htmlFor='zip'
                   className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  ZIP / Postal code
+                  ZIP / Codigo Postal
                 </label>
                 <div className='mt-2'>
                   <input
@@ -328,13 +377,13 @@ export default function Form() {
           </motion.div>
         )}
 
-        {currentStep === 2 && (
+        {currentStep === 3 && (
           <>
             <h2 className='text-base font-semibold leading-7 text-gray-900'>
-              Complete
+              Completado
             </h2>
             <p className='mt-1 text-sm leading-6 text-gray-600'>
-              Thank you for your submission.
+              Gracias por tu envío.
             </p>
           </>
         )}
