@@ -11,7 +11,6 @@ import { signIn } from 'next-auth/react'
 const App = () => {
   return (
     <div>
-      <button onClick={() => signIn()}>Sign in</button>
       <div className='grid grid-cols-2'>
         <Card className='mx-4 py-4'>
           <CardHeader className='flex-col items-start px-4 pb-0 pt-2'>
