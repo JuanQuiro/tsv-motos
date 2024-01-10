@@ -19,6 +19,6 @@ const config: Config = {
     }
   },
   darkMode: 'class',
-  plugins: [nextui(), require('@tailwindcss/forms')]
+  plugins: [nextui(), require('@tailwindcss/forms'),require('tailwind-scrollbar')]
 }
 export default config

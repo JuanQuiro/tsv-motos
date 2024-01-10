@@ -16,12 +16,19 @@ import {
   UserButton
 } from '@clerk/nextjs'
 
+import Image from 'next/image'
+
 export default function App() {
   return (
     <Navbar>
       <NavbarBrand>
-        <Link href='/' className='font-bold text-inherit'>
-          TVS Creditos
+        <Link href='/' className='font-bold justify-start text-inherit'>
+        <Image
+          src="/Logo-TVS.png"
+          width={200}
+          height={200}
+          alt="Picture of the author"
+        />
         </Link>
       </NavbarBrand>
 

@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang='es' suppressHydrationWarning={true}>
+      <html className=' scrollbar-thumb-[#243984] scrollbar-track-black scrollbar-thin h-32 overflow-y-scroll' lang='es' suppressHydrationWarning={true}>
         <body className={inter.className}>
           <NavBar />
           {children}
