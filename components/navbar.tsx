@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import {
   Navbar,
@@ -9,16 +10,25 @@ import {
   DropdownTrigger,
   Dropdown,
   DropdownMenu,
-  Avatar
+  Avatar,
+  Button
 } from '@nextui-org/react'
 
+import { useUser } from "@clerk/nextjs";
+
 import {
-  UserButton
-} from '@clerk/nextjs'
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 import Image from 'next/image'
 
 export default function App() {
+  const { isSignedIn } = useUser();
+  console.log(isSignedIn)
+
   return (
     <Navbar>
       <NavbarBrand>
@@ -33,24 +43,46 @@ export default function App() {
       </NavbarBrand>
 
       <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-        <NavbarItem>
-          <Link color='foreground' href='/credito'>
-            Acceder a credito
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link href='#' color='foreground'>
-            Dashboard
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color='foreground' href='#'>
-            Perfil
-          </Link>
-        </NavbarItem>
+        
       </NavbarContent>
-      <UserButton />
-      <NavbarContent as='div' justify='end'></NavbarContent>
+      <NavbarContent as='div' justify='end'>
+
+      <NavbarItem>
+        <Link  href="/somos" color="foreground">
+        Quienes Somos
+      </Link>
+        </NavbarItem>
+    {
+        isSignedIn ? (
+          <>
+          <SignedIn>
+          {/* Mount the UserButton component */}
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          {/* Signed out users get sign in button */}
+          <SignInButton/>
+        </SignedOut>
+          </>
+        ) : (
+      <>
+         
+
+      <Link isBlock href="/sign-up">
+        Registro
+      </Link>
+      <Button
+      href="/sign-in"
+      as={Link}
+      color="primary"
+      variant="solid"
+    >
+      Login
+    </Button>
+    </>
+        )
+      }
+      </NavbarContent>
     </Navbar>
   )
 }

@@ -4,6 +4,7 @@ import './globals.css'
 import NavBar from '@/components/navbar'
 import { ClerkProvider } from '@clerk/nextjs'
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
