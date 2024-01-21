@@ -14,6 +14,8 @@ import Select from './select'
 import { countryArray, Paises, PreciosSalarios, specifyRegionArray } from '@/lib/data'
 import axios from 'axios'
 
+import { sendContactForm } from "@/lib/api";
+
 type Inputs = z.infer<typeof FormDataSchema>
 
 
@@ -95,48 +97,17 @@ export default function Form() {
     resolver: zodResolver(FormDataSchema)
   })
 
-  const processForm: SubmitHandler<Inputs> = data => {
+  const processForm: any = async (data: { name: string; email: string; subject: string; message: string }) => {
 
     console.log("data is ",data);
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      //url: 'http://127.0.0.1:5001/opddev-51cfb/us-central1/sendOpdNeededEmail',
-      url:' https://us-central1-opddev-51cfb.cloudfunctions.net/sendOpdNeededEmail',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-
-    let config2 = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      //url: 'http://127.0.0.1:5001/opddev-51cfb/us-central1/sendOpdNeededEmailToClient',
-      url:' https://us-central1-opddev-51cfb.cloudfunctions.net/sendOpdNeededEmailToClient',
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
     
-    // send email to Mr. Itani
-    axios.request(config)
-    .then((response:any) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error:any) => {
-      console.log(error);
-    });
+  data.name = "Juan";
+  data.email = "juanquirozsana@gmail.com";
+  data.subject = "juanquirozsana@gmail.com";
+  data.message = "POPOPOPOPPOPOPPO";
 
-    // send email to Client
-    axios.request(config2)
-    .then((response:any) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error:any) => {
-      console.log(error);
-    });
+
+    await sendContactForm(data);
 
     // reset form
     reset()
