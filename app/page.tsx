@@ -7,9 +7,11 @@ import { Button, Card, CardBody, CardHeader, Image } from '@nextui-org/react'
 import sbr from './sbr.png'
 import NextImage from 'next/image'
 import { signIn } from 'next-auth/react'
-import Link from 'next/link'
+import LinkNext from 'next/link'
 import Youtube from '../components/Youtube'
-import FooterDefault from '@/components/page/FooterDefault'
+import FooterDefault from '@/components/FooterDefault'
+import {Link} from "@nextui-org/react";
+
 
 
 const App = () => {
@@ -17,7 +19,7 @@ const App = () => {
     <div>
       <div className='my-3'>
         <h3 className='grid grid-cols-1 place-items-center font-semibold text-2xl'>Bienvenidos a TVS Finance.</h3>
-        <span className='grid grid-cols-1 place-items-center '>La herramienta web que te permite pagar tu moto en cuotas de manera sencilla, accesible y segura.</span>
+        <span className='grid grid-cols-1 place-items-center text-center'>La herramienta web que te permite pagar tu moto en cuotas de manera sencilla, accesible y segura.</span>
       </div>
       <div className='grid grid-cols-2'>
         
@@ -35,10 +37,10 @@ const App = () => {
               width={270}
             />
             <div className='grid justify-center place-items-center content-center	'>
-            <h3 className='text-xl font-semibold'>Inicial: 700$</h3>
-            <p className='text-lg text-black/60'>Y luego pagar</p>
-            <Button className='text-white text-xl mx-auto font-bold group-hover:text-yellow-300 bg-[#243984] '>44$</Button>
-            <span className='text-xs'>Semanales por 24 semanas</span>
+            <h3 className='sm:text-xl text-xs font-semibold'>Inicial: 700$</h3>
+            <p className='sm:text-lg text-xs text-center text-black/60'>Y luego pagar</p>
+            <Button className='text-white sm:text-lg text-xs mx-auto font-bold group-hover:text-yellow-300 bg-[#243984] '>44$</Button>
+            <span className='text-xs sm:text-lg text-center'>Semanales por 24 semanas</span>
             
             </div>
           </CardBody>
@@ -57,10 +59,10 @@ const App = () => {
               width={270}
             />
             <div className='grid justify-center content-center	place-items-center'>
-            <h3 className='text-xl font-semibold'>Inicial: 700$</h3>
-            <p className='text-lg text-black/60'>Y luego pagar</p>
-            <Button className='text-white text-xl mx-auto font-bold group-hover:text-yellow-300 bg-[#243984] '>44$</Button>
-            <span className='text-xs'>Semanales por 24 semanas</span>
+            <h3 className='sm:text-xl text-xs font-semibold'>Inicial: 700$</h3>
+            <p className='sm:text-lg text-xs text-black/60 text-center'>Y luego pagar</p>
+            <Button className='text-white sm:text-lg text-xs mx-auto font-bold group-hover:text-yellow-300 bg-[#243984] '>44$</Button>
+            <span className='text-xs sm:text-lg text-center'>Semanales por 24 semanas</span>
             </div>
           </CardBody>
         </Card>
@@ -68,16 +70,28 @@ const App = () => {
       <div className='grid justify-center my-5'>
         <div className='mx-auto'>
         <Button href="/credito"
-      as={Link} className='bg-[#243984] text-white text-xl'>Aplicar ahora</Button>
+      as={LinkNext} className='bg-[#243984] text-white text-xl'>Aplicar ahora</Button>
         </div>
-        <p className='mt-2 mx-auto '>Registrate y completa el formulario para aplicar a nuestro servicio. Verificaremos tu informacion y te notificaremos el resultado en menos de <strong>72h</strong></p>
+        <p className='mt-2 mx-auto text-center'>Registrate y completa el formulario para aplicar a nuestro servicio. Verificaremos tu informacion y te notificaremos el resultado en menos de <strong>72h</strong></p>
       </div>
       <div className='grid place-items-center bg-gray-100	py-3'>
 
       <h3 className='text-xl font-semibold py-1'>¿Como Funciona?</h3>
-      <span className='pb-2'>Mira el siguiente video explicativo y aprende cómo funciona nuestro servicio.</span>
+      <span className='pb-2 text-center'>Mira el siguiente video explicativo y aprende cómo funciona nuestro servicio.</span>
       <Youtube />
-      <p className='mx-40 text-center mt-3'>Nuestra misión es brindarte una experiencia simple y amigable durante el proceso de compra a plazos de tu Moto 0 km. Facilitamos todas las herramientas necesarias para el seguimiento y pago digital de las cuotas semanales, mientras ofrecemos un conjunto de beneficios exclusivos a nuestros clientes activos.</p>
+      <div className='grid place-items-center text-'>
+      <Button
+      href="https://github.com/nextui-org/nextui"
+      as={Link}
+      color="primary"
+      showAnchorIcon
+      variant="solid"
+      className='sm:hidden'
+    >
+      Video Explicativo
+    </Button>
+      </div>
+      <p className='sm:mx-40 mx-3 text-center mt-3'>Nuestra misión es brindarte una experiencia simple y amigable durante el proceso de compra a plazos de tu Moto 0 km. Facilitamos todas las herramientas necesarias para el seguimiento y pago digital de las cuotas semanales, mientras ofrecemos un conjunto de beneficios exclusivos a nuestros clientes activos.</p>
       </div>
 
       <div className='grid place-items-center bg-white py-5	'>

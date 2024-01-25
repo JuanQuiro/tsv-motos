@@ -47,8 +47,8 @@ export default function App() {
       </NavbarContent>
       <NavbarContent as='div' justify='end'>
 
-      <NavbarItem>
-        <Link  href="/somos" color="foreground">
+      <NavbarItem className='hidden lg:block'>
+        <Link href="/somos" color="foreground">
         Quienes Somos
       </Link>
         </NavbarItem>

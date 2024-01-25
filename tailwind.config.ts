@@ -19,6 +19,10 @@ const config: Config = {
     }
   },
   darkMode: 'class',
+  daisyui: {
+    themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    darkTheme: "light", // name of one of the included themes for dark mode
+  },
   plugins: [nextui(), require('@tailwindcss/forms'),require('tailwind-scrollbar'),require('tailwindcss-animated'),require("daisyui")]
 }
 export default config
