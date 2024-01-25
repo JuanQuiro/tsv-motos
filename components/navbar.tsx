@@ -34,7 +34,7 @@ export default function App() {
       <NavbarBrand>
         <Link href='/' className='font-bold justify-start text-inherit'>
         <Image
-          src="/Logo-TVS.png"
+          src="/motostudio.png"
           width={200}
           height={200}
           alt="Picture of the author"

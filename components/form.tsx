@@ -9,12 +9,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Input from './input'
 import Heading from './heading'
-import './form.css';
 import Select from './select'
 import { countryArray, Paises, PreciosSalarios, specifyRegionArray } from '@/lib/data'
 import axios from 'axios'
 
 import { sendContactForm } from "@/lib/api";
+import { Button, Link } from '@nextui-org/react'
 
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -323,12 +323,38 @@ export default function Form() {
              Lee los terminos y condiciones
             </Heading>
 
-            <div className='mt-1 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-6'>
-            
-            <h2>Hola</h2>
+            <div className='mt-1 grid grid-cols-1 gap-x-2 gap-y-2'>
+            <p className="mb-2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+              consequat, risus id lacinia scelerisque, arcu urna ultrices urna,
+              vitae convallis dolor arcu a eros. Sed eleifend purus in pharetra
+              euismod. Duis vitae magna sed ante vehicula consequat id non
+              felis. Quisque euismod nec mauris ut efficitur.
+            </p>
+            <p className="mb-2">
+              Fusce pharetra, nibh at ultrices tristique, ipsum metus iaculis
+              arcu, sed tristique sapien ante eu ex. Nulla facilisi. Ut
+              fringilla, velit vitae facilisis ullamcorper, lacus dui sodales
+              nunc, ut cursus lacus turpis at lacus. Fusce ac urna arcu. Nulla
+              facilisi. Morbi fermentum lacinia tortor, eu congue libero
+              venenatis ac.
+            </p>
+            <p className="mb-2">
+              Vestibulum ut pretium ipsum. Aliquam sagittis enim a dui semper,
+              id pharetra nisi lobortis. Donec vitae tellus non nisi feugiat
+              fringilla et non enim. Suspendisse potenti. Pellentesque habitant
+              morbi tristique senectus et netus et malesuada fames ac turpis
+              egestas.
+            </p>
+            <Button 
+            href="/finalizar"
+            as={Link}
+            color="primary"
+            showAnchorIcon
+            variant="solid">
+              Finalizar
+            </Button>
             </div>
-
-            
           </motion.div>
         )}
 

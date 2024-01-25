@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from 'react';
-import './form.css';
 // Define an interface for the component props
 interface HeadingProps {
     title: string;
