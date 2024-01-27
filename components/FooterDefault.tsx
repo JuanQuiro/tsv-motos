@@ -6,7 +6,7 @@ const MotosSection = () => {
   <aside className="items-center grid-flow-col">
     <p> © 2024 ASISTO, C.A - Todos los derechos reservados</p>
   </aside> 
-  <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+  <nav className="grid-flow-col sm:grid hidden gap-4 md:place-self-center md:justify-self-end">
     <a>Quienes Somos</a>
     <a>Contacto</a>
   </nav>

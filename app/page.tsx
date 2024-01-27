@@ -96,7 +96,7 @@ const App = () => {
 
       <div className='grid place-items-center bg-white py-5	'>
       <h3 className='text-2xl underline font-semibold py-1'>Beneficios Exclusivos</h3>
-      <ul className="list-disc font-medium text-base grid place-items-center py-3">
+      <ul className="list-disc font-medium text-base grid text-center place-items-center py-3">
   <li>Interfaz amigable y fácil de usar.</li>
   <li>Pagos digitales en moneda nacional o extranjera.</li>
   <li>Chat de atencion personalizada.</li>
