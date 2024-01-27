@@ -100,10 +100,9 @@ const App = () => {
   <li>Interfaz amigable y fácil de usar.</li>
   <li>Pagos digitales en moneda nacional o extranjera.</li>
   <li>Chat de atencion personalizada.</li>
-  <li>Chat de atencion personalizada.</li>
   <li>Garantia de motor y caja por 24 meses.</li>
   <li>Mantenimiento Basico Durante Garantia.</li>
-  <li>Seguro Contra Catastrofe.</li>
+  <li>Seguro Contra Catastrofes.</li>
   <li>Y mucho mas!!</li>
 
 </ul>

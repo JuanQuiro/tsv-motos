@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const MotosSection = () => {
@@ -7,7 +8,7 @@ const MotosSection = () => {
     <p> © 2024 ASISTO, C.A - Todos los derechos reservados</p>
   </aside> 
   <nav className="grid-flow-col sm:grid hidden gap-4 md:place-self-center md:justify-self-end">
-    <a>Quienes Somos</a>
+    <Link href={'/somos'}>Quienes Somos</Link>
     <a>Contacto</a>
   </nav>
 </footer>
