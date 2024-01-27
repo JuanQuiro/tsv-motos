@@ -18,14 +18,14 @@ const App = () => {
   return (
     <div>
       <div className='my-3'>
-        <h3 className='grid grid-cols-1 place-items-center font-semibold text-2xl'>Bienvenidos a TVS Finance.</h3>
+        <h3 className='grid grid-cols-1 place-items-center font-semibold text-2xl'>Bienvenidos a MotoStudio.</h3>
         <span className='grid grid-cols-1 place-items-center text-center'>La herramienta web que te permite pagar tu moto en cuotas de manera sencilla, accesible y segura.</span>
       </div>
       <div className='grid grid-cols-2'>
         
         <Card className='group hover:bg-black/10 mx-4 py-4 animate-fade-left animate-duration-[900ms] animate-ease-in-out'>
           <CardHeader className='flex-col items-start px-4 pb-0 pt-2'>
-            <p className=' text-xl font-bold'>Trak 150cc</p>
+            <p className=' text-xl font-bold'>TVS Trak 150cc</p>
           </CardHeader>
           <CardBody className='overflow-visible grid grid-cols-2 py-2'>
             <Image
@@ -47,7 +47,7 @@ const App = () => {
         </Card>
         <Card className='group hover:bg-black/10 mx-4 py-4 animate-fade-left animate-duration-[900ms] animate-ease-in-out'>
           <CardHeader className='flex-col items-start px-4 pb-0 pt-2'>
-            <p className=' text-xl font-bold'>HLX 150x 5 Gear</p>
+            <p className=' text-xl font-bold'>TVS HLX 150x 5 Gear</p>
           </CardHeader>
           <CardBody className='overflow-visible grid grid-cols-2 py-2'>
             <Image
@@ -81,7 +81,7 @@ const App = () => {
       <Youtube />
       <div className='grid place-items-center text-'>
       <Button
-      href="https://github.com/nextui-org/nextui"
+      href="https://www.youtube.com/watch?v=f-iVZG7Xbuk"
       as={Link}
       color="primary"
       showAnchorIcon
