@@ -1,5 +1,7 @@
-import Link from 'next/link'
+import LinkNext from 'next/link'
 import React from 'react'
+import {Link} from "@nextui-org/react";
+
 
 const MotosSection = () => {
   return (
@@ -8,8 +10,8 @@ const MotosSection = () => {
     <p> © 2024 ASISTO, C.A - Todos los derechos reservados</p>
   </aside> 
   <nav className="grid-flow-col sm:grid hidden gap-4 md:place-self-center md:justify-self-end">
-    <Link href={'/somos'}>Quienes Somos</Link>
-    <a>Contacto</a>
+  <Link href="/somos" underline="hover">Quienes Somos</Link>
+  <a>Contacto</a>
   </nav>
 </footer>
   )
