@@ -6,37 +6,39 @@ const ComponenteEspecificoUno = () => {
   return <div className="bg-gray-200 p-4 rounded-lg shadow-md">
   <h2 className="text-2xl font-bold mb-4">Motor</h2>
   <p className="mb-2">
-    <span className="font-semibold">Tipo: </span> Motor de un Solo Cilindro, de 4 tiempos, refrigerado por aire y con encendido a chispa
+    <span className="font-semibold">Tipo de Motor: </span> 4 Tiempos, Refrigerado por Aire Natural
   </p>
-  <p className="mb-2"><span className="font-semibold">Capacidad Del Motor: </span> 147,49 cc</p>
-  <p className="mb-2"><span className="font-semibold">Potencia Maxima: </span> 8,8 kw a 7500 rpm</p>
+  <p className="mb-2"><span className="font-semibold">Desplazamiento del Motor: </span> 147,49 cc</p>
+  <p className="mb-2"><span className="font-semibold">Potencia Maxima: </span> 8,9kw a 7500 rpm</p>
   <p className="mb-2"><span className="font-semibold">Torque Maximo: </span> 12,3 Nm a 5000 rpm</p>
-  <p className="mb-2"><span className="font-semibold">Tipo De Carburador: </span> MIKUNI BS 26 (tipo CV)</p>
-  <p className="mb-2"><span className="font-semibold">Valvula Por Cilindro: </span>: 2 válvulas</p>
-  <p className="mb-2"><span className="font-semibold">Arranque: </span>: Arranque a Pedal y Arranque Eléctrico</p>
-  <p className="mb-2"><span className="font-semibold">Caja de Cambios: </span> 5 Velocidades, marchas constantes :1D4U</p>
+  <p className="mb-2"><span className="font-semibold">Arranque: </span>Arranque Eléctrico y Arranque a Pedal</p>
+  <p className="mb-2"><span className="font-semibold">Embrague y Transmisión: </span>Húmedo, Tipo Múltiples Discos</p>
+  <p className="mb-2"><span className="font-semibold">Transmisión: </span>Toma Constante de 5 Velocidades</p>
 </div>
 
 };
 
 const ComponenteEspecificoDos = () => {
     return <div className="bg-gray-200 p-4 rounded-lg shadow-md">
-    <h2 className="text-2xl font-bold mb-4">Chasis y Suspencion</h2>
+    <h2 className="text-2xl font-bold mb-4">Dimensiones y Pesos</h2>
     <p className="mb-2">
-      <span className="font-semibold">Tipo: </span> Tipo armazón simple
+      <span className="font-semibold">Largo: </span> 2040 mm
     </p>
-    <p className="mb-2"><span className="font-semibold">Bastidor: </span> Telescópica sumergida en aceite</p>
-    <p className="mb-2"><span className="font-semibold">Suspensión Delantera: </span> Amortiguadores hidráulicos ajustables de 5 pasos con balancín rectangular</p>
+    <p className="mb-2"><span className="font-semibold">Ancho: </span> 745 mm</p>
+    <p className="mb-2"><span className="font-semibold">Alto: </span> 1150 mm</p>
+    <p className="mb-2"><span className="font-semibold">Distencia entre ejes: </span>1295 mm</p>
+    <p className="mb-2"><span className="font-semibold">Altura del Asiento: </span>834 mm</p>
+    <p className="mb-2"><span className="font-semibold">Despeje del Suelo: </span>195 mm</p>
+    <p className="mb-2"><span className="font-semibold">Peso en orden de marcha del vehiculo: </span>119 kg</p>
   </div>
   
   };
 
 const ComponenteEspecificoTres = () => {
     return <div className="bg-gray-200 p-4 rounded-lg shadow-md">
-    <h2 className="text-2xl font-bold mb-4">Sitema Elétrico</h2>
-    <p className="mb-2"><span className="font-semibold">Batería: </span>12V, 5 Ah</p>
-  <p className="mb-2"><span className="font-semibold">Faro Delantero: </span>12V, 35/35W, HS1</p>
-  <p className="mb-2"><span className="font-semibold">Faro Trasero: </span>12V, 5/21 Wxl</p>
+    <h2 className="text-2xl font-bold mb-4">Chasis</h2>
+    <p className="mb-2"><span className="font-semibold">Suspensión Delantera: </span>Viaje de Horquilla, Telescópico</p>
+  <p className="mb-2"><span className="font-semibold">Suspensión Trasera: </span>Amortiguador hidráulico</p>
   </div>
   
   };
@@ -44,20 +46,17 @@ const ComponenteEspecificoTres = () => {
 
   const ComponenteEspecificoCuatro = () => {
     return <div className="bg-gray-200 p-4 rounded-lg shadow-md">
-    <h2 className="text-2xl font-bold mb-4">Neumaticos Y Frenos</h2>
-    <p className="mb-2"><span className="font-semibold">Neumático (delantero): </span>2,75 -17</p>
-  <p className="mb-2"><span className="font-semibold">Neumático (trasero): </span>90/90 -17</p>
-  <p className="mb-2"><span className="font-semibold">Freno Delantero: </span>Operado a mano, ampliándose internamente 130 mm de diámetro. Tambor</p>
-  <p className="mb-2"><span className="font-semibold">Freno Trasero: </span>Operado a pie, ampliándose internamente 130 mm de diámetro. Tambor.</p>
-  <p className="mb-2"><span className="font-semibold">Líquido de Freno: </span>DOT 3 / DOT 4</p>
+    <h2 className="text-2xl font-bold mb-4">Eletrico De Los Controles</h2>
+    <p className="mb-2"><span className="font-semibold">Indicación de Cambios: </span>12 V, 1,7 W x 5</p>
   </div>
   
   };
 
   const ComponenteEspecificoSeis = () => {
     return <div className="bg-gray-200 p-4 rounded-lg shadow-md">
-    <h2 className="text-2xl font-bold mb-4">Capacidades</h2>
-    <p className="mb-2"><span className="font-semibold">Capacidad del Tanque de Combustible: </span>12 L</p>
+    <h2 className="text-2xl font-bold mb-4">Tanque De Combustible</h2>
+    <p className="mb-2"><span className="font-semibold">Capacidad del Tanque de Combustible: </span>12 litros</p>
+    <p className="mb-2"><span className="font-semibold">Capacidad de la Reserva: </span>2 litros</p>
   </div>
   
   };
@@ -83,7 +82,7 @@ const Botonera = () => {
     setBotonSeleccionado(indice);
   };
 
-  const botones = ["Motor", "Chasis y Suspencio", "Sistema Eletrico", "Naumaticos y Frenos", "Dimensiones", "Capacidades"];
+  const botones = ["Motor y Transmisión", "Dimensiones y Pesos", "Chasis", "Frenos", "Eletrico De Los Controles", "Tanque de Combustible"];
 
   return (
     <div className="grid grid-cols-2 gap-2">
