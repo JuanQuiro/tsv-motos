@@ -36,6 +36,7 @@ const App = () => {
             <CardBody className='grid justify-center place-items-center content-center	'>
             <h3 className='sm:text-xl text-xs font-semibold'>Inicial: 700$</h3>
             <p className='sm:text-lg text-xs text-center text-black/60'>Y luego pagar</p>
+            <p className="btn btn-outline">44$</p>
             <span className='text-xs sm:text-lg text-center'>Semanales por 24 semanas</span>
             
             </CardBody>
