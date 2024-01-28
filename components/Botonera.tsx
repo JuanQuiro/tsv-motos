@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import {Button} from "@nextui-org/react";
+
 
 const ComponenteEspecificoUno = () => {
   return <div className="bg-gray-200 p-4 rounded-lg shadow-md">
@@ -27,19 +29,20 @@ const Botonera = () => {
   const botones = ["Motor", "Chasis y Suspencio", "Sistema Eletrico", "Naumaticos y Frenos", "Dimensiones", "Capacidades"];
 
   return (
-    <div className="grid grid-cols-6 gap-2">
+    <div className="grid grid-cols-2 gap-2">
       {botones.map((boton, indice) => (
-        <button
+        <Button
           key={indice}
-          className={`p-4 ${
+          size="sm"
+          className={`text-xs sm:text-sm ${
             botonSeleccionado === indice ? "bg-blue-500 text-white" : "bg-gray-200"
           }`}
           onClick={() => cambiarBotonSeleccionado(indice)}
         >
           {boton}
-        </button>
+        </Button>
       ))}
-      <div className="ml-4 col-span-6">
+      <div className="ml-4 col-span-2">
       {botonSeleccionado === 0 && <ComponenteEspecificoUno />}
       </div>
     </div>
