@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import MotosSection from './page/MotosSection'
 import CondicionesSection from './page/CondicionesSection'
 import BeneficiosSection from './page/BeneficiosSection'
@@ -10,7 +10,8 @@ import { signIn } from 'next-auth/react'
 import LinkNext from 'next/link'
 import Youtube from './Youtube'
 import FooterDefault from '@/components/FooterDefault'
-import {Link} from "@nextui-org/react";
+import Botonera from "../components/Botonera";
+
 
 
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
@@ -19,7 +20,10 @@ const App = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   return (
-    <>
+    <div>
+    
+    
+
         <Card onPress={onOpen} isPressable className='group hover:bg-black/10 mx-4 py-4 animate-fade-left animate-duration-[900ms] animate-ease-in-out'>
           <CardHeader className='flex-col items-start px-4 pb-0 pt-2'>
             <p className=' text-xl font-bold'>TVS HLX 150x 5 Gear</p>
@@ -42,29 +46,13 @@ const App = () => {
             </CardBody>
           </CardBody>
         </Card>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
+        <Modal size='5xl' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">TVS HLX 150</ModalHeader>
               <ModalBody>
-                <p> 
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                  dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. 
-                  Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. 
-                  Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur 
-                  proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
+              <Botonera />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
@@ -78,7 +66,8 @@ const App = () => {
           )}
         </ModalContent>
       </Modal>
-        </>
+      
+        </div>
   )
 }
 
