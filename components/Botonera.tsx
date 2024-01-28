@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {Button} from "@nextui-org/react";
+import { Carousel } from 'flowbite-react';
 
 
 const ComponenteEspecificoUno = () => {
@@ -76,6 +77,20 @@ const ComponenteEspecificoTres = () => {
   
   };
 
+
+  const ComponenteEspecificoSiete = () => {
+    return <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+      <Carousel>
+        <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
+        <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg" alt="..." />
+        <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg" alt="..." />
+        <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg" alt="..." />
+        <img src="https://flowbite.com/docs/images/carousel/carousel-5.svg" alt="..." />
+      </Carousel>
+    </div>
+  
+  };
+
 const Botonera = () => {
   const [botonSeleccionado, setBotonSeleccionado] = useState(0);
 
@@ -83,7 +98,7 @@ const Botonera = () => {
     setBotonSeleccionado(indice);
   };
 
-  const botones = ["Motor", "Chasis y Suspencio", "Sistema Eletrico", "Naumaticos y Frenos", "Dimensiones", "Capacidades"];
+  const botones = ["Motor", "Chasis y Suspencio", "Sistema Eletrico", "Naumaticos y Frenos", "Dimensiones", "Capacidades", "Imagenes"];
 
   return (
     <div className="grid grid-cols-2 gap-2">
@@ -93,6 +108,8 @@ const Botonera = () => {
           size="sm"
           className={`text-xs sm:text-sm ${
             botonSeleccionado === indice ? "bg-blue-500 text-white" : "bg-gray-200"
+          } ${
+            boton === 'Imagenes' ? "col-span-2" : ""
           }`}
           onClick={() => cambiarBotonSeleccionado(indice)}
         >
@@ -106,6 +123,7 @@ const Botonera = () => {
       {botonSeleccionado === 3 && <ComponenteEspecificoCuatro />}
       {botonSeleccionado === 4 && <ComponenteEspecificoCinco />}
       {botonSeleccionado === 5 && <ComponenteEspecificoSeis />}
+      {botonSeleccionado === 6 && <ComponenteEspecificoSiete />}
       </div>
     </div>
   );

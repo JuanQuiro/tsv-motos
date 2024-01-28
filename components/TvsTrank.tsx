@@ -43,7 +43,7 @@ const App = () => {
             </CardBody>
           </CardBody>
         </Card>
-        <Modal size='3xl' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
+        <Modal size='5xl' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
         <ModalContent>
           {(onClose) => (
             <>
