@@ -25,8 +25,7 @@ const App = () => {
         <h3 className='grid grid-cols-1 place-items-center font-semibold text-2xl'>Bienvenidos a MotoStudio.</h3>
         <span className='grid grid-cols-1 place-items-center text-center'>La herramienta web que te permite pagar tu moto en cuotas de manera sencilla, accesible y segura.</span>
       </div>
-      <div className='grid grid-cols-2'>
-        
+      <div className='grid grid-cols-2 place-content-between'>
         <TvsTrank />
         <TvsHlx />
       </div>

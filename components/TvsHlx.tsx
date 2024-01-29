@@ -20,10 +20,7 @@ const App = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   return (
-    <div>
-    
-    
-
+    <>
         <Card onPress={onOpen} isPressable className='group hover:bg-black/10 mx-4 py-4 animate-fade-left animate-duration-[900ms] animate-ease-in-out'>
           <CardHeader className='flex-col items-start px-4 pb-0 pt-2'>
             <p className=' text-xl font-bold'>TVS HLX 150x 5 Gear</p>
@@ -67,7 +64,7 @@ const App = () => {
         </ModalContent>
       </Modal>
       
-        </div>
+        </>
   )
 }
 
