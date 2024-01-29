@@ -92,13 +92,13 @@ const ComponenteEspecificoTres = () => {
   };
 
 const Botonera = () => {
-  const [botonSeleccionado, setBotonSeleccionado] = useState(0);
+  const [botonSeleccionado, setBotonSeleccionado] = useState(6);
 
   const cambiarBotonSeleccionado = (indice: React.SetStateAction<number>) => {
     setBotonSeleccionado(indice);
   };
 
-  const botones = ["Motor", "Chasis y Suspencio", "Sistema Eletrico", "Naumaticos y Frenos", "Dimensiones", "Capacidades", "Imagenes"];
+  const botones = ["Motor", "Chasis y Suspencio", "Sistema Elétrico", "Neumaticos y Frenos", "Dimensiones", "Capacidades", "Imagenes"];
 
   return (
     <div className="grid grid-cols-2 gap-2">

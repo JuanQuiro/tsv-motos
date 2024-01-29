@@ -5,7 +5,7 @@ import { Carousel } from 'flowbite-react';
 
 const ComponenteEspecificoUno = () => {
   return <div className="bg-gray-200 p-4 rounded-lg shadow-md">
-  <h2 className="text-2xl font-bold mb-4">Motor</h2>
+  <h2 className="text-2xl font-bold mb-4">Motor y Transmision</h2>
   <p className="mb-2">
     <span className="font-semibold">Tipo de Motor: </span> 4 Tiempos, Refrigerado por Aire Natural
   </p>
@@ -90,13 +90,13 @@ const ComponenteEspecificoTres = () => {
   };
 
 const Botonera = () => {
-  const [botonSeleccionado, setBotonSeleccionado] = useState(0);
+  const [botonSeleccionado, setBotonSeleccionado] = useState(6);
 
   const cambiarBotonSeleccionado = (indice: React.SetStateAction<number>) => {
     setBotonSeleccionado(indice);
   };
 
-  const botones = ["Motor y Transmisión", "Dimensiones y Pesos", "Chasis", "Frenos", "Eletrico De Los Controles", "Tanque de Combustible", "Imagenes"];
+  const botones = ["Motor y Transmisión", "Dimensiones y Pesos", "Chasis", "Eletrico De Los Controles", "Dimensiones", "Tanque de Combustible", "Imagenes"];
 
   return (
     <div className="grid grid-cols-2 gap-2">

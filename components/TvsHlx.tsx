@@ -23,7 +23,7 @@ const App = () => {
     <>
         <Card onPress={onOpen} isPressable className='group hover:bg-black/10 mx-4 py-4 animate-fade-left animate-duration-[900ms] animate-ease-in-out'>
           <CardHeader className='flex-col items-start px-4 pb-0 pt-2'>
-            <p className=' text-xl font-bold'>TVS HLX 150x 5 Gear</p>
+            <p className=' text-xl font-bold text-center'>TVS HLX 150x 5 Gear</p>
           </CardHeader>
           <CardBody className='overflow-visible grid grid-cols-2 py-2'>
             <Image
@@ -47,7 +47,7 @@ const App = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">TVS HLX 150</ModalHeader>
+              <ModalHeader className="flex flex-col text-center gap-1">TVS HLX 150x 5 Gear</ModalHeader>
               <ModalBody>
               <Botonera />
               </ModalBody>
