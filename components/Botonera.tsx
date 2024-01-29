@@ -81,11 +81,11 @@ const ComponenteEspecificoTres = () => {
   const ComponenteEspecificoSiete = () => {
     return <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
       <Carousel>
-        <img src="/1Rojo.jpg" alt="..." />
-        <img src="/2Rojo.png" alt="..." />
-        <img src="/3Rojo.jpg" alt="..." />
-        <img src="/4Rojo.jpg" alt="..." />
-        <img src="/5Rojo.png" alt="..." />
+        <img src="/1Rojos.jpg" alt="..." />
+        <img src="/2Rojos.png" alt="..." />
+        <img src="/3Rojos.jpg" alt="..." />
+        <img src="/4Rojos.jpg" alt="..." />
+        <img src="/5Rojos.png" alt="..." />
       </Carousel>
     </div>
   

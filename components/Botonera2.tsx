@@ -91,7 +91,7 @@ const ComponenteEspecificoTres = () => {
 
 const Botonera = () => {
   const [botonSeleccionado, setBotonSeleccionado] = useState(6);
-
+ 
   const cambiarBotonSeleccionado = (indice: React.SetStateAction<number>) => {
     setBotonSeleccionado(indice);
   };
