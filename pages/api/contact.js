@@ -1,4 +1,5 @@
 import { mailOptions, transporter } from "../../config/nodemailer";
+import prisma from "../../lib/prisma.server";
 
 const CONTACT_MESSAGE_FIELDS = {
   name: "Juan",
@@ -9,6 +10,12 @@ const CONTACT_MESSAGE_FIELDS = {
 
 
 const generateEmailContent = (data) => {
+
+  prisma.identidad.create({
+    data: {
+      data
+    },
+  });
 
   const currentDate = new Date();
   const currentDateTime = currentDate.toLocaleString();
