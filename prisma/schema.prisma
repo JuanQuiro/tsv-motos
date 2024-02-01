@@ -11,7 +11,7 @@ datasource db {
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  name  String?
+  name  String
   fecha DateTime
 }
 
@@ -20,4 +20,18 @@ model Auth {
   email String  @unique
   lastname  String
   name String
+  numberPhone Int
+}
+
+model Elegibilidad {
+  id    Int     @id @default(autoincrement())
+  ingresosPromedio String
+  archivoElegilidad String
+}
+
+model Identidad {
+  id    Int     @id @default(autoincrement())
+  cedula Int
+  archivoCedula String
+  archivoHolding String
 }
