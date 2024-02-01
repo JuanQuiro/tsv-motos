@@ -10,12 +10,6 @@ const CONTACT_MESSAGE_FIELDS = {
 
 const generateEmailContent = (data) => {
 
-  prisma.user.create({
-    data: {
-      data
-    },
-  });
-
   const currentDate = new Date();
   const currentDateTime = currentDate.toLocaleString();
 
