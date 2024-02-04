@@ -1,23 +1,33 @@
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
 }
-
 
 datasource db {
-  provider = "sqlite"
-    url      = env("TURSO_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
-  fecha DateTime
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  Ingresos   String
+  Yummy      Boolean
+  Extranjero Boolean
+  Cedula     String
+  PrimerNombre   String
+  SegundoNombre  String
+  PrimerApellido String
+  SegundoApellido String
+  Dirrecion  String
+  Pais       String
+  name       String
+  email      String
+  subject    String
+  message    String
 }
 
 model Auth {
-  id    Int     @id @default(autoincrement())
+  id    String      @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
   lastname  String
   name String
@@ -25,13 +35,13 @@ model Auth {
 }
 
 model Elegibilidad {
-  id    Int     @id @default(autoincrement())
+  id    String      @id @default(auto()) @map("_id") @db.ObjectId
   ingresosPromedio String
   archivoElegilidad String
 }
 
 model Identidad {
-  id    Int     @id @default(autoincrement())
+  id    String      @id @default(auto()) @map("_id") @db.ObjectId
   cedula Int
   archivoCedula String
   archivoHolding String
