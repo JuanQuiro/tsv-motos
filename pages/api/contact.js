@@ -10,12 +10,27 @@ const CONTACT_MESSAGE_FIELDS = {
   message: 'EMAIL'
 }
 
-const generateEmailContent = data => {
-  prisma.user.create({
+const generateEmailContent = async data => {
+  const user = await prisma.user.create({
     data: {
-      data
+      email: 'elsa@prisma.io',
+      name: 'Elsa Prisma',
+      Cedula: '21',
+      Dirrecion: 'la pradera',
+      Extranjero: true,
+      Ingresos: 'asass',
+      Yummy: true,
+      PrimerNombre: 'Juan',
+      SegundoNombre: 'Alberto',
+      PrimerApellido: 'Quiroz',
+      SegundoApellido: 'Sanchez',
+      Pais: 'Venezuela',
+      subject: 'TEST',
+      message: 'sasas'
     }
   })
+
+  console.log(user)
 
   const currentDate = new Date()
   const currentDateTime = currentDate.toLocaleString()
