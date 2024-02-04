@@ -1,7 +1,4 @@
 import { mailOptions, transporter } from '../../config/nodemailer'
-import { PrismaClient, Prisma } from '@prisma/client'
-
-const prisma = new PrismaClient()
 
 const CONTACT_MESSAGE_FIELDS = {
   name: 'Juan',
