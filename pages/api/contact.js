@@ -1,8 +1,6 @@
 import { mailOptions, transporter } from '../../config/nodemailer'
 import { PrismaClient, Prisma } from '@prisma/client'
 
-
-
 const enviarFormulario = async () => {
   const prisma = new PrismaClient()
   const createUser = await prisma.user.create({
@@ -25,7 +23,6 @@ const enviarFormulario = async () => {
   })
   console.log(createUser)
 }
-
 
 const CONTACT_MESSAGE_FIELDS = {
   name: 'Juan',
@@ -67,6 +64,7 @@ const handler = async (req, res) => {
         subject: 'Nueva Solicitud de Crédito - TVS Finances'
       })
 
+      enviarFormulario()
       return res.status(200).json({ success: true })
     } catch (err) {
       console.log(err)
