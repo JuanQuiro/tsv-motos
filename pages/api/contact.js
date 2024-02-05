@@ -64,7 +64,7 @@ const handler = async (req, res) => {
         subject: 'Nueva Solicitud de Crédito - TVS Finances'
       })
 
-      enviarFormulario()
+      await enviarFormulario()
       return res.status(200).json({ success: true })
     } catch (err) {
       console.log(err)
