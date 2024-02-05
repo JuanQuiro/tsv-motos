@@ -19,7 +19,7 @@ import {
 } from '@/lib/data'
 import axios from 'axios'
 
-import { sendContactForm } from '@/lib/api'
+import { enviarForm, sendContactForm } from '@/lib/api'
 import { Button, Link } from '@nextui-org/react'
 
 type Inputs = z.infer<typeof FormDataSchema>
@@ -126,29 +126,8 @@ export default function Form() {
     data.message = 'POPOPOPOPPOPOPPO'
 
     await sendContactForm(data)
-    const enviarFormulario = async () => {
-      const prisma = new PrismaClient()
-      const createUser = await prisma.user.create({
-        data: {
-          Cedula: '30391154',
-          Dirrecion: 'la pradera',
-          email: 'juanquirozsana',
-          Extranjero: true,
-          Ingresos: 'papa',
-          message: 'asasa',
-          name: 'juan',
-          Pais: 'sasa',
-          PrimerApellido: 'quiroz',
-          SegundoApellido: 'sasa',
-          PrimerNombre: 'sasa',
-          SegundoNombre: 'sasa',
-          subject: 'asasa',
-          Yummy: true
-        }
-      })
-      console.log(createUser)
-    }
-    await enviarFormulario()
+
+    await enviarForm(data)
 
     // reset form
     reset()
