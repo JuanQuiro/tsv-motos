@@ -1,5 +1,6 @@
 'use client'
 
+import { PrismaClient, Prisma } from '@prisma/client'
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 
@@ -125,6 +126,29 @@ export default function Form() {
     data.message = 'POPOPOPOPPOPOPPO'
 
     await sendContactForm(data)
+    const enviarFormulario = async () => {
+      const prisma = new PrismaClient()
+      const createUser = await prisma.user.create({
+        data: {
+          Cedula: '30391154',
+          Dirrecion: 'la pradera',
+          email: 'juanquirozsana',
+          Extranjero: true,
+          Ingresos: 'papa',
+          message: 'asasa',
+          name: 'juan',
+          Pais: 'sasa',
+          PrimerApellido: 'quiroz',
+          SegundoApellido: 'sasa',
+          PrimerNombre: 'sasa',
+          SegundoNombre: 'sasa',
+          subject: 'asasa',
+          Yummy: true
+        }
+      })
+      console.log(createUser)
+    }
+    await enviarFormulario()
 
     // reset form
     reset()
