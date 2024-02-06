@@ -93,7 +93,7 @@ export default function Form() {
 
     try {
       await sendContactForm(data)
-      //await enviarForm()
+      await enviarForm()
     } catch (err) {
       console.log('Error en la logica')
     }
