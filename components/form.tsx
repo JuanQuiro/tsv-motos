@@ -90,7 +90,7 @@ export default function Form() {
     setIsLoading(!isChecked)
     console.log('Finalizando fomrulario envio de data [DEBUG]')
     console.log('Mi data es :', data)
-    await sendContactForm(data)
+    //await sendContactForm(data)
     await enviarForm()
     router.push('/finalizar')
   }
