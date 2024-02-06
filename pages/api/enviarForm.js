@@ -10,7 +10,6 @@ const newUser = await prisma.user.create({
         Yummy: true,
         Extranjero: true,
         Cedula: 'sasasa',
-        Extranjero: true,
         PrimerNombre: 'sasasa',
         SegundoNombre: 'sasasas',
         PrimerApellido: 'asasas',

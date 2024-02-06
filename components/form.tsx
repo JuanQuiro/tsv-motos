@@ -1,8 +1,11 @@
 'use client'
 
+import { Checkbox } from '@nextui-org/react'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+
+import { useRouter } from 'next/navigation'
 
 import { z } from 'zod'
 import { FormDataSchema } from '@/lib/schema'
@@ -11,15 +14,8 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import Input from './input'
 import Heading from './heading'
 import Select from './select'
-import {
-  countryArray,
-  Paises,
-  PreciosSalarios,
-  specifyRegionArray
-} from '@/lib/data'
-import axios from 'axios'
+import { countryArray, Paises, PreciosSalarios, Estado } from '@/lib/data'
 
-import { enviarForm, sendContactForm } from '@/lib/api'
 import { Button, Link } from '@nextui-org/react'
 
 type Inputs = z.infer<typeof FormDataSchema>
@@ -34,7 +30,7 @@ const steps = [
     id: 'Paso 2',
     name: 'Informacion Personal',
     fields: [
-      'cedula',
+      'Cedula',
       'PrimerNombre',
       'SegundoNombre',
       'PrimerApellido',
@@ -44,47 +40,12 @@ const steps = [
   {
     id: 'Paso 3',
     name: 'Dirrecion',
-    fields: [
-      'CloseToWork',
-      'CloseToSchool',
-      'CloseToHospital',
-      'CloseToSupermarket',
-      'CloseToParksRecreation',
-      'CloseToRestaurants',
-      'CloseToHighways',
-      'PublicTransportation',
-      'OtherLocation',
-      'NoTraffic',
-      'VeryQuiet',
-      'YoungerNeighbors',
-      'OlderNeighbors',
-      'ChildFriendly',
-      'OtherNeighborhood'
-    ]
+    fields: ['Dirrecion', 'Estado']
   },
   {
     id: 'Paso 4',
     name: 'Terminos y Condiciones',
-    fields: [
-      'CloseToHome',
-      'GoodReputation',
-      'SmallClassSize',
-      'SolidCurriculum',
-      'OtherSchools',
-      'CentralAC',
-      'WoodStove',
-      'Fireplace',
-      'TanklessWaterHeater',
-      'CopperPlumbing',
-      'SolarPower',
-      'Generator',
-      'SecuritySystem',
-      'HomeAutomation',
-      'Cable',
-      'SatelliteDish',
-      'FiberOpticCable',
-      'OtherHomeSystems'
-    ]
+    fields: ['CloseToHome']
   }
 ]
 
@@ -93,6 +54,17 @@ export default function Form() {
   const [currentStep, setCurrentStep] = useState(0)
   const delta = currentStep - previousStep
   const formRef = useRef<HTMLFormElement>(null)
+  const [isChecked, setIsChecked] = useState(false)
+  const router = useRouter()
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked)
+  }
+
+  const handleClick = async () => {
+    console.log('Finalizando fomrulario envio de data [DEBUG]')
+    router.push('/finalizar')
+  }
 
   const submitForm = () => {
     if (formRef.current) {
@@ -124,11 +96,6 @@ export default function Form() {
     data.email = 'juanquirozsana@gmail.com'
     data.subject = 'juanquirozsana@gmail.com'
     data.message = 'POPOPOPOPPOPOPPO'
-
-    await sendContactForm(data)
-
-    await enviarForm(data)
-
     // reset form
     reset()
   }
@@ -227,7 +194,7 @@ export default function Form() {
 
               <Input
                 id='Yummy'
-                label='¿usted pertenece a Yummy?'
+                label='¿Usted pertenece a Yummy?'
                 type='checkbox'
                 register={register}
                 error={errors.Yummy?.message}
@@ -300,6 +267,15 @@ export default function Form() {
                 error={errors.Pais?.message}
               />
 
+              {/* Estado */}
+              <Select
+                id='Estado'
+                label='Estado :'
+                register={register}
+                options={Estado}
+                error={errors.Estado?.message}
+              />
+
               {/* Dirrecion */}
               <Input
                 id='Dirrecion'
@@ -313,7 +289,7 @@ export default function Form() {
                 label='¿Es extranjero?'
                 type='checkbox'
                 register={register}
-                error={errors.Yummy?.message}
+                error={errors.Extranjero?.message}
               />
             </div>
           </motion.div>
@@ -352,14 +328,19 @@ export default function Form() {
                 habitant morbi tristique senectus et netus et malesuada fames ac
                 turpis egestas.
               </p>
-              <Button
-                href='/finalizar'
-                as={Link}
-                color='primary'
-                showAnchorIcon
-                variant='solid'
+              <Checkbox
+                defaultSelected={isChecked}
+                radius='sm'
+                onChange={handleCheckboxChange}
               >
-                Finalizar
+                Estoy de acuerdo con los términos y condiciones
+              </Checkbox>
+              <Button
+                isDisabled={!isChecked}
+                color='primary'
+                onClick={handleClick}
+              >
+                Enviar
               </Button>
             </div>
           </motion.div>
