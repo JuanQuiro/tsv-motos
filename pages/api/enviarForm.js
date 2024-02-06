@@ -1,7 +1,7 @@
 import prisma from '../../lib/prisma'
 
 export default async function handle() {
-  await prisma.user.create({
+  const result = await prisma.user.create({
     data: {
       name: 'Alice',
       email: 'alice@prisma.io',
@@ -19,4 +19,5 @@ export default async function handle() {
       subject: 'sasa'
     }
   })
+  res.json(result)
 }
