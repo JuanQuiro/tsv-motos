@@ -1,8 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
-
 const handler = async (req, res) => {
+  const prisma = new PrismaClient()
   if (req.method === 'POST') {
     const data = req.body
     if (!data || !data.name || !data.email || !data.subject || !data.message) {
