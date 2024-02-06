@@ -87,11 +87,17 @@ export default function Form() {
   }
 
   const handleClick = async () => {
-    setIsLoading(!isChecked)
+    setIsLoading(!isLoading)
     console.log('Finalizando fomrulario envio de data [DEBUG]')
     console.log('Mi data es :', data)
-    //await sendContactForm(data)
-    await enviarForm()
+
+    try {
+      await sendContactForm(data)
+      //await enviarForm()
+    } catch (err) {
+      console.log('Error en la logica')
+    }
+
     router.push('/finalizar')
   }
 
