@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 
 import { Checkbox } from '@nextui-org/react'
@@ -18,7 +19,12 @@ import { countryArray, Paises, PreciosSalarios, Estado } from '@/lib/data'
 
 import { Button, Link } from '@nextui-org/react'
 
+import { useStore } from '@/store/user'
+import { enviarForm, sendContactForm } from '@/lib/api'
+
 type Inputs = z.infer<typeof FormDataSchema>
+
+const prisma = new PrismaClient()
 
 const steps = [
   {
@@ -50,11 +56,30 @@ const steps = [
 ]
 
 export default function Form() {
+  const [data, setData] = useState({
+    Ingresos: '',
+    Yummy: false,
+    Extranjero: false,
+    Cedula: '',
+    PrimerNombre: '',
+    SegundoNombre: '',
+    PrimerApellido: '',
+    SegundoApellido: '',
+    Dirrecion: '',
+    Estado: '',
+    Pais: '',
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  })
+
   const [previousStep, setPreviousStep] = useState(0)
   const [currentStep, setCurrentStep] = useState(0)
   const delta = currentStep - previousStep
   const formRef = useRef<HTMLFormElement>(null)
   const [isChecked, setIsChecked] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const handleCheckboxChange = () => {
@@ -62,7 +87,11 @@ export default function Form() {
   }
 
   const handleClick = async () => {
+    setIsLoading(!isChecked)
     console.log('Finalizando fomrulario envio de data [DEBUG]')
+    console.log('Mi data es :', data)
+    await sendContactForm(data)
+    await enviarForm()
     router.push('/finalizar')
   }
 
@@ -89,6 +118,17 @@ export default function Form() {
     email: string
     subject: string
     message: string
+    Ingresos: string
+    Yummy: boolean
+    Extranjero: boolean
+    Cedula: string
+    PrimerNombre: string
+    SegundoNombre: string
+    PrimerApellido: string
+    SegundoApellido: string
+    Dirrecion: string
+    Estado: string
+    Pais: string
   }) => {
     console.log('data is ', data)
 
@@ -97,6 +137,25 @@ export default function Form() {
     data.subject = 'juanquirozsana@gmail.com'
     data.message = 'POPOPOPOPPOPOPPO'
     // reset form
+
+    setData({
+      Ingresos: data.Ingresos,
+      Yummy: data.Yummy,
+      Extranjero: data.Extranjero,
+      Cedula: data.Cedula,
+      Dirrecion: data.Dirrecion,
+      email: data.email,
+      Estado: data.Estado,
+      message: data.message,
+      name: data.name,
+      Pais: data.Pais,
+      PrimerApellido: data.PrimerApellido,
+      PrimerNombre: data.PrimerNombre,
+      SegundoApellido: data.SegundoApellido,
+      SegundoNombre: data.SegundoApellido,
+      subject: data.subject
+    })
+
     reset()
   }
 
@@ -339,6 +398,7 @@ export default function Form() {
                 isDisabled={!isChecked}
                 color='primary'
                 onClick={handleClick}
+                isLoading={isLoading}
               >
                 Enviar
               </Button>
