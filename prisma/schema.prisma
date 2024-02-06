@@ -25,24 +25,3 @@ model User {
   subject    String
   message    String
 }
-
-model Auth {
-  id    String      @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  lastname  String
-  name String
-  numberPhone Int
-}
-
-model Elegibilidad {
-  id    String      @id @default(auto()) @map("_id") @db.ObjectId
-  ingresosPromedio String
-  archivoElegilidad String
-}
-
-model Identidad {
-  id    String      @id @default(auto()) @map("_id") @db.ObjectId
-  cedula Int
-  archivoCedula String
-  archivoHolding String
-}
