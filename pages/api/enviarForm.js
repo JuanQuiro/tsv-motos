@@ -9,7 +9,7 @@ const handler = async (req, res) => {
     }
 
     try {
-      await prisma.user.create.create({
+      await prisma.user.create({
         data: {
           name: 'Alice',
           email: 'alice@prisma.io',
