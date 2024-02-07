@@ -12,6 +12,7 @@ import Youtube from '../components/Youtube'
 import FooterDefault from '@/components/FooterDefault'
 import { Link } from '@nextui-org/react'
 import TvsHlx from '../components/TvsHlx'
+import { currentUser } from '@clerk/nextjs';
 
 import {
   Modal,
@@ -24,7 +25,7 @@ import {
 
 const App = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-
+    const user = currentUser();
   return (
     <div>
       <div className='my-3'>
