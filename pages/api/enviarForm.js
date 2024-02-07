@@ -1,6 +1,9 @@
 import prisma from '../../lib/prisma'
+import { auth } from '@clerk/nextjs'
 
 const handler = async (req, res) => {
+  const { userId } = auth()
+
   if (req.method === 'POST') {
     const info = req.body
     if (!info || !info.name || !info.email || !info.subject || !info.message) {
@@ -27,7 +30,7 @@ const handler = async (req, res) => {
         }
       })
 
-
+      console.log(userId)
       const resultClerck = await prisma.clerck.create({
         data: {
           id: `${dataClerck.id}`,
