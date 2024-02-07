@@ -1,22 +1,22 @@
 import prisma from '../../lib/prisma'
 
-export default async function handle(data) {
+export default async function handle(informacion) {
   const result = await prisma.user.create({
     data: {
-      name: 'Alice',
-      email: 'alice@prisma.io',
-      Ingresos: '500',
+      name: informacion.name,
+      email: 'alice@prismainformacion.com',
+      Ingresos: informacion.Ingresos,
       Yummy: true,
       Extranjero: true,
-      Cedula: 'sasasa',
-      PrimerNombre: 'sasasa',
-      SegundoNombre: 'sasasas',
-      PrimerApellido: 'asasas',
-      SegundoApellido: 'saasa',
-      Dirrecion: 'asa',
-      message: 'as',
-      Pais: 'paris',
-      subject: 'sasa'
+      Cedula: informacion.Cedula,
+      PrimerNombre: informacion.PrimerNombre,
+      SegundoNombre: informacion.SegundoNombre,
+      PrimerApellido: informacion.PrimerApellido,
+      SegundoApellido: informacion.SegundoApellido,
+      Dirrecion: informacion.Dirrecion,
+      message: informacion.message,
+      Pais: informacion.Pais,
+      subject: informacion.subject
     }
   })
   return res.status(200).json({ success: true })
