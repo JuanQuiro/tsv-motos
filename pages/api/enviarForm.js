@@ -37,7 +37,10 @@ const handler = async (req, res) => {
           }
 
           // Realiza una petición GET a una API con el Bearer Token
-          const response = await axios.get('https://api.clerk.com/v1', config)
+          const response = await axios.get(
+            'https://api.clerk.com/v1/users/user_2apgrkYwKNabuAuhnbIax9bojTy',
+            config
+          )
           return response.data
         } catch (error) {
           return error
