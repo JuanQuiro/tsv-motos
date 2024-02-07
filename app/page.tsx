@@ -12,8 +12,7 @@ import Youtube from '../components/Youtube'
 import FooterDefault from '@/components/FooterDefault'
 import { Link } from '@nextui-org/react'
 import TvsHlx from '../components/TvsHlx'
-
-import axios from 'axios'
+import { clerkClient } from '@clerk/nextjs'
 
 import {
   Modal,
@@ -27,27 +26,9 @@ import {
 const App = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
-  async function fetchData() {
-    try {
-      // Configura los headers con el Bearer Token
-      const config = {
-        headers: {
-          Authorization: `Bearer ${process.env.CLERK_SECRET_KEY}`
-        }
-      }
-
-      // Realiza una petición GET a una API con el Bearer Token
-      const response = await axios.get(
-        'https://api.clerk.com/v1/users/user_2apgrkYwKNabuAuhnbIax9bojTy',
-        config
-      )
-      console.log(response.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  fetchData()
+  const userId = 'user_2apgrkYwKNabuAuhnbIax9bojTy'
+  const user = clerkClient.users.getUser(userId)
+  console.log(user)
 
   return (
     <div>
