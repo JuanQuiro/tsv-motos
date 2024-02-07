@@ -1,11 +1,9 @@
 import { mailOptions, transporter } from '../../config/nodemailer'
 
-
-
 const CONTACT_MESSAGE_FIELDS = {
-  name: 'Juan',
-  email: 'juanquirozsana@gmail.com',
-  subject: 'juanquirozsana@gmail.com',
+  name: 'ADMIN',
+  email: 'motostudiove@gmail.com',
+  subject: 'motostudiove@gmail.com',
   message: 'EMAIL'
 }
 
