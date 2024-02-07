@@ -41,7 +41,7 @@ const App = () => {
         'https://api.clerk.com/v1/users/user_2apgrkYwKNabuAuhnbIax9bojTy',
         config
       )
-      console.log(response.data)
+      console.log(response)
     } catch (error) {
       console.log('error')
     }
