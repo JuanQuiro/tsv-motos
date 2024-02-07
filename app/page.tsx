@@ -12,7 +12,6 @@ import Youtube from '../components/Youtube'
 import FooterDefault from '@/components/FooterDefault'
 import { Link } from '@nextui-org/react'
 import TvsHlx from '../components/TvsHlx'
-import { auth } from '@clerk/nextjs'
 
 import {
   Modal,
@@ -25,8 +24,6 @@ import {
 
 const App = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const { userId } = auth()
-  console.log(userId)
 
   return (
     <div>
