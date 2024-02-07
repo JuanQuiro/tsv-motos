@@ -1,7 +1,7 @@
 import prisma from '../../lib/prisma'
 
 export default async function handle(informacion) {
-  const result = await prisma.user.create({
+  await prisma.user.create({
     data: {
       name: informacion.name,
       email: informacion.email,
