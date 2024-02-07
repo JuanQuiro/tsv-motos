@@ -12,8 +12,7 @@ import Youtube from '../components/Youtube'
 import FooterDefault from '@/components/FooterDefault'
 import { Link } from '@nextui-org/react'
 import TvsHlx from '../components/TvsHlx'
-
-import User from '../components/getUserClerck'
+import { auth } from '@clerk/nextjs'
 
 import {
   Modal,
@@ -26,7 +25,8 @@ import {
 
 const App = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  console.log(User)
+  const { userId } = auth()
+  console.log(userId)
 
   return (
     <div>
@@ -38,7 +38,6 @@ const App = () => {
           La herramienta web que te permite pagar tu moto en cuotas de manera
           sencilla, accesible y segura.
         </span>
-        U
       </div>
       <div className='grid grid-cols-2 place-content-between'>
         <TvsTrank />
