@@ -1,13 +1,13 @@
-import { data } from 'autoprefixer'
 import prisma from '../../lib/prisma'
 
-export default async function handle() {
+export default async function handle(data) {
   const result = await prisma.user.create({
     data: {
       name: data.name,
       email: data.email,
       Ingresos: data.Ingresos,
-      Extranjero: data.Extranjero,
+      Yummy:data.Yummy,
+      Extranjero:data.Extranjero,
       Cedula: data.Cedula,
       PrimerNombre: data.PrimerNombre,
       SegundoNombre: data.SegundoNombre,
