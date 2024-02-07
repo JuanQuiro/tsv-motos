@@ -1,6 +1,6 @@
 import prisma from '../../lib/prisma'
 
-export default async function handle() {
+export default async function handle(data) {
   const result = await prisma.user.create({
     data: {
       name: 'Alice',
@@ -19,5 +19,5 @@ export default async function handle() {
       subject: 'sasa'
     }
   })
-  res.json(result)
+  return res.status(200).json({ success: true })
 }
