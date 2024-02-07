@@ -19,5 +19,5 @@ export default async function handle() {
       subject: 'sasa'
     }
   })
-  res.json(result)
+        return res.status(200).json({ success: true })
 }
