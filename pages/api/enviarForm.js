@@ -1,6 +1,9 @@
 import prisma from '../../lib/prisma'
+import { getAuth } from '@clerk/nextjs/server'
 
 const handler = async (req, res) => {
+  const { userId } = getAuth(req)
+
   if (req.method === 'POST') {
     const info = req.body
     if (!info || !info.name || !info.email || !info.subject || !info.message) {
