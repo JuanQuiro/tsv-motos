@@ -4,10 +4,10 @@ export default async function handle(informacion) {
   const result = await prisma.user.create({
     data: {
       name: informacion.name,
-      email: 'alice@prismainformacion.com',
+      email: informacion.email,
       Ingresos: informacion.Ingresos,
-      Yummy: true,
-      Extranjero: true,
+      Yummy: informacion.Yummy,
+      Extranjero: informacion.Extranjero,
       Cedula: informacion.Cedula,
       PrimerNombre: informacion.PrimerNombre,
       SegundoNombre: informacion.SegundoNombre,
