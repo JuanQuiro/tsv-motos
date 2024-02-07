@@ -30,14 +30,13 @@ async function fetchData() {
       'https://api.clerk.com/v1/users/user_2apgrkYwKNabuAuhnbIax9bojTy',
       config
     )
-    return response.data
+    console.log(response.data)
   } catch (error) {
-    return 'error'
+    console.log('error')
   }
 }
 
-const dataClerck = fetchData()
-console.log(dataClerck)
+fetchData()
 
 import {
   Modal,
