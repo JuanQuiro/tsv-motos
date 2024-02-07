@@ -8,8 +8,8 @@ datasource db {
 }
 
 
-model User {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+model data_formulario {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   Ingresos   String
   Yummy      Boolean
   Extranjero Boolean
@@ -24,4 +24,17 @@ model User {
   email      String
   subject    String
   message    String
+}
+
+model clerck {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  object String
+  primary_email_address_id String
+  primary_phone_number_id String
+  primary_web3_wallet_id String
+  username String
+  first_name String
+  last_name String
+  profile_image_url String
+  image_url String
 }

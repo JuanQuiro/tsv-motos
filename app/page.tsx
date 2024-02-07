@@ -17,8 +17,8 @@ import TvsHlx from "../components/TvsHlx";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 
 const App = () => {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  
   return (
     <div>
       <div className='my-3'>
