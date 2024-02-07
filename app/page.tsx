@@ -12,7 +12,6 @@ import Youtube from '../components/Youtube'
 import FooterDefault from '@/components/FooterDefault'
 import { Link } from '@nextui-org/react'
 import TvsHlx from '../components/TvsHlx'
-import { clerkClient } from '@clerk/nextjs'
 
 import {
   Modal,
@@ -25,10 +24,6 @@ import {
 
 const App = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-
-  const userId = 'user_2apgrkYwKNabuAuhnbIax9bojTy'
-  const user = clerkClient.users.getUser(userId)
-  console.log(user)
 
   return (
     <div>
