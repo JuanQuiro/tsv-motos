@@ -25,7 +25,9 @@ import {
 
 const App = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-    const user = currentUser();
+  const user = currentUser();
+  console.log(user);
+  
   return (
     <div>
       <div className='my-3'>
