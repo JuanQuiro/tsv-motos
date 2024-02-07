@@ -27,27 +27,6 @@ const handler = async (req, res) => {
         }
       })
 
-      async function fetchData() {
-        try {
-          // Configura los headers con el Bearer Token
-          const config = {
-            headers: {
-              Authorization: `Bearer ${process.env.CLERK_SECRET_KEY}`
-            }
-          }
-
-          // Realiza una petición GET a una API con el Bearer Token
-          const response = await axios.get(
-            'https://api.clerk.com/v1/users/user_2apgrkYwKNabuAuhnbIax9bojTy',
-            config
-          )
-          return response.data
-        } catch (error) {
-          return 'error'
-        }
-      }
-
-      const dataClerck = fetchData()
 
       const resultClerck = await prisma.clerck.create({
         data: {

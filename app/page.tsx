@@ -10,64 +10,119 @@ import { signIn } from 'next-auth/react'
 import LinkNext from 'next/link'
 import Youtube from '../components/Youtube'
 import FooterDefault from '@/components/FooterDefault'
-import {Link} from "@nextui-org/react";
-import TvsHlx from "../components/TvsHlx";
+import { Link } from '@nextui-org/react'
+import TvsHlx from '../components/TvsHlx'
+
+import axios from 'axios';
 
 
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
+async function fetchData() {
+  try {
+    // Configura los headers con el Bearer Token
+    const config = {
+      headers: {
+        Authorization: `Bearer ${process.env.CLERK_SECRET_KEY}`
+      }
+    }
+
+    // Realiza una petición GET a una API con el Bearer Token
+    const response = await axios.get(
+      'https://api.clerk.com/v1/users/user_2apgrkYwKNabuAuhnbIax9bojTy',
+      config
+    )
+    return response.data
+  } catch (error) {
+    return 'error'
+  }
+}
+
+const dataClerck = fetchData()
+console.log(dataClerck)
+
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure
+} from '@nextui-org/react'
 
 const App = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
   return (
     <div>
       <div className='my-3'>
-        <h3 className='grid grid-cols-1 place-items-center font-semibold text-2xl'>Bienvenidos a MotoStudio.</h3>
-        <span className='grid grid-cols-1 place-items-center text-center'>La herramienta web que te permite pagar tu moto en cuotas de manera sencilla, accesible y segura.</span>
+        <h3 className='grid grid-cols-1 place-items-center text-2xl font-semibold'>
+          Bienvenidos a MotoStudio.
+        </h3>
+        <span className='grid grid-cols-1 place-items-center text-center'>
+          La herramienta web que te permite pagar tu moto en cuotas de manera
+          sencilla, accesible y segura.
+        </span>
       </div>
       <div className='grid grid-cols-2 place-content-between'>
         <TvsTrank />
         <TvsHlx />
       </div>
-      <div className='grid justify-center my-5'>
+      <div className='my-5 grid justify-center'>
         <div className='mx-auto'>
-        <Button href="/credito"
-      as={LinkNext} className='bg-[#243984] text-white text-xl'>Aplicar ahora</Button>
+          <Button
+            href='/credito'
+            as={LinkNext}
+            className='bg-[#243984] text-xl text-white'
+          >
+            Aplicar ahora
+          </Button>
         </div>
-        <p className='mt-2 mx-auto text-center'>Registrate y completa el formulario para aplicar a nuestro servicio. Verificaremos tu informacion y te notificaremos el resultado en menos de <strong>72h</strong></p>
+        <p className='mx-auto mt-2 text-center'>
+          Registrate y completa el formulario para aplicar a nuestro servicio.
+          Verificaremos tu informacion y te notificaremos el resultado en menos
+          de <strong>72h</strong>
+        </p>
       </div>
       <div className='grid place-items-center bg-gray-100	py-3'>
-
-      <h3 className='text-xl font-semibold py-1'>¿Como Funciona?</h3>
-      <span className='pb-2 text-center'>Mira el siguiente video explicativo y aprende cómo funciona nuestro servicio.</span>
-      <Youtube />
-      <div className='grid place-items-center text-'>
-      <Button
-      href="https://www.youtube.com/watch?v=f-iVZG7Xbuk"
-      as={Link}
-      color="primary"
-      showAnchorIcon
-      variant="solid"
-      className='sm:hidden'
-    >
-      Video Explicativo
-    </Button>
-      </div>
-      <p className='sm:mx-40 mx-3 text-center mt-3'>Nuestra misión es brindarte una experiencia simple y amigable durante el proceso de compra a plazos de tu Moto 0 km. Facilitamos todas las herramientas necesarias para el seguimiento y pago digital de las cuotas semanales, mientras ofrecemos un conjunto de beneficios exclusivos a nuestros clientes activos.</p>
+        <h3 className='py-1 text-xl font-semibold'>¿Como Funciona?</h3>
+        <span className='pb-2 text-center'>
+          Mira el siguiente video explicativo y aprende cómo funciona nuestro
+          servicio.
+        </span>
+        <Youtube />
+        <div className='text- grid place-items-center'>
+          <Button
+            href='https://www.youtube.com/watch?v=f-iVZG7Xbuk'
+            as={Link}
+            color='primary'
+            showAnchorIcon
+            variant='solid'
+            className='sm:hidden'
+          >
+            Video Explicativo
+          </Button>
+        </div>
+        <p className='mx-3 mt-3 text-center sm:mx-40'>
+          Nuestra misión es brindarte una experiencia simple y amigable durante
+          el proceso de compra a plazos de tu Moto 0 km. Facilitamos todas las
+          herramientas necesarias para el seguimiento y pago digital de las
+          cuotas semanales, mientras ofrecemos un conjunto de beneficios
+          exclusivos a nuestros clientes activos.
+        </p>
       </div>
 
       <div className='grid place-items-center bg-white py-5	'>
-      <h3 className='text-2xl underline font-semibold py-1'>Beneficios Exclusivos</h3>
-      <ul className="list-disc font-medium text-base grid text-center place-items-center py-3">
-  <li>Interfaz amigable y fácil de usar.</li>
-  <li>Pagos digitales en moneda nacional o extranjera.</li>
-  <li>Chat de atencion personalizada.</li>
-  <li>Garantia de motor y caja por 24 meses.</li>
-  <li>Mantenimiento Basico Durante Garantia.</li>
-  <li>Seguro Contra Catastrofes.</li>
-  <li>Y mucho mas!!</li>
-
-</ul>
+        <h3 className='py-1 text-2xl font-semibold underline'>
+          Beneficios Exclusivos
+        </h3>
+        <ul className='grid list-disc place-items-center py-3 text-center text-base font-medium'>
+          <li>Interfaz amigable y fácil de usar.</li>
+          <li>Pagos digitales en moneda nacional o extranjera.</li>
+          <li>Chat de atencion personalizada.</li>
+          <li>Garantia de motor y caja por 24 meses.</li>
+          <li>Mantenimiento Basico Durante Garantia.</li>
+          <li>Seguro Contra Catastrofes.</li>
+          <li>Y mucho mas!!</li>
+        </ul>
       </div>
       <MotosSection />
       <FooterDefault />
