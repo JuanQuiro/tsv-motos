@@ -27,7 +27,8 @@ model data_formulario {
 }
 
 model clerk {
-  id String @id @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String
   number String
   gmail String
   img String

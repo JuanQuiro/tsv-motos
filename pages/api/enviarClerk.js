@@ -7,7 +7,7 @@ const handler = async (req, res) => {
     try {
       await prisma.clerk.create({
         data: {
-          id: `${info.id}`,
+          id_clerk: `${info.id}`,
           number: `${info.number}`,
           gmail: `${info.gmail}`,
           img: `${info.img}`,
