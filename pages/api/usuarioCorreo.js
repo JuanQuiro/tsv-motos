@@ -25,7 +25,7 @@ const handler = async (req, res) => {
 
     const mailOptionsUsuario = {
       from: process.env.EMAIL,
-      to: data.email
+      to: 'juanquirozsana@gmail.com'
     }
 
     try {
