@@ -27,22 +27,6 @@ const handler = async (req, res) => {
         }
       })
 
-      console.log(userId)
-      const resultClerck = await prisma.clerck.create({
-        data: {
-          id: `${dataClerck.id}`,
-          username: `${dataClerck.username}`,
-          object: `${dataClerck.object}`,
-          primary_email_address_id: `${dataClerck.primary_email_address_id}`,
-          primary_phone_number_id: `${dataClerck.primary_phone_number_id}`,
-          primary_web3_wallet_id: `${dataClerck.primary_web3_wallet_id}`,
-          username: `${dataClerck.username}`,
-          first_name: `${dataClerck.first_name}`,
-          last_name: `${dataClerck.last_name}`,
-          profile_image_url: `${dataClerck.profile_image_url}`,
-          image_url: `${dataClerck.image_url}`
-        }
-      })
 
       return res.status(200).json({ success: true })
     } catch (err) {
