@@ -101,6 +101,7 @@ export default function Form() {
     try {
       console.log('USUARIO ES', user)
       data.id = user?.id || 'ID ERROR'
+      data.email = user?.externalAccounts[0].emailAddress || 'EMAIL ERROR'
       await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)
