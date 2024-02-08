@@ -11,7 +11,6 @@ const handler = async (req, res) => {
       const result = await prisma.data_formulario.create({
         data: {
           name: `${info.name}`,
-          email: `${info.email}`,
           Ingresos: `${info.Ingresos}`,
           Yummy: info.Yummy,
           Extranjero: info.Extranjero,
@@ -21,9 +20,7 @@ const handler = async (req, res) => {
           PrimerApellido: `${info.PrimerApellido}`,
           SegundoApellido: `${info.SegundoApellido}`,
           Dirrecion: `${info.Dirrecion}`,
-          message: `${info.message}`,
           Pais: `${info.Pais}`,
-          subject: `${info.subject}`,
           id_clerk: `${info.id}`
         }
       })

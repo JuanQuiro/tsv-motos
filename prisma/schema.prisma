@@ -22,9 +22,6 @@ model data_formulario {
   Dirrecion  String
   Pais       String
   name       String
-  email      String
-  subject    String
-  message    String
 }
 
 model clerk {
