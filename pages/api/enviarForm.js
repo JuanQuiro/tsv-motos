@@ -24,7 +24,7 @@ const handler = async (req, res) => {
           message: `${info.message}`,
           Pais: `${info.Pais}`,
           subject: `${info.subject}`,
-          id_clerck: `${info.id}`
+          id_clerk: `${info.id}`
         }
       })
 
