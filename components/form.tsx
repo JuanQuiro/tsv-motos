@@ -149,10 +149,7 @@ export default function Form() {
   }) => {
     console.log('data is ', data)
 
-    data.name = 'Juan'
-    data.email = 'juanquirozsana@gmail.com'
-    data.subject = 'juanquirozsana@gmail.com'
-    data.message = 'POPOPOPOPPOPOPPO'
+    
     // reset form
 
     setData({
