@@ -24,7 +24,6 @@ import {
 
 const App = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-
   return (
     <div>
       <div className='my-3'>

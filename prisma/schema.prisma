@@ -26,15 +26,12 @@ model data_formulario {
   message    String
 }
 
-model clerck {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  object String
-  primary_email_address_id String
-  primary_phone_number_id String
-  primary_web3_wallet_id String
+model clerk {
+  id String @id @map("_id") @db.ObjectId
+  number String
+  gmail String
+  img String
   username String
   first_name String
   last_name String
-  profile_image_url String
-  image_url String
 }

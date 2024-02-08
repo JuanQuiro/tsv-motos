@@ -4,9 +4,8 @@
 import { Checkbox } from '@nextui-org/react'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { useState, useRef } from 'react'
-import { motion } from 'framer-motion'
-
 import { useUser } from '@clerk/nextjs'
+import { motion } from 'framer-motion'
 
 import { useRouter } from 'next/navigation'
 
@@ -22,11 +21,9 @@ import { countryArray, Paises, PreciosSalarios, Estado } from '@/lib/data'
 import { Button, Link } from '@nextui-org/react'
 
 import { useStore } from '@/store/user'
-import { enviarForm, sendContactForm } from '@/lib/api'
+import { enviarClerk, enviarForm, sendContactForm } from '@/lib/api'
 
 type Inputs = z.infer<typeof FormDataSchema>
-
-const prisma = new PrismaClient()
 
 const steps = [
   {
@@ -58,9 +55,7 @@ const steps = [
 ]
 
 export default function Form() {
-  const { isSignedIn, user, isLoaded } = useUser()
-
-  console.log({ user }, { isLoaded }, { isSignedIn })
+  const { user } = useUser()
 
   const [data, setData] = useState({
     Ingresos: '',
@@ -98,8 +93,10 @@ export default function Form() {
     console.log('Mi data es :', data)
 
     try {
+      console.log('USUARIO ES',  user )
       await sendContactForm(data)
       await enviarForm(data)
+      await enviarClerk(user)
     } catch (err) {
       console.log('Error en la logica')
     }
