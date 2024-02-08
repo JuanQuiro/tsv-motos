@@ -6,6 +6,8 @@ import { PrismaClient, Prisma } from '@prisma/client'
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 
+import { useUser } from '@clerk/nextjs'
+
 import { useRouter } from 'next/navigation'
 
 import { z } from 'zod'
@@ -56,6 +58,10 @@ const steps = [
 ]
 
 export default function Form() {
+  const { isSignedIn, user, isLoaded } = useUser()
+
+  console.log({ user }, { isLoaded }, { isSignedIn })
+
   const [data, setData] = useState({
     Ingresos: '',
     Yummy: false,
