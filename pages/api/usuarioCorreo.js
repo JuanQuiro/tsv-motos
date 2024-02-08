@@ -1,8 +1,11 @@
-import {  transporter } from '../../config/nodemailer'
-
-
+import { transporter } from '../../config/nodemailer'
 
 const generateEmailContent = data => {
+  const stringData = Object.entries(data).reduce(
+    (str, [key, val]) =>
+      (str += `${CONTACT_MESSAGE_FIELDS[key]}: \n${val} \n \n`),
+    ''
+  )
 
   return {
     text: stringData,
