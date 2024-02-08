@@ -48,9 +48,14 @@ const handler = async (req, res) => {
   if (req.method === 'POST') {
     const data = req.body
 
+    const mailOptionsUsuario = {
+      from: process.env.EMAIL,
+      to: data.email
+    }
+
     try {
       await transporter.sendMail({
-        ...mailOptions,
+        ...mailOptionsUsuario,
         ...generateEmailContent(data),
         subject: 'Nueva Solicitud de Crédito - TVS Finances'
       })
