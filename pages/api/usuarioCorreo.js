@@ -1,24 +1,8 @@
-import { mailOptions, transporter } from '../../config/nodemailer'
+import {  transporter } from '../../config/nodemailer'
 
-const CONTACT_MESSAGE_FIELDS = {
-  name: 'Juan',
-  email: 'juanquirozsana@gmail.com',
-  subject: 'juanquirozsana@gmail.com',
-  message: 'EMAIL'
-}
+
 
 const generateEmailContent = data => {
-  const currentDate = new Date()
-  const currentDateTime = currentDate.toLocaleString()
-
-  const stringData = Object.entries(data).reduce(
-    (str, [key, val]) =>
-      (str += `${CONTACT_MESSAGE_FIELDS[key]}: \n${val} \n \n`),
-    ''
-  )
-  const htmlData = Object.entries(data).reduce((str, [key, val]) => {
-    return (str += `<h3 class="form-heading" align="left">${CONTACT_MESSAGE_FIELDS[key]}</h3><p class="form-answer" align="left">${val}</p>`)
-  }, '')
 
   return {
     text: stringData,
