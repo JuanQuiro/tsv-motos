@@ -22,25 +22,7 @@ const generateEmailContent = data => {
 
   return {
     text: stringData,
-    html: `<!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Nueva Solicitud de Crédito - TVS Finances</title>
-    </head>
-    <body>
-        <h1>Asunto: Nueva Solicitud de Crédito - TVS Finances</h1>
-        <p>Estimado Equipo de Recursos Humanos de Yummy,</p>
-        <p>Es un placer informarles que un nuevo usuario ha completado el proceso de aplicación al crédito de TVS Finances. A continuación, los detalles del solicitante:</p>
-        <ul>
-            <li>Número de Identificación: GENERANDOSE</li>
-        </ul>
-        <p>Para revisar la información completa y proceder con la verificación, por favor haga clic <a href="enlace al dashboard de administrador de Yummy">aquí</a>.</p>
-        <p>Gracias por su pronta atención a este asunto.</p>
-        <p>Solicitud Número: GENERANDOSE</p>
-        <p>*Este es un mensaje automático, por favor no responder. En caso de inconvenientes lo invitamos a ponerse en contacto con nuestro servicio técnico haciendo clic <a href="Link para enviar correo a servicio técnico">aquí</a>.</p>
-    </body>
-    </html>`
+    html: `<!DOCTYPE html> <html> <head> <title>Inicio de proceso</title> </head> <body> <p>Estimado usuario de TVS Finances,</p> <p>Nos complace informarle que su proceso esta en proceso </p> </body> </html>`
   }
 }
 
