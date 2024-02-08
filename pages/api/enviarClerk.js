@@ -3,9 +3,6 @@ import prisma from '../../lib/prisma'
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     const info = req.body
-    if (!info || !info.name || !info.email || !info.subject || !info.message) {
-      return res.status(400).send({ message: 'Bad request' })
-    }
 
     try {
       await prisma.clerk.create({
