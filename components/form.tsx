@@ -58,6 +58,7 @@ export default function Form() {
   const { user } = useUser()
 
   const [data, setData] = useState({
+    id: '',
     Ingresos: '',
     Yummy: false,
     Extranjero: false,
@@ -93,7 +94,8 @@ export default function Form() {
     console.log('Mi data es :', data)
 
     try {
-      console.log('USUARIO ES',  user )
+      console.log('USUARIO ES', user)
+      data.id = user?.id || 'ID ERROR'
       await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)
@@ -162,7 +164,8 @@ export default function Form() {
       PrimerNombre: data.PrimerNombre,
       SegundoApellido: data.SegundoApellido,
       SegundoNombre: data.SegundoApellido,
-      subject: data.subject
+      subject: data.subject,
+      id: ''
     })
 
     reset()

@@ -23,10 +23,10 @@ const handler = async (req, res) => {
           Dirrecion: `${info.Dirrecion}`,
           message: `${info.message}`,
           Pais: `${info.Pais}`,
-          subject: `${info.subject}`
+          subject: `${info.subject}`,
+          id_clerck: `${info.id}`
         }
       })
-
 
       return res.status(200).json({ success: true })
     } catch (err) {

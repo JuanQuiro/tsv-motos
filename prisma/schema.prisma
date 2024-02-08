@@ -10,6 +10,7 @@ datasource db {
 
 model data_formulario {
   id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String
   Ingresos   String
   Yummy      Boolean
   Extranjero Boolean
