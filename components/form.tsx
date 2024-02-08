@@ -21,7 +21,12 @@ import { countryArray, Paises, PreciosSalarios, Estado } from '@/lib/data'
 import { Button, Link } from '@nextui-org/react'
 
 import { useStore } from '@/store/user'
-import { enviarClerk, enviarForm, sendContactForm } from '@/lib/api'
+import {
+  enviarClerk,
+  enviarForm,
+  sendContactForm,
+  usuarioCorreo
+} from '@/lib/api'
 
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -99,6 +104,7 @@ export default function Form() {
       await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)
+      await usuarioCorreo(data)
     } catch (err) {
       console.log('Error en la logica')
     }
