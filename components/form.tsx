@@ -184,7 +184,7 @@ export default function Form() {
       SegundoNombre: data.SegundoApellido,
       subject: data.subject,
       id: '',
-      CedulaDocumento: '',
+      CedulaDocumento: data.CedulaDocumento,
       cedulaPersonaDocumento: '',
       rifDocumento: '',
       yummyDocumento: ''
