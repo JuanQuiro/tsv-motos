@@ -41,6 +41,7 @@ const steps = [
     name: 'Informacion Personal',
     fields: [
       'Cedula',
+      'CedulaDocumento',
       'PrimerNombre',
       'SegundoNombre',
       'PrimerApellido',
@@ -78,7 +79,14 @@ export default function Form() {
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
+    // Documentos - 01
+    CedulaDocumento: '',
+    cedulaPersonaDocumento: '',
+    // Documentos - 02
+    yummyDocumento: '',
+    // Documentos - 03
+    rifDocumento: ''
   })
 
   const [previousStep, setPreviousStep] = useState(0)
@@ -147,10 +155,16 @@ export default function Form() {
     Dirrecion: string
     Estado: string
     Pais: string
+    // Documentos - 01
+    CedulaDocumento: any
+    CedulaPersonaDocumento: any
+    // Documentos - 02
+    yummyDocumento: string
+    // Documentos - 03
+    rifDocumento: string
   }) => {
     console.log('data is ', data)
 
-    
     // reset form
 
     setData({
@@ -169,7 +183,11 @@ export default function Form() {
       SegundoApellido: data.SegundoApellido,
       SegundoNombre: data.SegundoApellido,
       subject: data.subject,
-      id: ''
+      id: '',
+      CedulaDocumento: '',
+      cedulaPersonaDocumento: '',
+      rifDocumento: '',
+      yummyDocumento: ''
     })
 
     reset()
@@ -286,7 +304,7 @@ export default function Form() {
             <Heading title='Informacion Personal'>
               Proporcione más detalles sobre la propiedad solicitada.
             </Heading>
-            <div className='mt-1 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-6'>
+            <div className='mt-1 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-4'>
               {/* Cedula Identidad */}
               <Input
                 id='Cedula'
@@ -318,6 +336,18 @@ export default function Form() {
                 register={register}
                 error={errors.SegundoApellido?.message}
               />
+
+              <label className='form-control w-full max-w-xs'>
+                <div className='label'>
+                  <span className='font-[3000]'>Cedula</span>
+                </div>
+                <input
+                  type='file'
+                  className='file-input file-input-bordered w-full max-w-xs'
+                  id='CedulaDocumento'
+                  {...register('CedulaDocumento')}
+                />
+              </label>
             </div>
           </motion.div>
         )}
