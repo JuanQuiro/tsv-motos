@@ -117,7 +117,7 @@ export default function Form() {
       const dataRifDocs = new FormData()
       dataRifDocs.append('file', data.RifDocumento)
 
-      await rifDocumento(data)
+      await rifDocumento(dataRifDocs)
       await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)
