@@ -114,10 +114,12 @@ export default function Form() {
       data.email = user?.externalAccounts[0].emailAddress || 'EMAIL ERROR'
 
       console.log(data.RifDocumento, data.CedulaDocumento, data.dashboardYummy)
-      const dataRifDocs = new FormData()
-      dataRifDocs.append('file', data.RifDocumento)
+      console.log(data.RifDocumento)
 
-      await rifDocumento(dataRifDocs)
+      const formData = new FormData()
+      formData.append('file', data.RifDocumento)
+
+      await rifDocumento(formData)
       await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)

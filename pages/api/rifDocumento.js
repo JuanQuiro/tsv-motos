@@ -10,20 +10,7 @@ cloudinary.config({
 })
 
 export default async function rifDocumento(req) {
-  const data = await req.FormData()
-  const image = data.get('image')
-
-  if (!image) {
-    return NextResponse.json('error', { status: 400 })
-  }
-
-  const bytes = await image.arrayBuffer()
-  const buffer = Buffer.from(bytes)
-
-  const filePath = path.join(process.cwd(), 'public', image.name)
-  await writeFile(filePath, buffer)
-
-  await cloudinary.uploader.upload(filePath)
-
-  return NextResponse.json('exito')
+  const data = await req
+  console.log(data)
+  
 }
