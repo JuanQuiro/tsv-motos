@@ -51,7 +51,7 @@ const steps = [
   {
     id: 'Paso 3',
     name: 'Dirrecion',
-    fields: ['Dirrecion', 'Estado', 'rifDocumento']
+    fields: ['Dirrecion', 'Estado', 'RifDocumento']
   },
   {
     id: 'Paso 4',
@@ -86,7 +86,7 @@ export default function Form() {
     // Documentos - 02
     dashboardYummy: '',
     // Documentos - 03
-    rifDocumento: ''
+    RifDocumento: ''
   })
 
   const [previousStep, setPreviousStep] = useState(0)
@@ -161,7 +161,7 @@ export default function Form() {
     // Documentos - 02
     yummyDocumento: any
     // Documentos - 03
-    rifDocumento: any
+    RifDocumento: any
     // dashboard
     dashboardYummy: any
   }) => {
@@ -188,7 +188,7 @@ export default function Form() {
       id: '',
       CedulaDocumento: data.CedulaDocumento,
       cedulaPersonaDocumento: data.CedulaPersonaDocumento,
-      rifDocumento: data.rifDocumento,
+      RifDocumento: data.RifDocumento,
       dashboardYummy: data.dashboardYummy
     })
 
@@ -418,8 +418,8 @@ export default function Form() {
                 <input
                   type='file'
                   className='file-input file-input-bordered w-full max-w-xs'
-                  id='rifDocumento'
-                  {...register('rifDocumento')}
+                  id='RifDocumento'
+                  {...register('RifDocumento')}
                 />
               </label>
             </div>
