@@ -9,7 +9,7 @@ cloudinary.config({
   api_secret: 'AMVu-s_WZepYanwaTbMpX92rIMk' 
 });
 
-export async function rifDocumento(req) {
+export default async function rifDocumento(req) {
   const data = await req.dataRifDocs()
   const image = data.get('image')
 
