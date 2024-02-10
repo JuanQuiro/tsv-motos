@@ -159,11 +159,11 @@ export default function Form() {
     CedulaDocumento: any
     CedulaPersonaDocumento: any
     // Documentos - 02
-    yummyDocumento: string
+    yummyDocumento: any
     // Documentos - 03
-    rifDocumento: string
+    rifDocumento: any
     // dashboard
-    dashboardYummy: string
+    dashboardYummy: any
   }) => {
     console.log('data is ', data)
 
