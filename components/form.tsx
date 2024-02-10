@@ -297,7 +297,7 @@ export default function Form() {
 
               <label className='form-control w-full max-w-xs'>
                 <div className='label'>
-                  <span className='font-[3000]'>Cedula</span>
+                  <span className='font-[3000]'>Dashboard Yummy</span>
                 </div>
                 <input
                   type='file'
