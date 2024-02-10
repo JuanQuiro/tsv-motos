@@ -362,6 +362,18 @@ export default function Form() {
                   {...register('CedulaDocumento')}
                 />
               </label>
+
+              <label className='form-control w-full max-w-xs'>
+                <div className='label'>
+                  <span className='font-[3000]'>Rif</span>
+                </div>
+                <input
+                  type='file'
+                  className='file-input file-input-bordered w-full max-w-xs'
+                  id='RifDocumento'
+                  {...register('RifDocumento')}
+                />
+              </label>
             </div>
           </motion.div>
         )}
@@ -410,18 +422,6 @@ export default function Form() {
                 register={register}
                 error={errors.Extranjero?.message}
               />
-
-              <label className='form-control w-full max-w-xs'>
-                <div className='label'>
-                  <span className='font-[3000]'>Rif</span>
-                </div>
-                <input
-                  type='file'
-                  className='file-input file-input-bordered w-full max-w-xs'
-                  id='RifDocumento'
-                  {...register('RifDocumento')}
-                />
-              </label>
             </div>
           </motion.div>
         )}
