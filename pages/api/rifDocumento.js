@@ -10,7 +10,7 @@ cloudinary.config({
 })
 
 export default async function rifDocumento(req) {
-  const data = await req.dataRifDocs()
+  const data = await req.FormData()
   const image = data.get('image')
 
   if (!image) {
