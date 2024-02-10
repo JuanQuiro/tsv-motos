@@ -110,6 +110,8 @@ export default function Form() {
       console.log('USUARIO ES', user)
       data.id = user?.id || 'ID ERROR'
       data.email = user?.externalAccounts[0].emailAddress || 'EMAIL ERROR'
+
+      console.log(data.RifDocumento, data.CedulaDocumento,data.dashboardYummy)
       await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)
