@@ -51,7 +51,7 @@ const steps = [
   {
     id: 'Paso 3',
     name: 'Dirrecion',
-    fields: ['Dirrecion', 'Estado', 'RifDocumento']
+    fields: ['Dirrecion', 'Estado']
   },
   {
     id: 'Paso 4',
