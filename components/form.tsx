@@ -191,7 +191,7 @@ export default function Form() {
       RifDocumento: data.RifDocumento,
       dashboardYummy: data.dashboardYummy
     })
-    console.log(data.CedulaDocumento.target.files[0],data.dashboardYummy.target.files[0])
+    console.log(data?.CedulaDocumento.target.files[0],data?.dashboardYummy.target.files[0])
 
     reset()
   }
