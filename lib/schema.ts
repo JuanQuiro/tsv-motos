@@ -12,5 +12,6 @@ export const FormDataSchema = z.object({
   Dirrecion: z.string().min(2, 'La dirrecion es requerida'),
   Estado: z.string().min(2, 'El Estado es requerido'),
   Pais: z.string().min(1, 'El Pais es requerido'),
-  CedulaDocumento: z.any()
+  CedulaDocumento: z.any(),
+  dashboardYummy: z.any(),
 })

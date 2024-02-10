@@ -84,7 +84,7 @@ export default function Form() {
     CedulaDocumento: '',
     cedulaPersonaDocumento: '',
     // Documentos - 02
-    yummyDocumento: '',
+    dashboardYummy: '',
     // Documentos - 03
     rifDocumento: ''
   })
@@ -162,6 +162,8 @@ export default function Form() {
     yummyDocumento: string
     // Documentos - 03
     rifDocumento: string
+    // dashboard
+    dashboardYummy: string
   }) => {
     console.log('data is ', data)
 
@@ -185,9 +187,9 @@ export default function Form() {
       subject: data.subject,
       id: '',
       CedulaDocumento: data.CedulaDocumento,
-      cedulaPersonaDocumento: '',
-      rifDocumento: '',
-      yummyDocumento: ''
+      cedulaPersonaDocumento: data.CedulaPersonaDocumento,
+      rifDocumento: data.rifDocumento,
+      dashboardYummy: data.dashboardYummy
     })
 
     reset()
@@ -292,6 +294,18 @@ export default function Form() {
                 register={register}
                 error={errors.Yummy?.message}
               />
+
+              <label className='form-control w-full max-w-xs'>
+                <div className='label'>
+                  <span className='font-[3000]'>Cedula</span>
+                </div>
+                <input
+                  type='file'
+                  className='file-input file-input-bordered w-full max-w-xs'
+                  id='dashboardYummy'
+                  {...register('dashboardYummy')}
+                />
+              </label>
             </div>
           </motion.div>
         )}
