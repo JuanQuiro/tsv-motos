@@ -24,6 +24,7 @@ import { useStore } from '@/store/user'
 import {
   enviarClerk,
   enviarForm,
+  rifDocumento,
   sendContactForm,
   usuarioCorreo
 } from '@/lib/api'
@@ -95,6 +96,7 @@ export default function Form() {
   const formRef = useRef<HTMLFormElement>(null)
   const [isChecked, setIsChecked] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [file, setfile] = useState(null)
   const router = useRouter()
 
   const handleCheckboxChange = () => {
@@ -111,7 +113,11 @@ export default function Form() {
       data.id = user?.id || 'ID ERROR'
       data.email = user?.externalAccounts[0].emailAddress || 'EMAIL ERROR'
 
-      console.log(data.RifDocumento, data.CedulaDocumento,data.dashboardYummy)
+      console.log(data.RifDocumento, data.CedulaDocumento, data.dashboardYummy)
+      const dataRifDocs = new FormData()
+      dataRifDocs.append('file', data.RifDocumento)
+
+      await rifDocumento(data)
       await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)
