@@ -51,7 +51,7 @@ const steps = [
   {
     id: 'Paso 3',
     name: 'Dirrecion',
-    fields: ['Dirrecion', 'Estado']
+    fields: ['Dirrecion', 'Estado', 'rifDocumento']
   },
   {
     id: 'Paso 4',
@@ -306,8 +306,6 @@ export default function Form() {
                   {...register('dashboardYummy')}
                 />
               </label>
-
-              
             </div>
           </motion.div>
         )}
@@ -424,7 +422,6 @@ export default function Form() {
                   {...register('rifDocumento')}
                 />
               </label>
-
             </div>
           </motion.div>
         )}
