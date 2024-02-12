@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+import { useRouter } from 'next/navigation';
 
 
 const Formulario = () => {
+  const router = useRouter()
   const [resource, setResource] = useState('') as any
   const [Uploads, setUploads] = useState(1);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -26,7 +28,7 @@ const Formulario = () => {
       }}
       onSuccess={(result, { widget }) => {
         setResource(result?.info);
-        console.log(result, widget);
+        router.push('/dashoard-tvs')
       }}
     >
       {({ open }) => {
