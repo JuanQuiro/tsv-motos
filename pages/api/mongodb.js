@@ -14,7 +14,6 @@ const handler = async (req, res) => {
           username: `${info.username}`,
           first_name: `${info.firstName}`,
           last_name: `${info.lastName}`,
-          estado_formulario: 'Formulario',
         }
       })
       return res.status(200).json({ success: true })

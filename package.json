@@ -7,7 +7,7 @@
     "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma": "npx prisma studio"
+    "prisma-studio": "npx prisma studio"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",

@@ -18,7 +18,7 @@ const handler = async (req, res) => {
           SegundoApellido: `${info.SegundoApellido}`,
           Dirrecion: `${info.Dirrecion}`,
           Pais: `${info.Pais}`,
-          id_clerk: `${info.id}`
+          id_clerk: `${info.id}`,
         }
       })
 

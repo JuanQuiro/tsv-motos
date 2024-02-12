@@ -10,7 +10,15 @@ cloudinary.config({
 })
 
 export default async function rifDocumento(req) {
-  const data = await req
+  const data = await req.formData()
   console.log(data)
   
+}
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '50mb',
+    },
+  },
 }

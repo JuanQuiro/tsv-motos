@@ -133,7 +133,7 @@ export default function Form() {
       const formData = new FormData()
       formData.append('file', data.RifDocumento)
 
-      await rifDocumento(formData)
+      
       await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)
@@ -142,7 +142,7 @@ export default function Form() {
       console.log('Error en la logica')
     }
 
-    router.push('/finalizar')
+    router.push('/documentos')
   }
 
   const submitForm = () => {
@@ -365,29 +365,6 @@ export default function Form() {
                 error={errors.SegundoApellido?.message}
               />
 
-              <label className='form-control w-full max-w-xs'>
-                <div className='label'>
-                  <span className='font-[3000]'>Cedula</span>
-                </div>
-                <input
-                  type='file'
-                  className='file-input file-input-bordered w-full max-w-xs'
-                  id='CedulaDocumento'
-                  {...register('CedulaDocumento')}
-                />
-              </label>
-
-              <label className='form-control w-full max-w-xs'>
-                <div className='label'>
-                  <span className='font-[3000]'>Rif</span>
-                </div>
-                <input
-                  type='file'
-                  className='file-input file-input-bordered w-full max-w-xs'
-                  id='RifDocumento'
-                  {...register('RifDocumento')}
-                />
-              </label>
             </div>
           </motion.div>
         )}
