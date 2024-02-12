@@ -15,6 +15,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Input from './input'
 import Heading from './heading'
+
+import { CldUploadWidget } from 'next-cloudinary';
+
 import Select from './select'
 import { countryArray, Paises, PreciosSalarios, Estado } from '@/lib/data'
 
@@ -30,6 +33,13 @@ import {
 } from '@/lib/api'
 
 type Inputs = z.infer<typeof FormDataSchema>
+
+const UploadWidget = (open : any, update : any) => {
+ 
+  open()
+
+  console.log(update)
+}
 
 const steps = [
   {
@@ -95,6 +105,10 @@ export default function Form() {
   const delta = currentStep - previousStep
   const formRef = useRef<HTMLFormElement>(null)
   const [isChecked, setIsChecked] = useState(false)
+
+  const [isResource, setResource] = useState(undefined)
+
+
   const [isLoading, setIsLoading] = useState(false)
   const [file, setfile] = useState(null)
   const router = useRouter()
@@ -236,6 +250,7 @@ export default function Form() {
     }
   }
 
+
   return (
     <section className='absolute inset-0 mt-36 flex flex-col  p-12'>
       {/* steps */}
@@ -305,17 +320,6 @@ export default function Form() {
                 error={errors.Yummy?.message}
               />
 
-              <label className='form-control w-full max-w-xs'>
-                <div className='label'>
-                  <span className='font-[3000]'>Dashboard Yummy</span>
-                </div>
-                <input
-                  type='file'
-                  className='file-input file-input-bordered w-full max-w-xs'
-                  id='dashboardYummy'
-                  {...register('dashboardYummy')}
-                />
-              </label>
             </div>
           </motion.div>
         )}
