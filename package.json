@@ -2,6 +2,7 @@
   "name": "next-multistep-form",
   "version": "0.1.0",
   "private": true,
+  "module": "module",
   "scripts": {
     "dev": "next dev",
     "build": "npx prisma generate && next build",
@@ -30,6 +31,7 @@
     "flowbite-react": "^0.7.2",
     "framer-motion": "^10.18.0",
     "lucide-react": "^0.309.0",
+    "million": "^3.0.3",
     "mongodb": "^6.3.0",
     "next": "14.0.4",
     "next-auth": "^4.24.5",

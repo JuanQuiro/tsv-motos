@@ -1,5 +1,9 @@
+const million = require("million/compiler");
+ 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  runtime: 'edge', 
+  reactStrictMode: true,
   images: {
     domains: ['beravirtual.com', 'nextui-docs-v2.vercel.app']
   },
@@ -8,6 +12,12 @@ const nextConfig = {
        config.resolve.alias.canvas = false;
        return config;
      },
-}
-
-module.exports = nextConfig
+};
+ 
+const millionConfig = {
+  auto: true,// if you're using RSC: auto: { rsc: true },
+};
+ 
+module.exports = million.next(
+  nextConfig, { auto: { rsc: true } }
+);
