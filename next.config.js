@@ -2,7 +2,6 @@ const million = require("million/compiler");
  
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  runtime: 'edge', 
   reactStrictMode: true,
   images: {
     domains: ['beravirtual.com', 'nextui-docs-v2.vercel.app']

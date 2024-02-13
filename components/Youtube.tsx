@@ -2,6 +2,7 @@
 import dynamic from 'next/dynamic';
 const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
 
+// million-ignore
 function Youtube() {
     return (
         <div  className='hidden sm:grid sm:place-items-center'>
