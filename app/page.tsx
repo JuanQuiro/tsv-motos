@@ -12,6 +12,7 @@ import Youtube from '../components/Youtube'
 import FooterDefault from '@/components/FooterDefault'
 import { Link } from '@nextui-org/react'
 import TvsHlx from '../components/TvsHlx'
+import axios from 'axios';
 
 
 import {
@@ -23,7 +24,11 @@ import {
   useDisclosure
 } from '@nextui-org/react'
 
-const App = () => {
+
+
+const App =  () => {
+
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   return (
     <div>
