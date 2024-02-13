@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import MotosSection from '../components/page/MotosSection'
 import CondicionesSection from '../components/page/CondicionesSection'
@@ -15,6 +14,8 @@ import TvsHlx from '../components/TvsHlx'
 import axios from 'axios';
 
 
+
+
 import {
   Modal,
   ModalContent,
@@ -24,9 +25,10 @@ import {
   useDisclosure
 } from '@nextui-org/react'
 
-
+// million-ignore
 const App =  () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
+
   return (
     <div>
       <div className='my-3'>

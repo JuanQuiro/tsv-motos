@@ -16,6 +16,7 @@ import Botonera from "../components/Botonera";
 
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 
+// million-ignore
 const App = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
