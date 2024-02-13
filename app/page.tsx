@@ -25,10 +25,8 @@ import {
 } from '@nextui-org/react'
 
 
-
+// million-ignore
 const App =  () => {
-
-
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   return (
     <div>
