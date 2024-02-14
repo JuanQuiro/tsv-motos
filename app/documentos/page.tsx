@@ -1,90 +1,63 @@
 'use client'
-import { useEffect, useState } from 'react';
-import { CldUploadWidget } from 'next-cloudinary';
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation'
-import { Toaster, toast } from 'sonner'
+import React from "react";
+import ReactDOM from "react-dom";
+import { MuiFileInput } from "mui-file-input";
+import { Controller, useForm } from "react-hook-form";
 
+import { Box, Button } from "@mui/material";
 
-const Formulario = () => {
-  const router = useRouter()
-  const [resource, setResource] = useState('') as any
-  const [Uploads, setUploads] = useState(1);
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const searchParams = useSearchParams()
-  const search = searchParams?.get('formulario')
+const App = () => {
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      file: null,
+    },
+  });
 
-console.log(search);
-
-
-  useEffect(() => {
-    if (search) {
-      toast('Haz sido redirigido porque ya haz completado el Formulario')
+  const onSubmit = (data: any) => {
+    alert(JSON.stringify(data.file));
+    console.log(data);
+    
+    const apiResolver  = async () => {
+      const formData = new FormData()
+      formData.append('file', data.file)
+      const response = await fetch('/api/documento', {
+        method: 'POST',
+        body: formData
+      })
     }
-  }, []);
-  
-  
 
+    apiResolver()
 
+  };
 
   return (
-    <>
-    <Toaster />
-    <div className='grid place-content-around grid-cols-3 gap-5 pt-60'>
-  <div className='col-span-3 mx-auto'>
-    <h3 className='font-medium text-xl my-3'>Antes de Finalizar</h3>
-    <p>Se necesitará los documentos de <strong>Cédula de Identidad</strong> , <strong>RIF</strong> , <strong>Capture de dashboard de Yummy</strong> y <strong>una foto del Solicitante con la cedula en mano</strong></p>
-  </div>
-  <div className='mx-auto col-span-3'>
-    <CldUploadWidget
-      uploadPreset="p15cdzof"
-      options={{
-        sources: ['local'],
-        multiple: true,
-        maxFiles: 4
-      }}
-      onSuccess={(result, { widget }) => {
-        setResource(result?.info);
-        router.push('/dashoard-tvs')
-      }}
-    >
-      {({ open }) => {
-        function handleOnClick() {
-          setResource(undefined);
-          open();
-        }
-        return (
-          <button className="btn btn-success bg-blue-700 hover:bg-black text-gray-50" onClick={handleOnClick}>
-            Subir Documentos
-          </button>
-        );
-      }}
-    </CldUploadWidget>
-  </div>
-  <div className='grid col-span-3 mx-auto'>
-    <Button onPress={onOpen}>Tutorial</Button>
-  </div>
-</div>
-<Modal size='5xl' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Tutorial Subida Documentos</ModalHeader>
-              <ModalBody>
-              <video controls src={"/10.mp4"} />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Cerrar
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-</>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+        control={control}
+        rules={{
+          validate: (value : any) => value instanceof File,
+        }}
+        render={({ field, fieldState }) => {
+          return (
+            <MuiFileInput
+              inputProps={{ accept: '.png, .jpg' }}
+             
+              {...field}
+              placeholder="Insert a file"
+              helperText={fieldState.invalid ? "File is invalid" : ""}
+              error={fieldState.invalid}
+            />
+          );
+        }}
+        name="file"
+      />
+      <Box>
+        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+          Submit
+        </Button>
+      </Box>
+    </form>
   );
 };
 
-export default Formulario;
+export default App

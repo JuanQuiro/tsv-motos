@@ -11,6 +11,7 @@
     "prisma-studio": "npx prisma studio"
   },
   "dependencies": {
+    "@ark-ui/react": "^2.0.2",
     "@chakra-ui/react": "^2.8.2",
     "@clerk/nextjs": "^4.29.2",
     "@emotion/react": "^11.11.3",
@@ -29,10 +30,12 @@
     "axios": "^1.6.7",
     "cloudinary": "^2.0.1",
     "flowbite-react": "^0.7.2",
+    "formidable-serverless": "^1.1.1",
     "framer-motion": "^10.18.0",
     "lucide-react": "^0.309.0",
     "million": "^3.0.3",
     "mongodb": "^6.3.0",
+    "mui-file-input": "^4.0.4",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "next-cloudinary": "^5.20.0",
