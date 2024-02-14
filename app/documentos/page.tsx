@@ -1,8 +1,10 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation'
+import { Toaster, toast } from 'sonner'
 
 
 const Formulario = () => {
@@ -10,9 +12,25 @@ const Formulario = () => {
   const [resource, setResource] = useState('') as any
   const [Uploads, setUploads] = useState(1);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const searchParams = useSearchParams()
+  const search = searchParams?.get('formulario')
+
+console.log(search);
+
+
+  useEffect(() => {
+    if (search) {
+      toast('Haz sido redirigido porque ya haz completado el Formulario')
+    }
+  }, []);
+  
+  
+
+
 
   return (
     <>
+    <Toaster />
     <div className='grid place-content-around grid-cols-3 gap-5 pt-60'>
   <div className='col-span-3 mx-auto'>
     <h3 className='font-medium text-xl my-3'>Antes de Finalizar</h3>
