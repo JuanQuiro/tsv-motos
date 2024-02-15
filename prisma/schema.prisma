@@ -10,7 +10,7 @@ datasource db {
 
 model data_formulario {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  id_clerk String
+  id_clerk String @unique
   Ingresos   String
   Yummy      Boolean
   Extranjero Boolean
@@ -26,7 +26,7 @@ model data_formulario {
 
 model clerk {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  id_clerk String
+  id_clerk String @unique
   number String
   gmail String
   img String
@@ -34,4 +34,13 @@ model clerk {
   first_name String
   last_name String
   estado_formulario String
+}
+
+model documentos {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String @unique
+  image String
+  image2 String
+  image3 String
+  image4 String
 }

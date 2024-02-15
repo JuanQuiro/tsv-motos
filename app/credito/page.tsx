@@ -11,11 +11,10 @@ export default async function Home() {
   const { userId } : { userId: string | null } = auth();
   const allData = await prisma.clerk.findMany({});
   const filteredData = allData.filter(data => data.id_clerk === userId); 
-  console.log('hola',filteredData[0].estado_formulario);
 
 
-  if (allData[0].estado_formulario == 'Formulario') return redirect('/documentos?formulario=true')
-  if (allData[0].estado_formulario == 'Finalizado') return redirect('/dashoard-tvs')
+  if (allData[0]?.estado_formulario == 'Formulario') return redirect('/documentos?formulario=true')
+  if (allData[0]?.estado_formulario == 'Finalizado') return redirect('/dashoard-tvs')
 
   
   

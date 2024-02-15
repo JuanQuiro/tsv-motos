@@ -1,62 +1,19 @@
-'use client'
-import React from "react";
-import ReactDOM from "react-dom";
-import { MuiFileInput } from "mui-file-input";
-import { Controller, useForm } from "react-hook-form";
+import { PrismaClient } from '@prisma/client';
+import Formulario from "../../components/formario-documentos";
+import { redirect } from 'next/navigation';
 
-import { Box, Button } from "@mui/material";
+const prisma = new PrismaClient()
 
-const App = () => {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      file: null,
-    },
-  });
+const App =  async () => {
+  const allData = await prisma.clerk.findMany({});
 
-  const onSubmit = (data: any) => {
-    alert(JSON.stringify(data.file));
-    console.log(data);
-    
-    const apiResolver  = async () => {
-      const formData = new FormData()
-      formData.append('file', data.file)
-      const response = await fetch('/api/documento', {
-        method: 'POST',
-        body: formData
-      })
-    }
-
-    apiResolver()
-
-  };
+  if (allData[0]?.estado_formulario == 'Formulario') return redirect('/documentos?formulario=true')
+  if (allData[0]?.estado_formulario == 'Finalizado') return redirect('/dashoard-tvs')
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        control={control}
-        rules={{
-          validate: (value : any) => value instanceof File,
-        }}
-        render={({ field, fieldState }) => {
-          return (
-            <MuiFileInput
-              inputProps={{ accept: '.png, .jpg' }}
-             
-              {...field}
-              placeholder="Insert a file"
-              helperText={fieldState.invalid ? "File is invalid" : ""}
-              error={fieldState.invalid}
-            />
-          );
-        }}
-        name="file"
-      />
-      <Box>
-        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-          Submit
-        </Button>
-      </Box>
-    </form>
+    <div className="grid pt-4 justify-items-center">
+      <Formulario />
+    </div>
   );
 };
 
