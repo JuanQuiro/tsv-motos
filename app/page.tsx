@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import MotosSection from '../components/page/MotosSection'
 import CondicionesSection from '../components/page/CondicionesSection'
