@@ -5,13 +5,11 @@ import { MuiFileInput } from "mui-file-input";
 import { Controller, useForm } from "react-hook-form";
 import { auth } from '@clerk/nextjs';
 import { Button } from "@nextui-org/react";
-import { useRouter } from 'next/navigation'
 
 
 
 
 const App = () => {
-    const router = useRouter()
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -42,7 +40,6 @@ const App = () => {
     apiResolver()
 
 
-    router.push('/dashoard-tvs')
 
   };
 
