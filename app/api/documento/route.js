@@ -1,9 +1,12 @@
 const { NextResponse } = require("next/server");
 import {v2 as cloudinary} from 'cloudinary';
 import { writeFile } from 'fs/promises';
-import path from 'path';
 import { auth } from '@clerk/nextjs';
 import { PrismaClient } from '@prisma/client';
+import { v4 as uuidv4 } from 'uuid';
+import { join } from 'path';
+import { promises as fs } from 'fs';
+
 
 
 cloudinary.config({ 
@@ -33,10 +36,13 @@ export async function POST(req) {
       const bytes = await image.arrayBuffer()
       const buffer = Buffer.from(bytes)
 
-      const filePath = path.join(process.cwd(), 'public', image.name)
-      await writeFile(filePath, buffer)
+      const imagePath = join('/tmp', `${uuidv4()}.webp`);
 
-      const response = await cloudinary.uploader.upload(filePath)
+      await writeFile(imagePath, Buffer.from(bytes))
+      
+      
+      const response = await cloudinary.uploader.upload(imagePath)
+      await fs.unlink(imagePath);
       console.log(response)
 
       uploadedImages.push(response)
