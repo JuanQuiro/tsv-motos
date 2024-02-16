@@ -72,6 +72,4 @@ export async function POST(req) {
   console.log('sasa')
 
 
-
-  return NextResponse.redirect(new URL('/new', request.url))
 }
