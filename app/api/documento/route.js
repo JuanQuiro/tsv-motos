@@ -69,6 +69,8 @@ export async function POST(req) {
     data: { estado_formulario: 'Finalizar' },
   })
 
+  console.log('sasa')
+
 
 
   return NextResponse.redirect(new URL('/new', request.url))
