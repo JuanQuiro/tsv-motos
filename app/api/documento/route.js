@@ -71,5 +71,5 @@ export async function POST(req) {
 
 
 
-  return NextResponse.json('formulario')
+  return NextResponse.redirect(new URL('/new', request.url))
 }
