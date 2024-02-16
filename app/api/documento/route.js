@@ -70,9 +70,6 @@ export async function POST(req) {
   })
 
 
-  if (uploadedImages.length === 0) {
-      return NextResponse.json('No se pudo subir ninguna imagen', { status: 400 })
-  }
 
   return NextResponse.json('formulario')
 }
