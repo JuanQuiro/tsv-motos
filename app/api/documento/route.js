@@ -71,5 +71,5 @@ export async function POST(req) {
 
   console.log('sasa')
 
-
+  return NextResponse.json({message: 'Completado'})
 }
