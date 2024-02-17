@@ -90,5 +90,5 @@
   })
 
 
-  return NextResponse.redirect(new URL('/new', req.url))
+  return NextResponse.redirect(new URL('/finalizar', req.url))
   };

@@ -90,7 +90,6 @@ const App = () => {
     apis()
     apiResolver()
 
-    router.push('/finalizar')
   };
 
   return (
