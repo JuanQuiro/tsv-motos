@@ -20,9 +20,10 @@
   const prisma = new PrismaClient()
 
   export const POST = async (req : any) => {
+    const { userId } : { userId: string | null } = auth();
     const data = await req.formData();
     const images = ['image', 'image2', 'image3', 'image4'];
-    const uploadedImages = [];
+    const uploadedImages = [] as any;
   
     for (const imageField of images) {
       const image = await data.get(imageField);
@@ -60,13 +61,35 @@
   
         uploadedImages.push(imageUrl);
         console.log(uploadedImages);
+
+        
         
       } catch (error) {
         console.log("server err", error);
-        return NextResponse.json({ err: "Internal Server Error" }, { status: 500 });
       }
     }
   
+    
+  try {
+    const user = await prisma.documentos.create({
+      data: {
+        id_clerk : userId || 'Error', 
+        image : uploadedImages[0].url,
+        image2 : uploadedImages[1]?.url,
+        image3 : uploadedImages[2]?.url,
+        image4 : uploadedImages[3]?.url
+      },
+    })
+  } catch (error) {
+    console.log('error');
+  }
+
+  const user2 = await prisma.clerk.update({
+    where: { id_clerk: userId || 'ERROR' },
+    data: { estado_formulario: 'Finalizar' },
+  })
+
+
     return NextResponse.json(
       { success: true, uploadedImages: uploadedImages },
       { status: 200 }
