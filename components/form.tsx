@@ -1,10 +1,12 @@
 'use client'
+import { Toaster, toast } from 'sonner'
 
-import { Checkbox } from '@nextui-org/react'
+import { Checkbox, input } from '@nextui-org/react'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { useState, useRef } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { motion } from 'framer-motion'
+
 
 import { useRouter } from 'next/navigation'
 
@@ -225,6 +227,36 @@ export default function Form() {
     const output = await trigger(fields as FieldName[], { shouldFocus: true })
     console.log('Form errors: ', errors)
 
+     // @ts-ignore
+    if (errors.Yummy?.Yummy?.message === 'Yummy debe ser true') {
+      toast('Debe ser parte de Yummy')
+    }
+
+    // @ts-ignore
+    if (errors.PrimerNombre?.PrimerNombre?.message === 'Primer Nombre solo debe contener letras') {
+      toast('Primer nombre solo debe contener letras')
+    }
+
+     // @ts-ignore
+     if (errors.SegundoNombre?.SegundoNombre?.message === 'Segundo Nombre solo debe contener letras') {
+      toast('Segundo nombre solo debe contener letras')
+    }
+
+     // @ts-ignore
+     if (errors.PrimerApellido?.PrimerApellido?.message === 'Primer Apellido solo debe contener letras') {
+      toast('Primer Apellido solo debe contener letras')
+    }
+
+    // @ts-ignore
+    if (errors.SegundoApellido?.PrimerApellido?.message === 'Segundo Apellido solo debe contener letras') {
+      toast('Segundo Apellido solo debe contener letras')
+    }
+
+    // @ts-ignore
+    if (errors.Dirrecion?.Dirrecion?.message === 'La dirrecion solo debe contener letras') {
+      toast('Dirrecion solo debe contener letras')
+    }
+
     if (!output) return
 
     if (currentStep < steps.length - 1) {
@@ -251,6 +283,8 @@ export default function Form() {
 
 
   return (
+    <>
+    <Toaster />
     <section className='absolute inset-0 mt-36 flex flex-col  p-12'>
       {/* steps */}
       <nav aria-label='Progress'>
@@ -334,12 +368,16 @@ export default function Form() {
             <div className='mt-1 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-4'>
               {/* Cedula Identidad */}
               <Input
+              type='number'
                 id='Cedula'
                 label='Cedula Identidad'
                 register={register}
                 error={errors.Cedula?.message}
               />
+              
               <Input
+              type='text'
+              pattern="[A-Za-z]+"
                 id='PrimerNombre'
                 label='Primer Nombre'
                 register={register}
@@ -495,5 +533,6 @@ export default function Form() {
         </div>
       </div>
     </section>
+    </>
   )
 }

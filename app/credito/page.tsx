@@ -13,8 +13,8 @@ export default async function Home() {
   const filteredData = allData.filter(data => data.id_clerk === userId); 
 
 
-  if (allData[0]?.estado_formulario == 'Formulario') return redirect('/documentos?formulario=true')
-  if (allData[0]?.estado_formulario == 'Finalizado') return redirect('/dashoard-tvs')
+  //if (allData[0]?.estado_formulario == 'Formulario') return redirect('/documentos?formulario=true')
+  //if (allData[0]?.estado_formulario == 'Finalizar') return redirect('/dashoard-tvs')
 
   
   

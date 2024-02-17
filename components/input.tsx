@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-export default function Input({id,label,type,register,error}:any){
+export default function Input({id,label,type,register,error,pattern}:any){
 
 
     useEffect(()=>{
       //1console.log("id",id);
       //console.log("label",label);
       //console.log("type",type);
-      //console.log("register",register);
+      console.log(pattern);
         console.log("error",error);
     },[error])
     
@@ -20,6 +20,7 @@ export default function Input({id,label,type,register,error}:any){
         >{label}</label>
         <div className='mt-2'>
         <input
+            pattern={pattern}
             type={type}
             id={id}
             {...register(id)}

@@ -90,8 +90,5 @@
   })
 
 
-    return NextResponse.json(
-      { success: true, uploadedImages: uploadedImages },
-      { status: 200 }
-    );
+  return NextResponse.redirect(new URL('/new', req.url))
   };
