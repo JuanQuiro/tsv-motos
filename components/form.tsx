@@ -135,10 +135,8 @@ export default function Form() {
       formData.append('file', data.RifDocumento)
 
       
-      await sendContactForm(data)
       await enviarForm(data)
       await enviarClerk(user)
-      await usuarioCorreo(data)
     } catch (err) {
       console.log('Error en la logica')
     }
@@ -252,10 +250,7 @@ export default function Form() {
       toast('Segundo Apellido solo debe contener letras')
     }
 
-    // @ts-ignore
-    if (errors.Dirrecion?.Dirrecion?.message === 'La dirrecion solo debe contener letras') {
-      toast('Dirrecion solo debe contener letras')
-    }
+   
 
     if (!output) return
 
@@ -419,6 +414,7 @@ export default function Form() {
             <div className='mt-1 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-6'>
               {/* Pais */}
               <Select
+              defaultValueData='Venezuela'
                 id='Pais'
                 label='Su pais de residencia es :'
                 register={register}
@@ -428,6 +424,7 @@ export default function Form() {
 
               {/* Estado */}
               <Select
+              defaultValueData='Distrito Capital'
                 id='Estado'
                 label='Estado :'
                 register={register}

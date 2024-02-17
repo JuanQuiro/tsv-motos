@@ -1,4 +1,4 @@
-export default function Select({id,label,register,options,error}:any){
+export default function Select({id,label,register,options,error, defaultValueData}:any){
 
     const listItems = options.map((item:string, index:number) =>
     <option key={index} value={item}>{item}</option>
@@ -14,6 +14,7 @@ export default function Select({id,label,register,options,error}:any){
       </label>
       <div className='mt-2'>
         <select
+        defaultValue={defaultValueData}
           id={id}
           {...register(id)}
           autoComplete={id}

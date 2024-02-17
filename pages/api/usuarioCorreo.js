@@ -22,6 +22,7 @@ const generateEmailContent = data => {
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     const data = req.body
+    console.log(data);
 
     const mailOptionsUsuario = {
       from: process.env.EMAIL,

@@ -1,15 +1,22 @@
 'use client'
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { MuiFileInput } from "mui-file-input";
 import { Controller, useForm } from "react-hook-form";
 import { auth } from '@clerk/nextjs';
 import { Button } from "@nextui-org/react";
+import { sendContactForm, usuarioCorreo } from "@/lib/api";
+import axios from "axios";
+import { useRouter } from 'next/navigation'
+
+
+const router = useRouter()
 
 
 
 
 const App = () => {
+  const [state, setState] = useState({}) as any
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -36,11 +43,54 @@ const App = () => {
       })
     }
 
+    
 
+   
+    const obtenerUsuario = async () => {
+      try {
+        const response = await axios.get('/api/obtenerUsuario');
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    const mostrarUsuario = async () => {
+      const usuario = await obtenerUsuario();
+      const usuarioData = usuario[0]
+      //console.log('usuario',usuarioData);
+      return usuarioData
+    };
+    
+    const correos = async (state : any) => {
+      console.log('estado',state);
+      
+      const data = {
+        primerNombre: state.primerNombre,
+        segundaNombre: state.segundaNombre,
+        email: state.gmail,
+        subject: '',
+        message: '',
+        // Documentos - 01
+        CedulaDocumento: state.id_clerk,
+        id: state.id_clerk,
+      };
+
+      await sendContactForm(data)
+      await usuarioCorreo(data)
+    }
+
+    const apis =  async() => {
+      const data = await mostrarUsuario();
+      console.log('sasa',data)
+      
+      await correos(data)
+    }
+
+    apis()
     apiResolver()
 
-
-
+    router.push('/finalizar')
   };
 
   return (

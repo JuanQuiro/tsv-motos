@@ -27,10 +27,7 @@ export const FormDataSchema = z.object({
     message: 'Segundo Apellido solo debe contener letras',
     path: ['SegundoApellido'],
   }),
-  Dirrecion: z.string().min(2, 'La dirrecion es requerida').refine((value) => isOnlyLetters(value), {
-    message: 'La dirrecion solo debe contener letras',
-    path: ['Dirrecion'],
-  }),
+  Dirrecion: z.string().min(2, 'La dirrecion es requerida'),
   Estado: z.string().min(2, 'El Estado es requerido'),
   Pais: z.string().min(1, 'El Pais es requerido'),
   CedulaDocumento: z.any(),
