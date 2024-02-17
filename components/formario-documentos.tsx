@@ -7,12 +7,15 @@ import { auth } from '@clerk/nextjs';
 import { Button } from "@nextui-org/react";
 import { sendContactForm, usuarioCorreo } from "@/lib/api";
 import axios from "axios";
+import { useRouter } from 'next/navigation'
 
 
 
 
 
 const App = () => {
+  const router = useRouter()
+
   const [state, setState] = useState({}) as any
 
   const { control, handleSubmit } = useForm({
@@ -87,6 +90,7 @@ const App = () => {
     apis()
     apiResolver()
 
+    router.push('/finalizar')
   };
 
   return (
