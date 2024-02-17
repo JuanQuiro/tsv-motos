@@ -45,7 +45,7 @@
                 invalidate: true,
               })
               .then((result) => {
-                console.log(result);
+                //console.log(result);
                 resolve(result);
               })
               .catch((error) => {
@@ -59,6 +59,8 @@
         const imageUrl = result;
   
         uploadedImages.push(imageUrl);
+        console.log(uploadedImages);
+        
       } catch (error) {
         console.log("server err", error);
         return NextResponse.json({ err: "Internal Server Error" }, { status: 500 });
