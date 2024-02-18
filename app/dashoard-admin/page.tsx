@@ -6,20 +6,24 @@ import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-or
 import Image from 'next/image';
 const { getMonitor } = require("consulta-dolar-venezuela");
 
+const elements = [
+  { date: '14/2/2024', content: 'Retiro de la unidad' },
+  { date: '12/2/2024', content: 'Luis Martinez' },
+  { date: '12/2/2024', content: 'Pago de Inicial' },
+  { date: '11/2/2024', content: 'Verificacion y Aprobacion' },
+];
 
 const prisma = new PrismaClient()
 
 const App =  async () => {
   const { price } = await getMonitor("BCV", "lastUpdate").then((data: any) => {
-    console.log(data,'sas',data.bcv);
+    //console.log(data,'sas',data.bcv);
     return data.bcv
   });
 
   const { userId } = auth()
-  const allData = await prisma.clerk.findFirst({
-    where: { id_clerk: userId || 'ERROR' },
-  })
-  console.log('[ALLDATA]',allData);
+  const allData = await prisma.clerk.findMany({})
+  //console.log('[ALLDATA]',allData);
   
 
   //if (allData[0]?.estado_formulario == 'Finalizar') return redirect('/dashoard-tvs')
@@ -100,7 +104,7 @@ const App =  async () => {
       </CardFooter>
     </Card>
     
-    <Card className=" mx-3 col-span-3">
+    <Card className=" mx-3 mt-3 col-span-3">
       <div className=' grid grid-cols-4 '>
 
     <Card className="mx-4 my-3 col-span-3">
@@ -115,9 +119,9 @@ const App =  async () => {
 
 
     </Card>
-    <Card className='col-span-1'>
-      <CardBody className='bg-black/10'>
-        <p className="mx-auto">
+    <Card className='col-span-1 m-2'>
+      <CardBody className='bg-black/10 '>
+        <p className="mx-auto ">
           Tasa BCV del dia 
         </p>
         <p className="mx-auto">
@@ -172,34 +176,21 @@ const App =  async () => {
 
     <div className="grid my-6 col-span-3  place-items-center">
       <h3 className="col-span-3 text-center text-lg underline font-semibold">Historial de actividad Global</h3>
-      <div className="grid grid-cols-2 col-span-3 gap-3">
-      <Card className="p-4 my-3 text-center">
-        14/2/2024 
-      </Card>
-      <Card className="p-4 my-3 text-center">
-        Retiro de la unidad
-      </Card>
+      <div className="grid grid-cols-3 col-span-3 gap-3">
+      {allData.map((element, index) => (
+      <>
+      <Card key={index+2} className="p-4 my-3 text-center">
+          <div>{element.fecha}</div>
+        </Card>
+        <Card key={index+index} className="p-4 my-3 text-center">
+          <div>{element.username} ({element.id_clerk})</div>
+        </Card>
 
-      <Card className="p-4 my-3 text-center">
-        12/2/2024 
-      </Card>
-      <Card className="p-4 my-3 text-center">
-        Pago de Inicial
-      </Card>
-
-      <Card className="p-4 my-3 text-center">
-        11/2/2024 
-      </Card>
-      <Card className="p-4 my-3 text-center">
-        Verificacion y Aprobacion
-      </Card>
-
-      <Card className="p-4 my-3 text-center">
-        10/2/2024 
-      </Card>
-      <Card className="p-4 my-3 text-center">
-        Apertura de cuenta
-      </Card>
+        <Card key={index+index} className="p-4 my-3 text-center">
+        <div className='text-center'>{element.estado_formulario === 'Finalizar' ? 'Nueva Aplicacion' : ''}</div>
+        </Card>
+      </>
+      ))}
       </div>
     </div>
 

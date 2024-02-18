@@ -3,9 +3,17 @@ import React from "react";
 import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-org/react";
 import {Image} from "@nextui-org/react";
 import NextImage from "next/image";
+import { PrismaClient } from "@prisma/client";
+import { auth } from "@clerk/nextjs";
 
+const prisma = new PrismaClient()
 
 export default function App() {
+  const userId = auth()
+  const allData = prisma.clerk.findFirst({
+    where: { id_clerk: userId || 'ERROR' },
+  })
+  console.log('[ALLDATA]',allData);
   const [isFollowed, setIsFollowed] = React.useState(false);
 
   return (

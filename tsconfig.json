@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "pages/api/contact.js", "pages/api/guardarDatosFormulario.js", "lib/prisma.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "pages/api/contact.js", "pages/api/guardarDatosFormulario.js", "lib/prisma.js", "app/api/validacion"],
   "exclude": ["node_modules"]
 }

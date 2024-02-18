@@ -28,22 +28,20 @@ const Home = () => {
   const onSubmit = async (data: Inputs) => {
     setIsValidating(true);
     try {
-      const response = await fetch("/api/validacion-token", {
+      const response = await fetch("/api/validacion", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: data.pass,
-        }),
+        body: JSON.stringify(data.pass),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
       });
 
       const result = await response.json();
       
+      console.log(result);
+      
 
-      if (result.valid) {
+      if (result.status === 200) {
         setIsTokenValid(true);
-        router.push('/dashboard')
+        router.push('/dashoard-admin')
       } else {
         setIsTokenValid(false);
       }
