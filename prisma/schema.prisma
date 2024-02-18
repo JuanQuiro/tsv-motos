@@ -35,7 +35,7 @@ model clerk {
   last_name String
   estado_formulario String
   cedula String
-  fecha DateTime
+  fecha String
 }
 
 model documentos {
