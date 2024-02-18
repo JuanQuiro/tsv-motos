@@ -34,6 +34,8 @@ model clerk {
   first_name String
   last_name String
   estado_formulario String
+  cedula String
+  fecha DateTime
 }
 
 model documentos {
@@ -43,4 +45,10 @@ model documentos {
   image2 String
   image3 String
   image4 String
+}
+
+model admin {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String @unique
+  autorizacion Boolean
 }
