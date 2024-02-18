@@ -4,7 +4,6 @@ const handler = async (req, res) => {
 
   if (req.method === 'POST') {
     const currentDate = new Date()
-  const currentDateTime = currentDate.toLocaleString()
     const info = req.body
 
     try {
@@ -19,7 +18,7 @@ const handler = async (req, res) => {
           last_name: `${info.lastName}`,
           estado_formulario: 'Formulario',
           cedula: `${info.Cedula}`,
-          fecha: `${currentDateTime}`
+          fecha: `${currentDate}`
         }
       })
       return res.status(200).json({ success: true })
