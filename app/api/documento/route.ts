@@ -74,10 +74,10 @@
     const user = await prisma.documentos.create({
       data: {
         id_clerk : userId || 'Error', 
-        image : uploadedImages[0].url,
-        image2 : uploadedImages[1]?.url,
-        image3 : uploadedImages[2]?.url,
-        image4 : uploadedImages[3]?.url
+        cedula : uploadedImages[0].url,
+        dashoard_yummy : uploadedImages[1]?.url,
+        rif : uploadedImages[2]?.url,
+        persona_cedula : uploadedImages[3]?.url
       },
     })
   } catch (error) {

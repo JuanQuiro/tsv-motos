@@ -19,7 +19,6 @@ const handler = async (req, res) => {
           first_name: `${info.firstName}`,
           last_name: `${info.lastName}`,
           estado_formulario: 'Formulario',
-          cedula: `${info.Cedula}`,
           fecha: `${currentDateTime}`
         }
       })

@@ -28,7 +28,6 @@ const App = () => {
   });
   
   const onSubmit = (data: any) => {
-    alert(JSON.stringify(data.file));
     console.log(data);
     
     const apiResolver  = async () => {
@@ -109,7 +108,7 @@ const App = () => {
               inputProps={{ accept: '.png, .jpg' }}
              
               {...field}
-              placeholder="Inserte la cedula de identidad"
+              placeholder="Inserte imagen de cedula de identidad"
               helperText={fieldState.invalid ? "Dato es invalido" : ""}
               error={fieldState.invalid}
             />
@@ -118,7 +117,7 @@ const App = () => {
         name='file'
       />
 
-<h3>Inserte la cedula de identidad</h3>
+<h3>Inserte una imagen de su Dashoard de Yummy</h3>
 
 <Controller
         control={control}
@@ -131,7 +130,7 @@ const App = () => {
               inputProps={{ accept: '.png, .jpg' }}
              
               {...field}
-              placeholder="Inserte la cedula de identidad"
+              placeholder="Inserte una imagen de su Dashoard de Yummy"
               helperText={fieldState.invalid ? "Dato es invalido" : ""}
               error={fieldState.invalid}
             />
@@ -140,7 +139,7 @@ const App = () => {
         name='file2'
       />
 
-<h3>Inserte la cedula de identidad</h3>
+<h3>Inserte su rif</h3>
 
 <Controller
         control={control}
@@ -153,7 +152,7 @@ const App = () => {
               inputProps={{ accept: '.png, .jpg' }}
              
               {...field}
-              placeholder="Inserte Imagen de dashoard de Yummy"
+              placeholder="Inserte imagen de su RIF"
               helperText={fieldState.invalid ? "Dato es invalido" : ""}
               error={fieldState.invalid}
             />
@@ -162,7 +161,7 @@ const App = () => {
         name='file3'
       />
 
-<h3>Inserte la cedula de identidad</h3>
+<h3>Inserte foto de usted con cedula</h3>
 
 <Controller
         control={control}

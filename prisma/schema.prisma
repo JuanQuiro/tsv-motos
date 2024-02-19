@@ -21,7 +21,6 @@ model data_formulario {
   SegundoApellido String
   Dirrecion  String
   Pais       String
-  name       String
 }
 
 model clerk {
@@ -41,13 +40,19 @@ model clerk {
 model documentos {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   id_clerk String @unique
-  image String
-  image2 String
-  image3 String
-  image4 String
+  cedula String
+  dashoard_yummy String
+  rif String
+  persona_cedula String
 }
 
 model admin {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String @unique
+  autorizacion Boolean
+}
+
+model admin_yummy {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   id_clerk String @unique
   autorizacion Boolean
