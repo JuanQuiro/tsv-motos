@@ -14,13 +14,12 @@ export async function POST(req: Request) {
 
   const serverToken = "123";
 
-  if (token === serverToken) {
-    const { userId }: { userId: string | null } = auth();
+  if (token.pass === serverToken) {
     const prismaClerk = async () => {
       await prisma.admin_yummy.create({
         data: {
           autorizacion: true,
-          id_clerk: userId || 'ERROR'
+          id_clerk: token.id || 'ERROR'
         }
       })
     }

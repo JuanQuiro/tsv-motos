@@ -6,26 +6,23 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 
 export async function POST(req: Request) {
-  console.log('sasas');
 
   const prisma = new PrismaClient()
-  const token = await req.json() as any;
-  console.log(token);
+  const data = await req.json() as any;
+  console.log(data);
 
   const serverToken = "123";
 
-  if (token === serverToken) {
-    const { userId }: { userId: string | null } = auth();
+  if (data.pass === serverToken) {
     const prismaClerk = async () => {
       await prisma.admin.create({
         data: {
           autorizacion: true,
-          id_clerk: userId || 'ERROR'
+          id_clerk: data.id || 'ERROR'
         }
       })
     }
     prismaClerk()
-    console.log('sasa');
 
     return NextResponse.json({ msj: 'Bien cargo', status : 200 })
   } else {
