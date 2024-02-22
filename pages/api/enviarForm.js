@@ -3,6 +3,7 @@ import prisma from '../../lib/prisma'
 const handler = async (req, res) => {
   if (req.method === 'POST') {
     const info = req.body
+    //console.log(info);
 
     try {
       const result = await prisma.data_formulario.create({

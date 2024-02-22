@@ -34,6 +34,10 @@ model clerk {
   last_name String
   estado_formulario String
   fecha String
+  estado_proceso String
+  aprobacion_yummy Boolean
+  aprobacion_tvs Boolean
+  aprobacion_final Boolean
 }
 
 model documentos {

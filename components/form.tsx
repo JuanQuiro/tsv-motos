@@ -206,7 +206,7 @@ export default function Form() {
       PrimerApellido: data.PrimerApellido,
       PrimerNombre: data.PrimerNombre,
       SegundoApellido: data.SegundoApellido,
-      SegundoNombre: data.SegundoApellido,
+      SegundoNombre: data.SegundoNombre,
       subject: data.subject,
       id: '',
       CedulaDocumento: data.CedulaDocumento,

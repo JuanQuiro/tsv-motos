@@ -12,12 +12,15 @@ const App =  async () => {
     where: { id_clerk: userId || 'ERROR' },
   })
 
-  //if (allData?.estado_formulario == 'Finalizar') return redirect('/dashoard-tvs')
+  if (allData?.estado_formulario === 'Finalizar') return redirect('/dashoard-tvs')
+  if (allData?.estado_formulario === null || allData?.estado_formulario === undefined) {
+    return redirect('/')
+  } 
 
 
   return (
     <div className="grid pt-4 justify-items-center">
-      <Formulario />
+      <Formulario userId={userId} />
     </div>
   );
 };

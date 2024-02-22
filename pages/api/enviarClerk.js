@@ -19,7 +19,11 @@ const handler = async (req, res) => {
           first_name: `${info.firstName}`,
           last_name: `${info.lastName}`,
           estado_formulario: 'Formulario',
-          fecha: `${currentDateTime}`
+          fecha: `${currentDateTime}`,
+          estado_proceso: 'documentos',
+          aprobacion_yummy: false,
+          aprobacion_tvs: false,
+          aprobacion_final: false
         }
       })
       return res.status(200).json({ success: true })

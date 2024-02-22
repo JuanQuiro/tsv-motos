@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation'
 
 
 
-const App = () => {
+const App = ({userId} : any) => {
   const router = useRouter()
 
   const [state, setState] = useState({}) as any
@@ -36,9 +36,15 @@ const App = () => {
       formData.append('image2', data.file2)
       formData.append('image3', data.file3)
       formData.append('image4', data.file4)
+      
       const response = await fetch('/api/documento', {
         method: 'POST',
         body: formData
+      })
+      
+      const responses = await fetch('/api/documentos', {
+        method: 'POST',
+        body: JSON.stringify(userId),
       })
     }
 

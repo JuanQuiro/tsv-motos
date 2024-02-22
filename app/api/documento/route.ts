@@ -60,7 +60,7 @@
         const imageUrl = result;
   
         uploadedImages.push(imageUrl);
-        console.log(uploadedImages);
+        //console.log(uploadedImages);
 
         
         
@@ -69,6 +69,7 @@
       }
     }
   
+    
     
   try {
     const user = await prisma.documentos.create({
@@ -83,11 +84,6 @@
   } catch (error) {
     console.log('error');
   }
-
-  const user2 = await prisma.clerk.update({
-    where: { id_clerk: userId || 'ERROR' },
-    data: { estado_formulario: 'Finalizar' },
-  })
 
 
   return NextResponse.redirect(new URL('/finalizar', req.url))

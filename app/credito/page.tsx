@@ -15,11 +15,12 @@ export default async function Home() {
   })
 
 
-  //console.log('Data :',allData, userId);
+  console.log('Data :',allData, userId);
   
 
-  if (allData?.estado_formulario == 'Formulario') return redirect('/documentos?formulario=true')
-  if (allData?.estado_formulario == 'Finalizar') return redirect('/dashoard-tvs')
+  if (allData?.estado_formulario === 'Formulario') return redirect('/documentos')
+  else if (allData?.estado_formulario === 'Finalizar') return redirect('/dashoard-tvs')
+  //else return redirect('/')
 
   
   
