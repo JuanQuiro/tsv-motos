@@ -36,7 +36,9 @@ const App = ({userId} : any) => {
       formData.append('image2', data.file2)
       formData.append('image3', data.file3)
       formData.append('image4', data.file4)
-      
+      formData.append("username", userId || 'ERROR');
+
+
       const response = await fetch('/api/documento', {
         method: 'POST',
         body: formData

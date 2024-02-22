@@ -6,6 +6,8 @@
   import { v4 as uuidv4 } from 'uuid';
   import { join } from 'path';
   import { promises as fs } from 'fs';
+  const blobToBuffer = require('blob-to-buffer');
+
 
 
 
@@ -20,10 +22,16 @@
   const prisma = new PrismaClient()
 
   export const POST = async (req : any) => {
-    const { userId } : { userId: string | null } = auth();
     const data = await req.formData();
     const images = ['image', 'image2', 'image3', 'image4'];
     const uploadedImages = [] as any;
+
+
+    const userId = data.get('username');
+    console.log('userId',userId);
+
+
+    
   
     for (const imageField of images) {
       const image = await data.get(imageField);

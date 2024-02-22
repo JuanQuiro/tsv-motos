@@ -22,7 +22,7 @@
 export const POST = async (req : any) => {
   const userId = await req.json()
 
-  console.log('clerk ID =', userId);
+  //console.log('clerk ID =', userId);
   
 
   try {

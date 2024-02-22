@@ -13,7 +13,6 @@ export default async function App() {
     where: { id_clerk: userId || 'ERROR' },
   })
 
-  console.log('[ALLDATA]',allData);
 
   return (
     <>
