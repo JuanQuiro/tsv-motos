@@ -19,7 +19,7 @@ const ConfirmationMessage = () => {
           ¡Estamos emocionados de acompañarte en este viaje financiero con TVS!
         </p>
         <Button
-        href="/dashboard-tvs"
+        href="/dashoard-tvs"
         as={Link}
         color="primary"
         variant="solid"

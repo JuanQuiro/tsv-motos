@@ -1,6 +1,6 @@
 import { authMiddleware } from '@clerk/nextjs'
 export default authMiddleware({
-  publicRoutes: ["/", "/somos", "/api/contact", "/contacto", "/api/yummy", '/api/enviarForm', "/api/enviarClerk","/api/usuarioCorreo", "/api/documento", "/api/documentos"],
+  publicRoutes: ["/", "/somos", "/api/contact", "/contacto", "/api/yummy", '/api/enviarForm', "/api/enviarClerk","/api/usuarioCorreo", "/api/documento", "/api/documentos","/api/validacion", "/api/validacionyummy"]
 })
 
 export const config = {
