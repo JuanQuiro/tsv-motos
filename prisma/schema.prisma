@@ -33,7 +33,6 @@ model clerk {
   first_name String
   last_name String
   estado_formulario String
-  cedula String
   fecha String
 }
 

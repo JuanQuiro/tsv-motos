@@ -35,8 +35,8 @@ export default function App() {
         <Link href='/' className='font-bold justify-start text-inherit'>
         <Image
           src="/motostudio.png"
-          width={200}
-          height={200}
+          width={160}
+          height={160}
           alt="Picture of the author"
         />
         </Link>

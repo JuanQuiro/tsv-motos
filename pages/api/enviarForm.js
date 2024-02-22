@@ -7,7 +7,6 @@ const handler = async (req, res) => {
     try {
       const result = await prisma.data_formulario.create({
         data: {
-          name: `${info.name}`,
           Ingresos: `${info.Ingresos}`,
           Yummy: info.Yummy,
           Extranjero: info.Extranjero,

@@ -4,7 +4,7 @@ const million = require("million/compiler");
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['beravirtual.com', 'nextui-docs-v2.vercel.app']
+    domains: ['beravirtual.com', 'nextui-docs-v2.vercel.app','res.cloudinary.com']
   },
 
   webpack: (config) => {
