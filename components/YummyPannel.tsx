@@ -200,7 +200,11 @@ export default function App({ allData, price, imagenes }: any) {
                         </Card>
 
                         <Card key={index + index} className="p-4 my-3 text-center">
-                          <div className='text-center'>{element.estado_formulario === 'Finalizar' ? 'Nueva Aplicacion' : ''}</div>
+                          <div className='text-center'>
+                            {element.estado_proceso === 'documentos' ? 'En Documentos' : ''}
+                            {element.estado_proceso === 'Aplicante' ? 'Aplicante' : ''}
+                            {element.estado_proceso === 'aprobado' ? 'aprobado' : ''}
+                          </div>
                         </Card>
                       </>
                     ))}
@@ -218,23 +222,29 @@ export default function App({ allData, price, imagenes }: any) {
 
           <Card className="mx-3 mt-3 col-span-3">
             <div className="grid grid-cols-3 gap-3">
+              <h3 className="col-span-3 mx-auto text-lg mx-4">Historial de aplicaciones:</h3>
 
-              {allData.map((element: any, index: any) => (
-                <>
-                  <Card key={index + 2} className="p-4 my-3 text-center">
-                    <div className="text-xl">{element.fecha}</div>
-                  </Card>
-                  <Card key={index + index} className="p-4 my-3 text-center">
-                    <div>{element.username} ({element.id_clerk})</div>
-                  </Card>
-
-                  <button key={index + index} onClick={() => handleButtonInfo('informacion')}>
-                    <Card className="p-4 my-3 cursor-pointer text-center">
-                      <div className='text-center  text-xl'>Info.</div>
+              {allData.filter((item: { estado_proceso: any; }) => item.estado_proceso === 'aplicante').length > 0 ? (
+                allData.filter((item: { estado_proceso: any; }) => item.estado_proceso === 'aplicante').map((element: any, index: any) => (
+                  <>
+                    <Card key={index + 2} className="p-4 my-3 text-center">
+                      <div className="text-xl">{element.fecha}</div>
                     </Card>
-                  </button>
-                </>
-              ))}
+                    <Card key={index + index} className="p-4 my-3 text-center">
+                      <div>{element.username} ({element.id_clerk})</div>
+                    </Card>
+
+                    <button key={index + index} onClick={() => handleButtonInfo('informacion')}>
+                      <Card className="p-4 my-3 cursor-pointer text-center">
+                        <div className='text-center  text-xl'>Info.</div>
+                      </Card>
+                    </button>
+                  </>
+                ))
+              ) : (
+                <h3 className="mx-auto col-span-3 text-xl text-red-600">No se ha encontrado ningun aplicante</h3>
+              )}
+
             </div>
           </Card>
         )}
@@ -301,7 +311,7 @@ export default function App({ allData, price, imagenes }: any) {
                   <div className="grid items-center">
 
                     <Button
-                    className="mx-auto mt-3"
+                      className="mx-auto mt-3"
                       onClick={handleClick}
                       isDisabled={!isChecked}
                       color='primary'

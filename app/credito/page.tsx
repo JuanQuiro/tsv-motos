@@ -15,7 +15,7 @@ export default async function Home() {
   })
 
 
-  console.log('Data :',allData, userId);
+  //console.log('Data :',allData, userId);
   
 
   if (allData?.estado_formulario === 'Formulario') return redirect('/documentos')

@@ -28,7 +28,7 @@ export const POST = async (req : any) => {
   try {
     const user2 = await prisma.clerk.update({
       where: { id_clerk: userId || 'ERROR' },
-      data: { estado_formulario: 'Finalizar', estado_proceso: 'aplicante' },
+      data: { estado_formulario: 'Finalizar', estado_proceso: 'Aplicante' },
     });
   } catch (error) {
     console.error('Error al actualizar el usuario en la tabla clerk:', error);
