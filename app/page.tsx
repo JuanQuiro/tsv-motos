@@ -15,16 +15,17 @@ export default async function Home() {
   
   try {
 
+    if (user?.id != null && user?.emailAddresses[0].emailAddress != null) {
     const createdCorreo = await prisma.correo_iniciando_estimacion.create({
       data: {
-        id_clerk : user?.id || 'Error',
-        gmail : user?.emailAddresses[0].emailAddress || 'Error',
+        id_clerk : user.id,
+        gmail : user.emailAddresses[0].emailAddress,
         iniciando : true,
       },
     });
-
+  }
   } catch (error) {
-    console.error(error);
+    console.error('Usuario ya creado o error al crearlo');
   }
  
 
