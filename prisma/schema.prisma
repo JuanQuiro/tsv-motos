@@ -60,3 +60,10 @@ model admin_yummy {
   id_clerk String @unique
   autorizacion Boolean
 }
+
+model correo_iniciando_estimacion {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String @unique
+  gmail String @unique
+  iniciando Boolean
+}
