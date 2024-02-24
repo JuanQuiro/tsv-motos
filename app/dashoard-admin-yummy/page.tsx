@@ -7,12 +7,6 @@ import Image from 'next/image';
 const { getMonitor } = require("consulta-dolar-venezuela");
 import YummyPanel from "../../components/YummyPannel";
 
-const elements = [
-  { date: '14/2/2024', content: 'Retiro de la unidad' },
-  { date: '12/2/2024', content: 'Luis Martinez' },
-  { date: '12/2/2024', content: 'Pago de Inicial' },
-  { date: '11/2/2024', content: 'Verificacion y Aprobacion' },
-];
 
 const prisma = new PrismaClient()
 

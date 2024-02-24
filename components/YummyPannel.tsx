@@ -18,8 +18,7 @@ export default function App({ allData, price, imagenes, Iniciados }: any) {
   const [selectedButtonInfo, setSelectedButtonInfo] = useState(null);
   const [isChecked, setIsChecked] = useState(false)
 
-  console.log('iniciados tama=',allData, Iniciados);
-
+  
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked)
   }
@@ -33,49 +32,20 @@ export default function App({ allData, price, imagenes, Iniciados }: any) {
   };
 
   const handleButtonInfo = (estado: any) => {
-    console.log('sas', estado);
+    //console.log('sas', estado);
 
     setSelectedButtonInfo(estado)
-
+    
   };
   const handleClick = async () => {
     console.log('Finalizando fomrulario envio de data [DEBUG]')
   }
 
-  // Variable
-const Iniciado = [
-  {
-    id: '65d9dfc17696867d9af32a7b',
-    id_clerk: 'user_2apgrkYwKNabuAuhnbIax9bojTy',
-    gmail: 'juanquirozsana@gmail.com',
-    iniciando: true,
-    fecha: '2/24/2024, 12:23:29 PM'
-  }
-];
-
-const Alldata = [
-  {
-    id: '65d9e447ec13133f1e2513a9',
-    id_clerk: 'user_2apgrkYwKNabuAuhnbIax9bojTy',
-    number: '+584244062826',
-    gmail: 'juanquirozsana@gmail.com',
-    img: 'https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yYXBncml4Rm44Y3BsYndKb3llOFlxME45aEMifQ',
-    username: 'juanquiroz',
-    first_name: 'Juan',
-    last_name: 'Quiroz',
-    estado_formulario: 'Formulario',
-    fecha: '2/24/2024, 12:42:47 PM',
-    estado_proceso: 'documentos',
-    aprobacion_yummy: false,
-    aprobacion_tvs: false,
-    aprobacion_final: false
-  }
-];
-
-// Función
-function buscarAlldata() {
-  const correosIniciado = Iniciado.map(data => data.gmail);
-  const correosAlldata = Alldata.map(data => data.gmail);
+  
+  // Función
+function buscarAlldata(Iniciado : any, Alldata : any) {
+  const correosIniciado = Iniciado.map(((data: { gmail: any; }) => data.gmail));
+  const correosAlldata = Alldata.map((data: { gmail: any; }) => data.gmail);
 
   const resultados = [];
 
@@ -83,7 +53,7 @@ function buscarAlldata() {
     const correo = correosIniciado[i];
 
     if (correosAlldata.includes(correo)) {
-      const objetoAlldata = Alldata.find(data => data.gmail === correo);
+      const objetoAlldata = Alldata.find((data: any) => data.gmail === correo);
       if (objetoAlldata) {
         resultados.push(objetoAlldata);
       }
@@ -94,9 +64,15 @@ function buscarAlldata() {
 
   return resultados;
 }
+let filtradoAplicado = buscarAlldata(Iniciados,allData)
+const totalDocumentos = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'aplicantes').length;
+const totalAprobados = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'aplicantes').length;
+const totalProceso = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Proceso').length;
+const totalGarantia = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Garantia').length;
+const totalFinalizado = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Finalizados').length;
+console.log('Filtrados=',filtradoAplicado);
 
 // Ejemplo de uso
-console.log(buscarAlldata()); // Resultado: [{ ...Alldata[n] }, { ...Iniciado[n] }] or [{ ...Iniciado[n] }]
   return (
     <>
       <div className="grid grid-cols-4">
@@ -214,31 +190,31 @@ console.log(buscarAlldata()); // Resultado: [{ ...Alldata[n] }, { ...Iniciado[n]
 
                 <div className="mx-6">
                   <Card className="grid p-5 py-3 place-items-center">
-                    2 - Aplicantes (0{Iniciados.length})
+                    2 - Aplicantes ({totalDocumentos})
                   </Card>
                 </div>
 
                 <div className="mx-6">
                   <Card className="grid p-5 py-3 place-items-center">
-                    3 - Aprobados (00)
+                    3 - Aprobados ({totalAprobados})
                   </Card>
                 </div>
 
                 <div className="mx-6">
                   <Card className="grid my-6 place-items-center p-5 py-3">
-                    4 - En Proceso (00)
+                    4 - En Proceso ({totalProceso})
                   </Card>
                 </div>
 
                 <div className="mx-6">
                   <Card className="grid my-6 place-items-center p-5 py-3">
-                    5 - Garantia (00)
+                    5 - Garantia ({totalGarantia})
                   </Card>
                 </div>
 
                 <div className="mx-6">
                   <Card className="grid my-6 place-items-center p-5 py-3">
-                    6 - Finalizados (00)
+                    6 - Finalizados ({totalFinalizado})
                   </Card>
                 </div>
 
@@ -247,7 +223,7 @@ console.log(buscarAlldata()); // Resultado: [{ ...Alldata[n] }, { ...Iniciado[n]
                   <div className="grid grid-cols-3 col-span-3 gap-3">
 
 
-                  {buscarAlldata().map((element: any, index: any) => (
+                  {filtradoAplicado.map((element: any, index: any) => (
                       <>
                         <Card key={index + 2} className="p-4 my-3 text-center">
                           <div>{element.fecha}</div>
