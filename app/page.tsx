@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import MotosSection from '../components/page/MotosSection'
 import CondicionesSection from '../components/page/CondicionesSection'
 import BeneficiosSection from '../components/page/BeneficiosSection'
@@ -25,9 +25,32 @@ import {
   ModalFooter,
   useDisclosure
 } from '@nextui-org/react'
+import { useUser } from '@clerk/nextjs'
 
 // million-ignore
 const App =  () => {
+  const { user } = useUser();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const usersData = [
+          { name: 'John', age: 30 },
+          { name: 'Jane', age: 25 },
+          // Otros objetos de usuario...
+        ];
+
+        const response = await axios.post('/api/usuario-correo', { user: user });
+        console.log(response.data);
+        // Hacer algo con la respuesta exitosa aquí
+      } catch (error) {
+        console.error(error);
+        // Manejar el error aquí
+      }
+    };
+
+    fetchData();
+  }, []);
 
 
   return (
