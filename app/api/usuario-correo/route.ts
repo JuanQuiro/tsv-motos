@@ -10,17 +10,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { id_clerk, gmail, iniciando } = await req.body as any;
+    const data = await req.body as any;
 
-    const createdCorreo = await prisma.correo_iniciando_estimacion.create({
-      data: {
-        id_clerk,
-        gmail,
-        iniciando,
-      },
-    });
+   
 
-    return NextResponse.json({ msj: 'Creado con exito', status : 201 });
+    return NextResponse.json({ msj: 'Creado con exito', status : 201,dato:data });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ msj: 'Creado con exito', status : 201 });
