@@ -1,12 +1,6 @@
   const { NextResponse } = require("next/server");
   import {v2 as cloudinary} from 'cloudinary';
-  import { writeFile } from 'fs/promises';
-  import { auth } from '@clerk/nextjs';
   import { PrismaClient } from '@prisma/client';
-  import { v4 as uuidv4 } from 'uuid';
-  import { join } from 'path';
-  import { promises as fs } from 'fs';
-  const blobToBuffer = require('blob-to-buffer');
 
 
 
