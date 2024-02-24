@@ -26,15 +26,25 @@ export default async function App() {
 
   if(validador === null) return redirect('/')
 
-  const { price } = await getMonitor("BCV", "lastUpdate").then((data: any) => {
-    //console.log(data,'sas',data.bcv);
-    return data.bcv
+  let price = 0;
+
+try {
+  const { price: monitorPrice } = await getMonitor("BCV", "lastUpdate").then((data: any) => {
+    return data.bcv || 'Actualizando';
   });
+
+  price = monitorPrice;
+  // Resto del código para manejar el precio obtenido correctamente
+} catch (error) {
+  console.error("Error:", error);
+  // Resto del código para manejar el error 504
+}
 
   const allData = await prisma.clerk.findMany({})
   const Imagenes = await prisma.documentos.findMany({})
+  const Iniciados = await prisma.correo_iniciando_estimacion.findMany({})
 
   return (
-    <YummyPanel allData={allData} price={price} imagenes={Imagenes}  />
+    <YummyPanel allData={allData} price={price} imagenes={Imagenes} Iniciados={Iniciados}  />
   );
 };

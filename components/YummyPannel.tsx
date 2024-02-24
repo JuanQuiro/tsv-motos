@@ -13,12 +13,12 @@ const elements = [
 ];
 
 
-export default function App({ allData, price, imagenes }: any) {
+export default function App({ allData, price, imagenes, Iniciados }: any) {
   const [selectedButton, setSelectedButton] = useState(null);
   const [selectedButtonInfo, setSelectedButtonInfo] = useState(null);
   const [isChecked, setIsChecked] = useState(false)
 
-  console.log(imagenes);
+  console.log('iniciados tama=',allData, Iniciados);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked)
@@ -41,6 +41,62 @@ export default function App({ allData, price, imagenes }: any) {
   const handleClick = async () => {
     console.log('Finalizando fomrulario envio de data [DEBUG]')
   }
+
+  // Variable
+const Iniciado = [
+  {
+    id: '65d9dfc17696867d9af32a7b',
+    id_clerk: 'user_2apgrkYwKNabuAuhnbIax9bojTy',
+    gmail: 'juanquirozsana@gmail.com',
+    iniciando: true,
+    fecha: '2/24/2024, 12:23:29 PM'
+  }
+];
+
+const Alldata = [
+  {
+    id: '65d9e447ec13133f1e2513a9',
+    id_clerk: 'user_2apgrkYwKNabuAuhnbIax9bojTy',
+    number: '+584244062826',
+    gmail: 'juanquirozsana@gmail.com',
+    img: 'https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yYXBncml4Rm44Y3BsYndKb3llOFlxME45aEMifQ',
+    username: 'juanquiroz',
+    first_name: 'Juan',
+    last_name: 'Quiroz',
+    estado_formulario: 'Formulario',
+    fecha: '2/24/2024, 12:42:47 PM',
+    estado_proceso: 'documentos',
+    aprobacion_yummy: false,
+    aprobacion_tvs: false,
+    aprobacion_final: false
+  }
+];
+
+// Función
+function buscarAlldata() {
+  const correosIniciado = Iniciado.map(data => data.gmail);
+  const correosAlldata = Alldata.map(data => data.gmail);
+
+  const resultados = [];
+
+  for (let i = 0; i < Iniciado.length; i++) {
+    const correo = correosIniciado[i];
+
+    if (correosAlldata.includes(correo)) {
+      const objetoAlldata = Alldata.find(data => data.gmail === correo);
+      if (objetoAlldata) {
+        resultados.push(objetoAlldata);
+      }
+    } else {
+      resultados.push(Iniciado[i]);
+    }
+  }
+
+  return resultados;
+}
+
+// Ejemplo de uso
+console.log(buscarAlldata()); // Resultado: [{ ...Alldata[n] }, { ...Iniciado[n] }] or [{ ...Iniciado[n] }]
   return (
     <>
       <div className="grid grid-cols-4">
@@ -137,7 +193,7 @@ export default function App({ allData, price, imagenes }: any) {
                       Tasa BCV del dia
                     </p>
                     <p className="mx-auto">
-                      {price}
+                      {price === 0 ? 'Actualizando Precio' : price}
                     </p>
                   </CardBody>
                 </Card>
@@ -152,13 +208,13 @@ export default function App({ allData, price, imagenes }: any) {
 
                 <div className="mx-6">
                   <Card className="grid p-5 place-items-center">
-                    1 - Registrado (1)
+                    1 - Registrado (0{Iniciados.length})
                   </Card>
                 </div>
 
                 <div className="mx-6">
                   <Card className="grid p-5 py-3 place-items-center">
-                    2 - Aplicantes (1)
+                    2 - Aplicantes (0{Iniciados.length})
                   </Card>
                 </div>
 
@@ -190,7 +246,8 @@ export default function App({ allData, price, imagenes }: any) {
                   <h3 className="col-span-3 text-center text-lg underline font-semibold">Historial de actividad Global</h3>
                   <div className="grid grid-cols-3 col-span-3 gap-3">
 
-                    {allData.map((element: any, index: any) => (
+
+                  {buscarAlldata().map((element: any, index: any) => (
                       <>
                         <Card key={index + 2} className="p-4 my-3 text-center">
                           <div>{element.fecha}</div>

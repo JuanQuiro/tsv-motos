@@ -10,6 +10,9 @@ export default async function Home() {
   const clerk = await prisma.clerk.findMany({});
   const user = await currentUser()
 
+  const currentDate = new Date()
+  const currentDateTime = currentDate.toLocaleString()
+
   console.log('data: ',clerk);
   
   
@@ -21,6 +24,7 @@ export default async function Home() {
         id_clerk : user.id,
         gmail : user.emailAddresses[0].emailAddress,
         iniciando : true,
+        fecha: currentDateTime,
       },
     });
   }
