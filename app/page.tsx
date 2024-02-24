@@ -41,7 +41,7 @@ const App =  () => {
         ];
 
         const response = await axios.post('/api/usuario-correo', { user: user });
-        console.log(response.data);
+        console.log(response);
         // Hacer algo con la respuesta exitosa aquí
       } catch (error) {
         console.error(error);
