@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
-export default async function POST(req: Request) {
+export async function POST(req: Request) {
   if (req.method !== 'POST') {
     return NextResponse.json({ msj: 'Mal no es POST', status : 404 });
 
