@@ -61,7 +61,7 @@
         const result = await uploadToCloudinary();
         const imageUrl = result;
   
-        uploadedImages.push(imageUrl);
+        await uploadedImages.push(imageUrl);
         //console.log(uploadedImages);
 
         
