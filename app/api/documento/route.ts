@@ -87,6 +87,19 @@
     console.log('error');
   }
 
+   //console.log('clerk ID =', userId);
+  
+
+   try {
+    const user2 = await prisma.clerk.update({
+      where: { id_clerk: userId || 'ERROR' },
+      data: { estado_formulario: 'Finalizar', estado_proceso: 'Aplicante' },
+    });
+  } catch (error) {
+    console.error('Error al actualizar el usuario en la tabla clerk:', error);
+  }
+  
+
 
   return NextResponse.redirect(new URL('/finalizar', req.url))
   };

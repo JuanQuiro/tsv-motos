@@ -61,6 +61,18 @@ model admin_yummy {
   autorizacion Boolean
 }
 
+model rechazados {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String @unique
+  rechazo Boolean
+}
+
+model rechazados_yummy {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String @unique
+  rechazo Boolean
+}
+
 model correo_iniciando_estimacion {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   id_clerk String @unique

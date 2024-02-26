@@ -39,15 +39,19 @@ const App = ({userId} : any) => {
       formData.append("username", userId || 'ERROR');
 
 
-      const response = await fetch('/api/documento', {
-        method: 'POST',
-        body: formData
-      })
+      try {
+        const response = await fetch('/api/documento', {
+          method: 'POST',
+          body: formData
+        });
+        
+        // Aquí puedes realizar el procesamiento de la respuesta de la primera llamada
       
-      const responses = await fetch('/api/documentos', {
-        method: 'POST',
-        body: JSON.stringify(userId),
-      })
+       
+      } catch (error) {
+        // Manejar el error de la primera llamada
+        console.error('Error en la primera llamada:', error);
+      }
     }
 
     
