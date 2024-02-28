@@ -96,3 +96,9 @@ model correo_iniciando_estimacion {
   iniciando Boolean
   fecha String
 }
+
+model firma {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_clerk String @unique
+  firma String
+}

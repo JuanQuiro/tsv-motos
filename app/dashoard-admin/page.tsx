@@ -12,11 +12,12 @@ const prisma = new PrismaClient()
 
 const MiComponente = async () => {
 
-
   const { userId } = auth()
   const validador = await prisma.admin.findFirst({
     where: { id_clerk: userId || 'ERROR' },
   })
+  const firma = await prisma.firma.findMany({});
+
 
   console.log('Data :', validador);
 
@@ -45,7 +46,7 @@ const MiComponente = async () => {
   const Iniciados = await prisma.correo_iniciando_estimacion.findMany({})
 
   return (
-    <Admin allData={allData} price={price} dataFormulario={dataFormulario} imagenes={Imagenes} Iniciados={Iniciados} />
+    <Admin allData={allData} price={price} firma={firma} dataFormulario={dataFormulario} imagenes={Imagenes} Iniciados={Iniciados} />
   );
 };
 

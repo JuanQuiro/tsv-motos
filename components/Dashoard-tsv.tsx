@@ -13,8 +13,17 @@ import { useState } from "react";
 
 const prisma = new PrismaClient()
 
-export default function App({allData,documento, imagenes} : any) {
-  console.log(allData,documento,imagenes);
+export default function App({allData,documento, imagenes, firma} : any) {
+  console.log('firma',firma);
+  let isFirma;
+if (firma) {
+  isFirma = true;
+} else {
+  isFirma = false;
+}
+
+const [firmaUser, setFirmaUser] = useState(isFirma);
+
 
   const pasos = [
     { id: 1, nombre: 'Aplicación' },
@@ -45,15 +54,17 @@ export default function App({allData,documento, imagenes} : any) {
     const formData = new FormData();
     const file = dataURLtoFile(dataURL, 'signature.png');
     formData.append('signature', file);
+    formData.append('userId', allData.id_clerk);
 
     // Envía el formData a la API
-    fetch('/firma-update', {
+    fetch('/api/firma-update', {
       method: 'POST',
       body: formData,
     })
       .then(response => response.json())
       .then(data => {
         console.log(data);
+        setFirmaUser(true)
       })
       .catch(error => {
         console.error(error);
@@ -268,7 +279,9 @@ export default function App({allData,documento, imagenes} : any) {
                     </p>
                   </div>
 
-                  <div className="grid place-items-center border mx-auto">
+{firmaUser === false && (
+
+  <div className="grid place-items-center border mx-auto">
 
                   <SignatureCanvas
                   // @ts-ignore
@@ -285,8 +298,16 @@ export default function App({allData,documento, imagenes} : any) {
       </div>
 
     </div>
+          )}
 
+{firmaUser === true  && (
 
+<div className="grid place-items-center mx-auto">
+
+<h3>Firma Ya agregada. Por favor, espere para el siguiente paso</h3>
+
+  </div>
+        )}
 
                 </div></>
 

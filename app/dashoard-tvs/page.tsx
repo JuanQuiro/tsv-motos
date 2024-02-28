@@ -20,9 +20,13 @@ export default async function App() {
     where: { id_clerk: userId || 'ERROR' },
   })
 
+  const firma = await prisma.firma.findFirst({
+    where: { id_clerk: userId || 'ERROR' },
+  })
+
   return (
     <>
-    <Dashoard allData={allData} documento={allDocumento} imagenes={allImagenes} />
+    <Dashoard allData={allData} documento={allDocumento}  imagenes={allImagenes} firma={firma} />
     </>
   );
 }
