@@ -3,14 +3,82 @@ import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-or
 import {Image} from "@nextui-org/react";
 import NextImage from "next/image";
 import { PrismaClient } from "@prisma/client";
+import React, { useRef } from 'react';
+
 import { auth } from "@clerk/nextjs";
+
+import SignatureCanvas from 'react-signature-canvas'
 import { useState } from "react";
 
 
 const prisma = new PrismaClient()
 
-export default async function App() {
+export default function App({allData,documento, imagenes} : any) {
+  console.log(allData,documento,imagenes);
+
+  const pasos = [
+    { id: 1, nombre: 'Aplicación' },
+    { id: 2, nombre: 'Aprobación' },
+    { id: 3, nombre: 'Firma' },
+    { id: 4, nombre: 'Pago de Inicial' },
+    { id: 5, nombre: 'Retiro' }
+  ];
+  
   const [isFollowed, setIsFollowed] = useState(false);
+  const [pasoActual, setpasoActual] = useState(1);
+
+  if (pasoActual === 1 && allData.aprobacion_final) {
+    setpasoActual(2)
+  }
+
+  const signatureRef = useRef();
+
+  const handleSave = () => {
+    // Obtén el archivo de imagen de la firma
+    // @ts-ignore
+    const canvas = signatureRef?.current?.getCanvas();
+    const dataURL = canvas.toDataURL();
+    console.log(dataURL);
+
+    
+    // Crea un objeto FormData
+    const formData = new FormData();
+    const file = dataURLtoFile(dataURL, 'signature.png');
+    formData.append('signature', file);
+
+    // Envía el formData a la API
+    fetch('/firma-update', {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const handleClear = () => {
+    // Limpiar el lienzo de la firma
+    // @ts-ignore
+    signatureRef?.current?.clear();
+  };
+
+   // Convierte el dataURL en un archivo
+   const dataURLtoFile = (dataURL: string, fileName: string) => {
+    const arr = dataURL.split(',');
+    // @ts-ignore
+    const mime = arr[0]?.match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], fileName, { type: mime });
+  };
 
   return (
     <>
@@ -18,14 +86,14 @@ export default async function App() {
     
 
     
-    <div className="grid grid-cols-1">
+    <div className="grid grid-cols-4">
     <Card className=" mx-2">
       <CardHeader className="justify-between">
         <div className="flex gap-5 mx-auto">
-          <Avatar isBordered radius="full" size="md" src="/avatars/avatar-1.png" />
+          <Avatar isBordered radius="full" size="md" src={allData.img} />
           <div className="flex  flex-col gap-1 items-start justify-center">
-            <h4 className="text-small font-semibold leading-none text-default-600">Juan Quiroz</h4>
-            <h5 className="text-small tracking-tight text-default-400">C.I = 30.391.154</h5>
+            <h4 className="text-small font-semibold leading-none text-default-600">{allData.username}</h4>
+            <h5 className="text-small tracking-tight text-default-400">C.I = {documento.Cedula}</h5>
           </div>
         </div>
       </CardHeader>
@@ -38,13 +106,13 @@ export default async function App() {
 
     <Card className="m-4 my-0 mt-3 text-center	">
       <CardBody>
-        <p className="mx-auto">Inicio 02/01/2024</p>
+        <p className="mx-auto">N/A</p>
       </CardBody>
     </Card>
 
     <Card className="m-4 my-0 mt-3 text-center	">
       <CardBody>
-        <p className="mx-auto">Final 02/01/2024</p>
+        <p className="mx-auto">N/A</p>
       </CardBody>
     </Card>
 
@@ -53,10 +121,10 @@ export default async function App() {
         <p className="mx-auto">Especificaciones</p>
         <Image
       as={NextImage}
-      width={300}
-      height={150}
+      width={200}
+      height={50}
       alt="NextUI hero Image"
-      src="/sport-100cc.png"
+      src="/motoMisterio.png"
     />
       </CardBody>
     </Card>
@@ -89,88 +157,146 @@ export default async function App() {
       <CardFooter>
       </CardFooter>
     </Card>
+
+    <Card className=" mx-3 col-span-3">
+      <div className="mx-5 my-5">
+
+      <div className="flex justify-between">
+      {pasos.map((paso) => (
+        <div
+          key={paso.id}
+          className={`flex items-center ${
+            paso.id <= pasoActual ? 'text-green-500' : 'text-gray-500'
+          }`}
+        >
+          {paso.id <= pasoActual ? (
+            <svg
+              className="w-6 h-6 mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+              <line x1="9" y1="9" x2="9.01" y2="9" />
+              <line x1="15" y1="9" x2="15.01" y2="9" />
+            </svg>
+          ) : (
+            <div className="w-6 h-6 border-2 border-gray-300 rounded-full mr-2" />
+          )}
+          <span>{paso.nombre}</span>
+        </div>
+      ))}
+    </div>
+
     
-    <Card className=" mx-3 col-span-1">
-    <Card className="mx-4  my-3">
-      <CardBody>
-        <p className="mx-auto">
-          <span className="text-red-600">Urgente:</span> Tener un Servicio de Mantenimineto, ponte al dia lo antes posible y continua disfrutando de nuestro servicios.
-        </p>
-      </CardBody>
-
-    </Card>
-    <div className="grid grid-cols-3">
-
-      <div className="col-span-3">
-      <p className="text-center text-lg underline font-semibold mx-auto">
-        Proximo Pago
-      </p>
       </div>
 
-    <div className="mx-6">
-      <Card className="grid place-items-center">
-      <span>Fecha</span>
-        21/2/2023
-        </Card>
-    </div>
+{
+  pasoActual === 1 && (
 
-    <div className="mx-6">
-      <Card className="grid py-3 place-items-center">
-      44$
-        </Card>
-    </div>
+ 
+    <><Card className="mx-4  my-3">
+                <CardBody>
+                  <p className="mx-auto">
+                    <span className="text-red-600">Gracias por Aplicar:</span> Estamos revisando la información que nos facilitaste en las proximas horas te estaremos notificando
+                  </p>
+                </CardBody>
 
-    <div className="mx-6">
-      <Card className="grid place-items-center">
-      <span>Estado</span>
-      3 dias para el Pago
-        </Card>
-    </div>
+              </Card><div className="grid grid-cols-3 ">
 
-    <div className="grid my-6 col-span-3 place-items-center">
-      <Card className="p-2">
-        Pagar Ahora 
-      </Card>
-    </div>
+                  <div className="col-span-3">
+                    <p className="text-center text-lg underline font-semibold mx-auto mb-5">
+                      Validacion de Yummy =
+                    </p>
+                  </div>
 
-    <div className="grid my-6 col-span-3 place-items-center">
-      <h3 className="col-span-3 text-center text-lg underline font-semibold">Feed/Historial</h3>
-      <div className="grid grid-cols-2 col-span-3 gap-3">
-      <Card className="p-4 my-3 text-center">
-        14/2/2024 
-      </Card>
-      <Card className="p-4 my-3 text-center">
-        Retiro de la unidad
-      </Card>
+                  <div className="mx-6">
+                    <Card className="grid py-3 place-items-center">
+                      Validacion de Yummy = {allData.aprobacion_yummy ? 'si' : 'no'}
+                    </Card>
+                  </div>
 
-      <Card className="p-4 my-3 text-center">
-        12/2/2024 
-      </Card>
-      <Card className="p-4 my-3 text-center">
-        Pago de Inicial
-      </Card>
+                  <div className="mx-6">
+                    <Card className="grid place-items-center">
+                      Imagen cedula con usuario =
 
-      <Card className="p-4 my-3 text-center">
-        11/2/2024 
-      </Card>
-      <Card className="p-4 my-3 text-center">
-        Verificacion y Aprobacion
-      </Card>
+                      <Image
+                        as={NextImage}
+                        width={200}
+                        height={50}
+                        alt="NextUI hero Image"
+                        src={imagenes.persona_cedula} />
 
-      <Card className="p-4 my-3 text-center">
-        10/2/2024 
-      </Card>
-      <Card className="p-4 my-3 text-center">
-        Apertura de cuenta
-      </Card>
+                    </Card>
+                  </div>
+
+
+                  <div className="mx-6">
+                    <Card className="grid py-3 place-items-center">
+                      Dirrecion = {documento.Dirrecion}
+                    </Card>
+                  </div>
+
+
+
+                </div></>
+
+)
+}
+
+{
+  pasoActual === 2 && (
+
+ 
+    <><Card className="mx-4  my-3">
+                <CardBody>
+                  <p className="mx-auto">
+                    <span className="text-green-500">¡Felicidades! Tu postulación a sido aprobada.</span> Por favor, lee y firma nuestro contrato digital para el siguiente paso 
+                  </p>
+                </CardBody>
+
+              </Card><div className=" grid-cols-3 ">
+
+                  <div className="col-span-3">
+                    <p className="text-center text-lg underline font-semibold mx-auto mb-5">
+                      Firma de Contrato =
+                    </p>
+                  </div>
+
+                  <div className="grid place-items-center border mx-auto">
+
+                  <SignatureCanvas
+                  // @ts-ignore
+        ref={signatureRef}
+        canvasProps={{
+          width: 500,
+          height: 200,
+          className: 'signature-canvas',
+        }}
+      />
+      <div>
+      <Button onClick={handleSave}>Guardar firma</Button>
+      <Button onClick={handleClear}>Limpiar</Button>
       </div>
-    </div>
 
     </div>
 
+
+
+                </div></>
+
+)
+}
     </Card>
     </div>
-    
     </>
   );
 }
+
+
+

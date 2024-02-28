@@ -12,11 +12,17 @@ export default async function App() {
   const allData = await prisma.clerk.findFirst({
     where: { id_clerk: userId || 'ERROR' },
   })
+  const allDocumento = await prisma.data_formulario.findFirst({
+    where: { id_clerk: userId || 'ERROR' },
+  })
 
+  const allImagenes = await prisma.documentos.findFirst({
+    where: { id_clerk: userId || 'ERROR' },
+  })
 
   return (
     <>
-    <Dashoard />
+    <Dashoard allData={allData} documento={allDocumento} imagenes={allImagenes} />
     </>
   );
 }

@@ -10,7 +10,7 @@ import { toast, Toaster } from 'sonner';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 
-import {ModalContent, ModalHeader, ModalBody, ModalFooter} from "@nextui-org/react";
+import { ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react";
 
 import { MuiFileInput } from "mui-file-input";
 import { Controller, useForm } from "react-hook-form";
@@ -32,6 +32,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
   const [infoUser, setInfoUser] = useState({}) as any;
   const [formulario, setFormulario] = useState({}) as any;
   const [isChecked, setIsChecked] = useState(false)
+  const [isAplicacion, setIsAplicacion] = useState(false)
   const [id_users, setIdUsers] = useState('') as any
 
 
@@ -67,9 +68,16 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
   const totalGarantia = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Garantia').length;
   const totalFinalizado = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Finalizados').length;
 
+
+  const aprobadoYummys = allData.filter((aplicante: any) => aplicante.aprobacion_yummy === true);
+  const allAprobados = allData.filter((aplicante: any) => aplicante.aprobacion_tvs === true);
+
+  console.log('all probados', allAprobados);
+
+
   const handleButtonClick = (buttonName: any) => {
     console.log(buttonName);
-    
+
     if (selectedButton === buttonName) {
       setSelectedButton(null); // Deseleccionar el botón si ya estaba seleccionado
     } else {
@@ -77,20 +85,20 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
     }
   };
 
-  const {isOpen, onOpen, onClose} = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const showSwal = () => {
     withReactContent(Swal).fire({
       title: <i>Usuario Aceptado</i>,
-  icon: "success",
+      icon: "success",
       inputValue,
       preConfirm: () => {
         setInputValue(Swal.getInput()?.value || '')
       },
     })
   }
-  
-  
+
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked)
   }
@@ -98,55 +106,67 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
   const handleButtonInfo = (estado: any) => {
     const usuario = estado;
-    
-    const formularioCLiente = findObjectById(dataFormulario,usuario.id_clerk)
+
+    const formularioCLiente = findObjectById(dataFormulario, usuario.id_clerk)
     setFormulario(formularioCLiente)
 
     setIdUsers(usuario.id_clerk)
-  
+
     setSelectedButtonInfo('Informacion');
     setInfoUser(usuario);
-    console.log('user',formularioCLiente);
-    
-    
+    console.log('user', formularioCLiente);
+
+
   };
 
 
   const handleButtonInfoBack = () => {
-  
+
     setSelectedButtonInfo(null);
-    
-    
+
+
   };
+
+  function buscarAceptacionYummy(array: any, id_clerk: any) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id_clerk === id_clerk) {
+        return array[i];
+      }
+    }
+    return null; // Si no se encuentra ningún objeto con el id_clerk proporcionado
+  }
 
   const handleClick = async () => {
     showSwal()
 
-      const response = await fetch('/api/aceptarTvs', {
-        method: 'POST',
-        body: JSON.stringify(infoUser.id_clerk),
-      });
-      
+    const response = await fetch('/api/aceptarTvs', {
+      method: 'POST',
+      body: JSON.stringify(infoUser.id_clerk),
+    });
 
-      const result = await response.json();
-          const status = result?.status
 
-          console.log(status);
-          
+    const result = await response.json();
+    const status = result?.status
 
-          if (status === 200) {
-            onClose()
-            toast('Aceptacion Creada')
-          }
-          if (status === 400) {
-            onClose()
-            toast('Error al crear aceptacion')
-          }
-     
+    console.log(status);
+
+
+    if (status === 200) {
+      //const userAceptacion =buscarAceptacionYummy(allAprobados,infoUser.id_clerk)
+      //console.log('aceptacion',userAceptacion);
+
+      onClose()
+      toast('Aceptacion Creada')
+    }
+    if (status === 400) {
+      onClose()
+      toast('Error al crear aceptacion')
+    }
+
 
 
   }
-  
+
   const handleClickDeclinar = async () => {
     onOpen();
 
@@ -158,11 +178,11 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
     if (infoUser) {
       const filteredDocuments = imagenes.filter((doc: { id_clerk: any; }) => doc.id_clerk === infoUser.id_clerk);
-      console.log('DOCUMENTO',filteredDocuments);
+      console.log('DOCUMENTO', filteredDocuments);
       setFilteredDocuments(filteredDocuments)
       //const objeto = findObjectById(dataFormulario,id_clerk)
     }
-  
+
   }, [infoUser]);
 
   const { control, handleSubmit } = useForm({
@@ -174,47 +194,47 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
   const onSubmit = (data: any) => {
 
-  
-    const apiResolver  = async () => {
+
+    const apiResolver = async () => {
       const formData = new FormData()
       formData.append('image', data.file)
       formData.append('user', infoUser.id_clerk)
-  
-  
 
-      
-          const fetchResponse = await fetch('/api/rechazo', {
-            method: 'POST',
-            body: formData
-          });
 
-          const result = await fetchResponse.json();
-          const status = result.status
 
-          console.log(status);
-          
 
-          if (status === 200) {
-            onClose()
-            toast('Rechazo Creado')
-          }
-          if (status === 400) {
-            onClose()
-            toast('Error al crear rechazo')
-          }
-      
+      const fetchResponse = await fetch('/api/rechazo', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await fetchResponse.json();
+      const status = result.status
+
+      console.log(status);
+
+
+      if (status === 200) {
+        onClose()
+        toast('Rechazo Creado')
+      }
+      if (status === 400) {
+        onClose()
+        toast('Error al crear rechazo')
+      }
+
 
     }
 
-    
 
-  
+
+
     const response = apiResolver()
     console.log(response);
-    
+
   };
-  
-  console.log('Filtrados=',filtradoAplicado);
+
+  console.log('Filtrados=', filtradoAplicado);
   //console.log(req);
 
   //if (allData[0]?.estado_formulario == 'Finalizar') return redirect('/dashoard-tvs')
@@ -222,7 +242,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
   return (
     <>
-              <Toaster />
+      <Toaster />
       <div className="grid grid-cols-4">
         <Card className=" mx-2 mt-2">
 
@@ -251,87 +271,74 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
               </CardBody>
             </Button>
 
-            <Button
-              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'aprobados' ? 'bg-black text-white' : ''}`}
-              onClick={() => handleButtonClick('aprobados')}
-            >
-              <CardBody>
-                <p className="mx-auto">Aprobados</p>
-              </CardBody>
-            </Button>
+            
+              <><Button
+                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'aprobados' ? 'bg-black text-white' : ''}`}
+                onClick={() => handleButtonClick('aprobados')}
+              >
+                <CardBody>
+                  <p className="mx-auto">Aprobados</p>
+                </CardBody>
+              </Button><Button
+                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'inicial' ? 'bg-black text-white' : ''}`}
+                onClick={() => handleButtonClick('inicial')}
+              >
+                  <CardBody>
+                    <p className="mx-auto">Firmas de Contrato</p>
+                  </CardBody>
+                </Button><Button
+                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'retiroInicial' ? 'bg-black text-white' : ''}`}
+                  onClick={() => handleButtonClick('retiroInicial')}
+                >
+                  <CardBody>
+                    <p className="mx-auto">Pago de Inicial</p>
+                  </CardBody>
+                </Button><Button
+                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'retiroUnidad' ? 'bg-black text-white' : ''}`}
+                  onClick={() => handleButtonClick('retiroUnidad')}
+                >
+                  <CardBody>
+                    <p className="mx-auto">Registro de Unidad</p>
+                  </CardBody>
+                </Button><Button
+                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'historialPagos' ? 'bg-black text-white' : ''}`}
+                  onClick={() => handleButtonClick('historialPagos')}
+                >
+                  <CardBody>
+                    <p className="mx-auto">Retiro de Unidades</p>
+                  </CardBody>
+                </Button><Button
+                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'citasTaller' ? 'bg-black text-white' : ''}`}
+                  onClick={() => handleButtonClick('citasTaller')}
+                >
+                  <CardBody>
+                    <p className="mx-auto">Citas de Taller</p>
+                  </CardBody>
+                </Button><Button
+                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'atencionCliente' ? 'bg-black text-white' : ''}`}
+                  onClick={() => handleButtonClick('atencionCliente')}
+                >
+                  <CardBody>
+                    <p className="mx-auto">Atencion al Cliente</p>
+                  </CardBody>
+                </Button><Button
+                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'shopRepuestos' ? 'bg-black text-white' : ''}`}
+                  onClick={() => handleButtonClick('shopRepuestos')}
+                >
+                  <CardBody>
+                    <p className="mx-auto">Shop / Respuestos</p>
+                  </CardBody>
+                </Button></>
 
-            <Button
-              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'inicial' ? 'bg-black text-white' : ''}`}
-              onClick={() => handleButtonClick('inicial')}
-            >
-              <CardBody>
-                <p className="mx-auto">Pagos De Inicial</p>
-              </CardBody>
-            </Button>
-
-            <Button
-              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'retiroInicial' ? 'bg-black text-white' : ''}`}
-              onClick={() => handleButtonClick('retiroInicial')}
-            >
-              <CardBody>
-                <p className="mx-auto">Retiro de Inicial</p>
-              </CardBody>
-            </Button>
-
-            <Button
-              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'retiroUnidad' ? 'bg-black text-white' : ''}`}
-              onClick={() => handleButtonClick('retiroUnidad')}
-            >
-              <CardBody>
-                <p className="mx-auto">Retiro de Unidad</p>
-              </CardBody>
-            </Button>
-
-            <Button
-              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'historialPagos' ? 'bg-black text-white' : ''}`}
-              onClick={() => handleButtonClick('historialPagos')}
-            >
-              <CardBody>
-                <p className="mx-auto">Historial de Pagos</p>
-              </CardBody>
-            </Button>
-
-            <Button
-              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'citasTaller' ? 'bg-black text-white' : ''}`}
-              onClick={() => handleButtonClick('citasTaller')}
-            >
-              <CardBody>
-                <p className="mx-auto">Citas de Taller</p>
-              </CardBody>
-            </Button>
-
-
-            <Button
-              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'atencionCliente' ? 'bg-black text-white' : ''}`}
-              onClick={() => handleButtonClick('atencionCliente')}
-            >
-              <CardBody>
-                <p className="mx-auto">Atencion al Cliente</p>
-              </CardBody>
-            </Button>
-
-            <Button
-              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'shopRepuestos' ? 'bg-black text-white' : ''}`}
-              onClick={() => handleButtonClick('shopRepuestos')}
-            >
-              <CardBody>
-                <p className="mx-auto">Shop / Respuestos</p>
-              </CardBody>
-            </Button>
-
+            
 
           </div>
           <CardFooter>
           </CardFooter>
         </Card>
 
-        {(selectedButton === null) && ( 
-        <Card className=" mx-3 mt-3 col-span-3">
+        {(selectedButton === null) && (
+          <Card className=" mx-3 mt-3 col-span-3">
             <div className=' grid grid-cols-4 '>
 
 
@@ -407,26 +414,26 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
               <div className="grid my-6 col-span-3  place-items-center">
                 <h3 className="col-span-3 text-center text-lg underline font-semibold">Historial de actividad Global</h3>
                 <div className="grid grid-cols-3 col-span-3 gap-3">
-                  
-                {filtradoAplicado.map((element: any, index: any) => (
-                      <div className="grid grid-cols-3 col-span-3 gap-3" key={index+500}>
-                        <Card key={index + 2} className="p-4 my-3 text-center">
-                          <div>{element.fecha}</div>
-                        </Card>
-                        <Card key={index + index} className="p-4 my-3 text-center">
-                          <div>{element.username} ({element.id_clerk})</div>
-                        </Card>
 
-                        <Card key={index + index} className="p-4 my-3 text-center">
-                          <div className='text-center'>
-                            {element.estado_proceso === 'documentos' ? 'En Documentos' : ''}
-                            {element.estado_proceso === 'Aplicante' ? 'Aplicante' : ''}
-                            {element.estado_proceso === 'aprobado' ? 'aprobado' : ''}
-                            {element.estado_proceso  ? '': 'Usuario No ha iniciado proceso'}
-                          </div>
-                        </Card>
-                      </div>
-                    ))}
+                  {filtradoAplicado.map((element: any, index: any) => (
+                    <div className="grid grid-cols-3 col-span-3 gap-3" key={index + 500}>
+                      <Card key={index + 2} className="p-4 my-3 text-center">
+                        <div>{element.fecha}</div>
+                      </Card>
+                      <Card key={index + index} className="p-4 my-3 text-center">
+                        <div>{element.username} ({element.id_clerk})</div>
+                      </Card>
+
+                      <Card key={index + index} className="p-4 my-3 text-center">
+                        <div className='text-center'>
+                          {element.estado_proceso === 'documentos' ? 'En Documentos' : ''}
+                          {element.estado_proceso === 'Aplicante' ? 'Aplicante' : ''}
+                          {element.estado_proceso === 'aprobado' ? 'aprobado' : ''}
+                          {element.estado_proceso ? '' : 'Usuario No ha iniciado proceso'}
+                        </div>
+                      </Card>
+                    </div>
+                  ))}
 
 
 
@@ -438,159 +445,158 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
           </Card>
 
-          )
+        )
         }
 
         {((selectedButton === 'aplicaciones') && (selectedButtonInfo === null)) && (
 
-        <Card className="mx-3 mt-3 col-span-3">
-          <div className="grid grid-cols-3 gap-3">
-            <h3 className="col-span-3 mx-auto text-lg mx-4">Historial de aplicaciones:</h3>
+          <Card className="mx-3 mt-3 col-span-3">
+            <div className="grid grid-cols-3 gap-3">
+              <h3 className="col-span-3 mx-auto text-lg mx-4">Historial de aplicaciones:</h3>
 
-            {allData.filter((item: { estado_proceso: any; }) => item.estado_proceso === 'Aplicante').length > 0 ? (
-              allData.filter((item: { estado_proceso: any; }) => item.estado_proceso === 'Aplicante').map((element: any, index: any) => (
-                <>
-                  <Card key={index + 2} className="p-4 my-3 text-center">
-                    <div className="text-xl">{element.fecha}</div>
-                  </Card>
-                  <Card key={index + index} className="p-4 my-3 text-center">
-                    <div>{element.username} ({element.id_clerk})</div>
-                  </Card>
-
-                  <button  key={index + index} onClick={() => handleButtonInfo(element)}>
-                    <Card className="p-4 my-3 cursor-pointer text-center">
-                      <div className='text-center  text-xl'>Informacion</div>
+              {allData.filter((item: { estado_proceso: any; }) => item.estado_proceso === 'Aplicante').length > 0 ? (
+                allData.filter((item: { estado_proceso: any; }) => item.estado_proceso === 'Aplicante').map((element: any, index: any) => (
+                  <>
+                    <Card key={index + 2} className="p-4 my-3 text-center">
+                      <div className="text-xl">{element.fecha}</div>
                     </Card>
-                  </button>
-                </>
-              ))
-            ) : (
-              <h3 className="mx-auto col-span-3 text-xl text-red-600">No se ha encontrado ningun aplicante</h3>
-            )}
+                    <Card key={index + index} className="p-4 my-3 text-center">
+                      <div>{element.username} ({element.id_clerk})</div>
+                    </Card>
 
-          </div>
-        </Card>
+                    <button key={index + index} onClick={() => handleButtonInfo(element)}>
+                      <Card className="p-4 my-3 cursor-pointer text-center">
+                        <div className='text-center  text-xl'>Informacion</div>
+                      </Card>
+                    </button>
+                  </>
+                ))
+              ) : (
+                <h3 className="mx-auto col-span-3 text-xl text-red-600">No se ha encontrado ningun aplicante</h3>
+              )}
+
+            </div>
+          </Card>
         )}
 
         {((selectedButton === 'aplicaciones') && (selectedButtonInfo === 'Informacion') && (infoUser)) && (
 
-        <Card className="mx-3 mt-3 col-span-3">
-          <div className="grid gap-3">
+          <Card className="mx-3 mt-3 col-span-3">
+            <div className="grid gap-3">
 
-          <Button onClick={() => handleButtonInfoBack()} className="w-3 absolute right-0 top-0" color="danger">
-        <p>◀</p>
-        </Button>
-            <Card className="mx-auto mt-5">
-              <CardBody className="">
+              <Button onClick={() => handleButtonInfoBack()} className="w-3 absolute right-0 top-0" color="danger">
+                <p>◀</p>
+              </Button>
+              <Card className="mx-auto mt-5">
+                <CardBody className="">
 
-                <p>Informacion de la aplicacion</p>
+                  <p>Informacion de la aplicacion</p>
 
-              </CardBody>
-            </Card>
-            <div className="grid grid-cols-2 gap-5 place-items-center">
-
-              <Card className="p-5">
-                <p>Informacion de Usuario</p>
-                <p>Nombre : {infoUser.username}</p>
-                <p>Fecha de Ingreso : {infoUser.fecha}</p>
-                <p>Estado Proceso : {infoUser.estado_formulario}</p>
-                <p>Id Clerk : {infoUser.id_clerk}</p>
-                <p>Ingresos de Usuario : {formulario.Ingresos}</p>
-                <p>Nacionalidad : {formulario.Extranjero ? 'Extranjero' : 'No es extranjero'}</p>
-                <p>Dirrecion : {formulario.Dirrecion}</p>
-                <p>Pais donde recide : {formulario.Pais}</p>
+                </CardBody>
               </Card>
+              <div className="grid grid-cols-2 gap-5 place-items-center">
 
-              <div>
+                <Card className="p-5">
+                  <p>Informacion de Usuario</p>
+                  <p>Nombre : {infoUser.username}</p>
+                  <p>Fecha de Ingreso : {infoUser.fecha}</p>
+                  <p>Estado Proceso : {infoUser.estado_formulario}</p>
+                  <p>Id Clerk : {infoUser.id_clerk}</p>
+                  <p>Ingresos de Usuario : {formulario.Ingresos}</p>
+                  <p>Nacionalidad : {formulario.Extranjero ? 'Extranjero' : 'No es extranjero'}</p>
+                  <p>Dirrecion : {formulario.Dirrecion}</p>
+                  <p>Pais donde recide : {formulario.Pais}</p>
+                </Card>
 
-              <Card className="p-5">
-                <p>Capture de Dashboard Yummy</p>
-                <div className="mx-auto">
+                <div>
 
-                  <Image
-                    src={filteredDocuments[0]?.dashoard_yummy }
-                    width={100}
-                    height={100}
-                    alt="Dashoard de yummy"
-                  />
-                </div>
-              </Card>
+                  <Card className="p-5">
+                    <p>Capture de Dashboard Yummy</p>
+                    <div className="mx-auto">
 
-
-              <Card className="p-5">
-                <p>Capture de persona Cedula</p>
-                <div className="mx-auto">
-
-                  <Image
-                    src={filteredDocuments[0]?.persona_cedula}
-                    width={100}
-                    height={100}
-                    alt="Persona Cedula"
-                  />
-                </div>
-              </Card>
+                      <Image
+                        src={filteredDocuments[0]?.dashoard_yummy}
+                        width={100}
+                        height={100}
+                        alt="Dashoard de yummy"
+                      />
                     </div>
+                  </Card>
 
-              <div className="col-span-2">
-                <Checkbox
-                  defaultSelected={isChecked}
-                  radius='sm'
-                  onChange={handleCheckboxChange}
-                >
-                  Estoy de acuerdo con los términos y condiciones
-                </Checkbox>
-                <div className="grid grid-cols-2 items-center">
 
-                  <Button
-                    className="mx-auto mt-3"
-                    onClick={handleClickDeclinar}
-                    isDisabled={!isChecked}
-                    color='danger'
-                  >
-                    Declinar
-                  </Button>
+                  <Card className="p-5">
+                    <p>Capture de persona Cedula</p>
+                    <div className="mx-auto">
 
-                  <Button
-                    className="mx-auto mt-3"
-                    onClick={handleClick}
-                    isDisabled={!isChecked}
-                    color='primary'
-                  >
-                    Enviar
-                  </Button>
-
+                      <Image
+                        src={filteredDocuments[0]?.persona_cedula}
+                        width={100}
+                        height={100}
+                        alt="Persona Cedula"
+                      />
+                    </div>
+                  </Card>
                 </div>
-              </div>
 
+                <div className="col-span-2">
+                  <Checkbox
+                    defaultSelected={isChecked}
+                    radius='sm'
+                    onChange={handleCheckboxChange}
+                  >
+                    Estoy de acuerdo con los términos y condiciones
+                  </Checkbox>
+                  <div className="grid grid-cols-2 items-center">
+
+                    <Button
+                      className="mx-auto mt-3"
+                      onClick={handleClickDeclinar}
+                      isDisabled={!isChecked}
+                      color='danger'
+                    >
+                      Declinar
+                    </Button>
+
+                    <Button
+                      className="mx-auto mt-3"
+                      onClick={handleClick}
+                      isDisabled={!isChecked}
+                      color='primary'
+                    >
+                      Enviar
+                    </Button>
+
+                  </div>
+                </div>
+
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
         )}
 
         {selectedButton === 'aprobados' && (
           <Card className="mx-3 mt-3 col-span-3">
-          
-          <h3 className='mx-auto mt-5 text-xl'>Aprobados</h3>
 
-          {filtradoAplicado.map((element: any, index: any) => (
-                      <div className="grid grid-cols-3 col-span-3 gap-3" key={index+500}>
-                        <Card key={index + 2} className="p-4 my-3 text-center">
-                          <div>{element.fecha}</div>
-                        </Card>
-                        <Card key={index + index} className="p-4 my-3 text-center">
-                          <div>{element.username} ({element.id_clerk})</div>
-                        </Card>
+            <h3 className='mx-auto mt-5 text-xl'>Aprobados</h3>
 
-                        <Card key={index + index} className="p-4 my-3 text-center">
-                          <div className='text-center'>
-                            {element.estado_proceso === 'documentos' ? 'En Documentos' : ''}
-                            {element.estado_proceso === 'Aplicante' ? 'Aplicante' : ''}
-                            {element.estado_proceso === 'aprobado' ? 'aprobado' : ''}
-                            {element.estado_proceso  ? '': 'Usuario No ha iniciado proceso'}
-                          </div>
-                        </Card>
-                      </div>
-                    ))}
+            {allAprobados.map((element: any, index: any) => (
+              <div className="grid grid-cols-3 col-span-3 gap-3" key={index + 500}>
+                <Card key={index + 2} className="p-4 my-3 text-center">
+                  <div>{element.fecha}</div>
+                </Card>
+                <Card key={index + index} className="p-4 my-3 text-center">
+                  <div>{element.username} ({element.id_clerk})</div>
+                </Card>
+
+                <Card key={index + index} className="p-4 my-3 text-center">
+                  <div className='text-center'>
+                    {element.aprobacion_tvs === true ? 'aprobado TVS' : ''}
+                    {element.aprobacion_tvs === true && element.aprobacion_yummy === true ? <hr /> : ''}
+                    {element.aprobacion_yummy === true ? 'aprobado Yummy' : ''}
+                  </div>
+                </Card>
+              </div>
+            ))}
           </Card>
         )}
 
@@ -611,55 +617,58 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
             {/* Código del componente cuando el botón "Aceptados" está seleccionado */}
           </Card>
         )}
-        
+
+
+
+
       </div>
 
 
-      <Modal 
-        size={'md'} 
-        isOpen={isOpen} 
-        onClose={onClose} 
+      <Modal
+        size={'md'}
+        isOpen={isOpen}
+        onClose={onClose}
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">Informacion de Rechazo</ModalHeader>
               <ModalBody>
-                
 
-              <div className="grid  items-center">
 
-<form onSubmit={handleSubmit(onSubmit)}>
-    <h3>Inserte la razon de rechazo</h3>
-  <Controller
-    control={control}
-    rules={{
-      validate: (value : any) => value instanceof File,
-    }}
-    render={({ field, fieldState }) => {
-      return (
-        <MuiFileInput
-          inputProps={{ accept: '.png, .jpg' }}
-         
-          {...field}
-          placeholder="Inserte la razon de rechazo"
-          helperText={fieldState.invalid ? "Dato es invalido" : ""}
-          error={fieldState.invalid}
-        />
-      );
-    }}
-    name='file'
-  />
+                <div className="grid  items-center">
 
-<div className="pt-5 grid ">
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <h3>Inserte la razon de rechazo</h3>
+                    <Controller
+                      control={control}
+                      rules={{
+                        validate: (value: any) => value instanceof File,
+                      }}
+                      render={({ field, fieldState }) => {
+                        return (
+                          <MuiFileInput
+                            inputProps={{ accept: '.png, .jpg' }}
 
-    <Button className=" bg-black text-white" type="submit">
-      Enviar
-    </Button>
-</div>
-</form>
-    </div>
-                
+                            {...field}
+                            placeholder="Inserte la razon de rechazo"
+                            helperText={fieldState.invalid ? "Dato es invalido" : ""}
+                            error={fieldState.invalid}
+                          />
+                        );
+                      }}
+                      name='file'
+                    />
+
+                    <div className="pt-5 grid ">
+
+                      <Button className=" bg-black text-white" type="submit">
+                        Enviar
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+
 
               </ModalBody>
               <ModalFooter>
