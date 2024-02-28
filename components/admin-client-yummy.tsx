@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import {Button} from "@nextui-org/react";
 
 
 
@@ -25,12 +26,17 @@ const Home = ({userId} : any) => {
   });
 
   const [isValidating, setIsValidating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isTokenValid, setIsTokenValid] = useState(false);
 
   const onSubmit = async (data: Inputs) => {
-    setIsValidating(true);
+    console.log('asas');
+    
+
     data.id = userId
     try {
+      setIsLoading(true)
+      setIsValidating(true);
       const response = await fetch("/api/validacionyummy", {
         method: "POST",
         body: JSON.stringify(data),
@@ -49,9 +55,15 @@ const Home = ({userId} : any) => {
         setIsTokenValid(false);
       }
     } catch (error) {
-      console.error("Error validating token", error);
-    } finally {
+      console.log('error');
+      
+      setIsLoading(false)
       setIsValidating(false);
+      console.error("Error validating token");
+    } finally {
+      setIsLoading(false)
+      setIsValidating(false);
+      console.log('finalizo', isLoading, isValidating);
     }
   };
 
@@ -73,14 +85,17 @@ const Home = ({userId} : any) => {
               />
               {errors.pass && <p className="text-red-500">{errors.pass.message}</p>}
             </div>
-            
-            <button
+            <div className="grid">
+
+            <Button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
               disabled={isValidating}
-            >
+              isLoading={isLoading}
+              >
               {isValidating ? "Validando..." : "Enviar"}
-            </button>
+            </Button>
+              </div>
           </form>
         )}
       </div>

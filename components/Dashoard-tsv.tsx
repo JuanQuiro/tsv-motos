@@ -14,7 +14,11 @@ export default async function App() {
 
   return (
     <>
-    <div className="grid grid-cols-4">
+
+    
+
+    
+    <div className="grid grid-cols-1">
     <Card className=" mx-2">
       <CardHeader className="justify-between">
         <div className="flex gap-5 mx-auto">
@@ -86,7 +90,7 @@ export default async function App() {
       </CardFooter>
     </Card>
     
-    <Card className=" mx-3 col-span-3">
+    <Card className=" mx-3 col-span-1">
     <Card className="mx-4  my-3">
       <CardBody>
         <p className="mx-auto">

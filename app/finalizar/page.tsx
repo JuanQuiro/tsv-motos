@@ -18,14 +18,18 @@ const ConfirmationMessage = () => {
         <p className="mb-4">
           ¡Estamos emocionados de acompañarte en este viaje financiero con TVS!
         </p>
+        <div className="grid">
+
         <Button
         href="/dashoard-tvs"
         as={Link}
         color="primary"
         variant="solid"
+        
         >
         Dashboard TVS
         </Button>
+        </div>
       </div>
     </div>
   );

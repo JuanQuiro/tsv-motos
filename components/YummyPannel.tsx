@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardHeader, CardBody, CardFooter, Avatar, Button, Checkbox, user } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Avatar, Button, Checkbox, user, useDisclosure,Modal } from "@nextui-org/react";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, PromiseLikeOfReactNode, useState, useEffect } from "react";
@@ -8,17 +8,50 @@ import { Toaster, toast } from "sonner";
 const { getMonitor } = require("consulta-dolar-venezuela");
 
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+import {ModalContent, ModalHeader, ModalBody, ModalFooter} from "@nextui-org/react";
 
 
 
-export default function App({ allData, price, imagenes, Iniciados }: any) {
+
+import React from "react";
+import ReactDOM from "react-dom";
+import { MuiFileInput } from "mui-file-input";
+import { Controller, useForm } from "react-hook-form";
+import { auth } from '@clerk/nextjs';
+import { sendContactForm, usuarioCorreo } from "@/lib/api";
+import axios from "axios";
+
+
+export default function App({ allData, price, imagenes, Iniciados, dataFormulario }: any) {
+  const [filteredDocuments, setFilteredDocuments] = useState(false) as any
   const router = useRouter()
   const [selectedButton, setSelectedButton] = useState(null);
+  const [inputValue, setInputValue] = useState('')
   const [selectedButtonInfo, setSelectedButtonInfo] = useState(null) as any;
   const [infoUser, setInfoUser] = useState({}) as any;
+  const [formulario, setFormulario] = useState({}) as any;
   const [isChecked, setIsChecked] = useState(false)
-  const [filteredDocuments, setFilteredDocuments] = useState(false) as any
+  const [id_users, setIdUsers] = useState('') as any
+  
 
+  
+
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
+  const showSwal = () => {
+    withReactContent(Swal).fire({
+      title: <i>Usuario Aceptado</i>,
+  icon: "success",
+      inputValue,
+      preConfirm: () => {
+        setInputValue(Swal.getInput()?.value || '')
+      },
+    })
+  }
+  
   
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked)
@@ -34,21 +67,52 @@ export default function App({ allData, price, imagenes, Iniciados }: any) {
 
   const handleButtonInfo = (estado: any) => {
     const usuario = estado;
-    console.log(usuario);
+    
+    const formularioCLiente = findObjectById(dataFormulario,usuario.id_clerk)
+    setFormulario(formularioCLiente)
+
+    setIdUsers(usuario.id_clerk)
   
     setSelectedButtonInfo('Informacion');
     setInfoUser(usuario);
-    console.log('user',infoUser);
+    console.log('user',formularioCLiente);
+    
+    
+  };
+
+
+  const handleButtonInfoBack = () => {
+  
+    setSelectedButtonInfo(null);
     
     
   };
 
   const handleClick = async () => {
-    toast('Usuario Aceptado')
-  }
+    showSwal()
 
+    try {
+      const response = await fetch('/api/aceptar', {
+        method: 'POST',
+        body: JSON.stringify(infoUser.id_clerk),
+      });
+      
+      // Aquí puedes realizar el procesamiento de la respuesta de la primera llamada
+     
+    } catch (error) {
+      // Manejar el error de la primera llamada
+      console.error('Error en aceptar:', error);
+    }
+
+    toast('Usuario Aceptado')
+
+
+  }
+  
   const handleClickDeclinar = async () => {
-    router.push('/declinar')
+    onOpen();
+
+    //router.push('/declinar')
   }
 
   
@@ -74,6 +138,10 @@ export default function App({ allData, price, imagenes, Iniciados }: any) {
     return resultados;
   }
 
+  function findObjectById(array: any[], id_clerk: any) {
+    return array.find((obj: { id_clerk: any; }) => obj.id_clerk === id_clerk);
+  }
+
 let filtradoAplicado = buscarAlldata(Iniciados,allData)
 const totalDocumentos = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Aplicante').length;
 const totalAprobados = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'aplicantes').length;
@@ -88,15 +156,52 @@ useEffect(() => {
     const filteredDocuments = imagenes.filter((doc: { id_clerk: any; }) => doc.id_clerk === infoUser.id_clerk);
     console.log('DOCUMENTO',filteredDocuments);
     setFilteredDocuments(filteredDocuments)
+    //const objeto = findObjectById(dataFormulario,id_clerk)
   }
 
 }, [infoUser]);
+
+const [state, setState] = useState({}) as any
+
+const { control, handleSubmit } = useForm({
+  defaultValues: {
+    file: null,
+  },
+});
+
+const onSubmit = (data: any) => {
+
+  
+  const apiResolver  = async () => {
+    const formData = new FormData()
+    formData.append('image', data.file)
+    formData.append('user', infoUser.id_clerk)
+
+
+    try {
+      const response = await fetch('/api/rechazo', {
+        method: 'POST',
+        body: formData
+      });
+      
+      // Aquí puedes realizar el procesamiento de la respuesta de la primera llamada
+     
+    } catch (error) {
+      // Manejar el error de la primera llamada
+      console.error('Error en la primera llamada:', error);
+    }
+  }
+
+  const response = apiResolver()
+  console.log(response);
+  
+};
 
 // Ejemplo de uso
   return (
     <>
           <Toaster />
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-4">
         <Card className=" mx-2 mt-2">
 
           <div className="grid mt-2 grid-cols-2">
@@ -307,7 +412,7 @@ useEffect(() => {
           <Card className="mx-3 mt-3 col-span-3">
             <div className="grid gap-3">
 
-            <Button onClick={() => handleButtonInfo(null)} className="w-3 absolute right-0 top-0" color="danger">
+            <Button onClick={() => handleButtonInfoBack()} className="w-3 absolute right-0 top-0" color="danger">
   <p>◀</p>
 </Button>
               <Card className="mx-auto mt-5">
@@ -320,37 +425,42 @@ useEffect(() => {
               <div className="grid grid-cols-2 gap-5 place-items-center">
 
                 <Card className="p-5">
-                  <p>Info Input de Usuario</p>
+                  <p>Informacion de Usuario</p>
                   <p>Nombre : {infoUser.username}</p>
                   <p>Fecha de Ingreso : {infoUser.fecha}</p>
                   <p>Estado Proceso : {infoUser.estado_formulario}</p>
+                  <p>Id Clerk : {infoUser.id_clerk}</p>
+                  <p>Ingresos de Usuario : {formulario.Ingresos}</p>
+                  <p>Nacionalidad : {formulario.Extranjero ? 'Extranjero' : 'No es extranjero'}</p>
+                  <p>Dirrecion : {formulario.Dirrecion}</p>
+                  <p>Pais donde recide : {formulario.Pais}</p>
                 </Card>
 
                 <div>
 
                 <Card className="p-5">
-                  <p>Capture de Dashboard</p>
+                  <p>Capture de Dashboard Yummy</p>
                   <div className="mx-auto">
 
                     <Image
                       src={filteredDocuments[0]?.dashoard_yummy }
                       width={100}
                       height={100}
-                      alt="Picture of the author"
+                      alt="Dashoard de yummy"
                     />
                   </div>
                 </Card>
 
 
                 <Card className="p-5">
-                  <p>Capture de Dashboard</p>
+                  <p>Capture de persona Cedula</p>
                   <div className="mx-auto">
 
                     <Image
                       src={filteredDocuments[0]?.persona_cedula}
                       width={100}
                       height={100}
-                      alt="Picture of the author"
+                      alt="Persona Cedula"
                     />
                   </div>
                 </Card>
@@ -368,7 +478,7 @@ useEffect(() => {
 
                     <Button
                       className="mx-auto mt-3"
-                      onClick={handleClick}
+                      onClick={handleClickDeclinar}
                       isDisabled={!isChecked}
                       color='danger'
                     >
@@ -412,6 +522,66 @@ useEffect(() => {
 
       </div>
 
+
+      <Modal 
+        size={'md'} 
+        isOpen={isOpen} 
+        onClose={onClose} 
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Informacion de Rechazo</ModalHeader>
+              <ModalBody>
+                
+
+              <div className="grid  items-center">
+
+<form onSubmit={handleSubmit(onSubmit)}>
+    <h3>Inserte la razon de rechazo</h3>
+  <Controller
+    control={control}
+    rules={{
+      validate: (value : any) => value instanceof File,
+    }}
+    render={({ field, fieldState }) => {
+      return (
+        <MuiFileInput
+          inputProps={{ accept: '.png, .jpg' }}
+         
+          {...field}
+          placeholder="Inserte la razon de rechazo"
+          helperText={fieldState.invalid ? "Dato es invalido" : ""}
+          error={fieldState.invalid}
+        />
+      );
+    }}
+    name='file'
+  />
+
+<div className="pt-5 grid ">
+
+    <Button className=" bg-black text-white" type="submit">
+      Enviar
+    </Button>
+</div>
+</form>
+    </div>
+                
+
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={onClose}>
+                  Action
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   );
 };
