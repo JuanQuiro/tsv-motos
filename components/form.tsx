@@ -135,8 +135,14 @@ export default function Form() {
       formData.append('file', data.RifDocumento)
 
       
-      await enviarForm(data)
-      await enviarClerk(user)
+      const resForm = await enviarForm(data)
+      const resClerk = await enviarClerk(user)
+
+      console.log('Formulario =', resForm, 'ResClerk =',resClerk);
+      
+
+      router.push('/documentos')
+
     } catch (err) {
       console.log('Error en la logica')
     }

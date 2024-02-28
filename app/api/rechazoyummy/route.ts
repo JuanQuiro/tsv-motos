@@ -74,27 +74,15 @@
     
     
   try {
-    const user = await prisma.rechazados.create({
+    const user = await prisma.rechazados_yummy.create({
       data: {
         id_clerk : userId || 'Error', 
         razon_rechazo : uploadedImages[0].url,
         rechazo: true
       },
     })
-
-    try {
-      const user2 = await prisma.clerk.update({
-        where: { id_clerk: userId || 'ERROR' },
-        data: { rechazo_tvs: true },
-      });
-    } catch (error) {
-      console.error('Error al actualizar el usuario en la tabla clerk:');
-      return NextResponse.json({ msj: 'Error', status : 500 });
-    }
-
   } catch (error) {
     console.log('error en rechazado');
-    return NextResponse.json({ msj: 'Mal cargo', status : 400})
   }
 
   const image = uploadedImages[0].url

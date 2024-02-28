@@ -5,31 +5,38 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import {Button} from "@nextui-org/react";
 
 
 
 type Inputs = {
   pass: string;
-  id: string
+  id: string;
 };
 
 const schema = z.object({
   pass: z.string().nonempty("Token es requerido"),
 });
 
-const Home = ({auth}: any) => {
+
+const Home = ({userId} : any) => {
   const router = useRouter()
   const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
     resolver: zodResolver(schema), // Zod resolver
   });
 
   const [isValidating, setIsValidating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isTokenValid, setIsTokenValid] = useState(false);
 
   const onSubmit = async (data: Inputs) => {
-    data.id = auth
-    setIsValidating(true);
+    console.log('asas');
+    
+
+    data.id = userId
     try {
+      setIsLoading(true)
+      setIsValidating(true);
       const response = await fetch("/api/validacion", {
         method: "POST",
         body: JSON.stringify(data),
@@ -38,7 +45,7 @@ const Home = ({auth}: any) => {
 
       const result = await response.json();
       
-      console.log(result);
+      console.log({result});
       
 
       if (result.status === 200) {
@@ -48,9 +55,15 @@ const Home = ({auth}: any) => {
         setIsTokenValid(false);
       }
     } catch (error) {
-      console.error("Error validating token", error);
-    } finally {
+      console.log('error');
+      
+      setIsLoading(false)
       setIsValidating(false);
+      console.error("Error validating token");
+    } finally {
+      setIsLoading(false)
+      setIsValidating(false);
+      console.log('finalizo', isLoading, isValidating);
     }
   };
 
@@ -72,14 +85,17 @@ const Home = ({auth}: any) => {
               />
               {errors.pass && <p className="text-red-500">{errors.pass.message}</p>}
             </div>
-            
-            <button
+            <div className="grid">
+
+            <Button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
               disabled={isValidating}
-            >
+              isLoading={isLoading}
+              >
               {isValidating ? "Validando..." : "Enviar"}
-            </button>
+            </Button>
+              </div>
           </form>
         )}
       </div>

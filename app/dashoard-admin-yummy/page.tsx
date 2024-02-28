@@ -44,7 +44,9 @@ const dataFormulario = await prisma.data_formulario.findMany({})
   const Imagenes = await prisma.documentos.findMany({})
   const Iniciados = await prisma.correo_iniciando_estimacion.findMany({})
 
+  
+
   return (
-    <YummyPanel allData={allData} price={price} dataFormulario={dataFormulario} imagenes={Imagenes} Iniciados={Iniciados}  />
+        <YummyPanel allData={allData} price={price} dataFormulario={dataFormulario} imagenes={Imagenes} Iniciados={Iniciados}  />
   );
 };

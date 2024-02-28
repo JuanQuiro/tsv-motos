@@ -38,6 +38,8 @@ model clerk {
   aprobacion_yummy Boolean
   aprobacion_tvs Boolean
   aprobacion_final Boolean
+  rechazo_yummy Boolean
+  rechazo_tvs Boolean
 }
 
 model documentos {
@@ -64,6 +66,7 @@ model admin_yummy {
 model rechazados {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   id_clerk String @unique
+  razon_rechazo String
   rechazo Boolean
 }
 

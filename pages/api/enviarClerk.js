@@ -23,7 +23,9 @@ const handler = async (req, res) => {
           estado_proceso: 'documentos',
           aprobacion_yummy: false,
           aprobacion_tvs: false,
-          aprobacion_final: false
+          aprobacion_final: false,
+          rechazo_yummy: false,
+          rechazo_tvs : false
         }
       })
       return res.status(200).json({ success: true })
