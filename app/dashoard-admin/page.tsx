@@ -44,9 +44,10 @@ const MiComponente = async () => {
   const allData = await prisma.clerk.findMany({})
   const Imagenes = await prisma.documentos.findMany({})
   const Iniciados = await prisma.correo_iniciando_estimacion.findMany({})
+  const DocsFirmas = await prisma.firma.findMany({})
 
   return (
-    <Admin allData={allData} price={price} firma={firma} dataFormulario={dataFormulario} imagenes={Imagenes} Iniciados={Iniciados} />
+    <Admin allData={allData} price={price} firma={firma} dataFormulario={dataFormulario} imagenes={Imagenes} Iniciados={Iniciados} DocsFirmas={DocsFirmas} />
   );
 };
 

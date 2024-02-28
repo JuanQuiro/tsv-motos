@@ -68,7 +68,17 @@ export const POST = async (req : Request) => {
         console.log('error');
         return NextResponse.json({ msj: 'Error', status : 400 });
       }
-  
+      
+
+      
+   try {
+    const user2 = await prisma.clerk.update({
+      where: { id_clerk: userId || 'ERROR'  as any},
+      data: { firma_mandada: true },
+    });
+  } catch (error) {
+    return NextResponse.json({ msj: 'Error', status : 400 });
+  }
 
       return NextResponse.json({ msj: 'Aceptar', status : 200 });
 };

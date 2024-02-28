@@ -13,7 +13,7 @@ import { useState } from "react";
 
 const prisma = new PrismaClient()
 
-export default function App({allData,documento, imagenes, firma} : any) {
+export default function App({allData,documento, imagenes, firma, DocsFirmas} : any) {
   console.log('firma',firma);
   let isFirma;
 if (firma) {
@@ -241,7 +241,7 @@ const [firmaUser, setFirmaUser] = useState(isFirma);
                         width={200}
                         height={50}
                         alt="NextUI hero Image"
-                        src={imagenes.persona_cedula} />
+                        src={imagenes?.persona_cedula} />
 
                     </Card>
                   </div>

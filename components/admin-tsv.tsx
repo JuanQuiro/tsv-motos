@@ -3,8 +3,7 @@ import { PrismaClient } from '@prisma/client';
 //import Formulario from "../../components/formario-documentos";
 import { redirect, useRouter } from 'next/navigation';
 import { auth } from '@clerk/nextjs';
-import { Card, CardHeader, CardBody, CardFooter, Avatar, Button, useDisclosure, Checkbox, Modal } from "@nextui-org/react";
-import Image from 'next/image';
+import { Card, CardHeader, CardBody, CardFooter, Avatar, Button, useDisclosure, Checkbox, Modal, Image } from "@nextui-org/react";
 import { useEffect, useState } from 'react';
 import { toast, Toaster } from 'sonner';
 import withReactContent from 'sweetalert2-react-content';
@@ -23,13 +22,15 @@ const { getMonitor } = require("consulta-dolar-venezuela");
 
 const prisma = new PrismaClient()
 
-const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
+const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }: any) => {
   const [filteredDocuments, setFilteredDocuments] = useState(false) as any
   const router = useRouter()
   const [selectedButton, setSelectedButton] = useState(null);
   const [inputValue, setInputValue] = useState('')
   const [selectedButtonInfo, setSelectedButtonInfo] = useState(null) as any;
   const [infoUser, setInfoUser] = useState({}) as any;
+  const [infoUserFirma, setInfoUserFirma] = useState(null) as any;
+  const [infoUserFirmaImg, setInfoUserFirmaImg] = useState(null) as any;
   const [formulario, setFormulario] = useState({}) as any;
   const [isChecked, setIsChecked] = useState(false)
   const [isAplicacion, setIsAplicacion] = useState(false)
@@ -71,8 +72,9 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
   const aprobadoYummys = allData.filter((aplicante: any) => aplicante.aprobacion_yummy === true);
   const allAprobados = allData.filter((aplicante: any) => aplicante.aprobacion_tvs === true);
+  const allFirma = allData.filter((aplicante: any) => aplicante.firma_mandada === true);
 
-  console.log('all probados', allAprobados);
+  console.log('all probados', allFirma);
 
 
   const handleButtonClick = (buttonName: any) => {
@@ -90,6 +92,17 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
   const showSwal = () => {
     withReactContent(Swal).fire({
       title: <i>Usuario Aceptado</i>,
+      icon: "success",
+      inputValue,
+      preConfirm: () => {
+        setInputValue(Swal.getInput()?.value || '')
+      },
+    })
+  }
+
+  const showSwalFirma = () => {
+    withReactContent(Swal).fire({
+      title: <i>Firma aceptada</i>,
       icon: "success",
       inputValue,
       preConfirm: () => {
@@ -119,12 +132,23 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
   };
 
+  const handleButtonInfoFirma = (estado: any) => {
+    const usuario = estado;
+
+    setInfoUserFirma(usuario)
+
+
+  };
 
   const handleButtonInfoBack = () => {
 
     setSelectedButtonInfo(null);
 
 
+  };
+
+  const handleButtonInfoBackFirma = () => {
+    setInfoUserFirma(null)
   };
 
   function buscarAceptacionYummy(array: any, id_clerk: any) {
@@ -167,6 +191,37 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
   }
 
+  const handleClickFirma = async () => {
+    showSwalFirma()
+
+    const response = await fetch('/api/aceptarFirma', {
+      method: 'POST',
+      body: JSON.stringify(infoUserFirma.id_clerk),
+    });
+
+
+    const result = await response.json();
+    const status = result?.status
+
+    console.log({status},{result});
+
+
+    if (status === 200) {
+      //const userAceptacion =buscarAceptacionYummy(allAprobados,infoUser.id_clerk)
+      //console.log('aceptacion',userAceptacion);
+
+      onClose()
+      toast('Firma Aceptada')
+    }
+    if (status === 400) {
+      onClose()
+      toast('Error al crear aceptacion de firma')
+    }
+
+
+
+  }
+
   const handleClickDeclinar = async () => {
     onOpen();
 
@@ -184,6 +239,13 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
     }
 
   }, [infoUser]);
+
+  useEffect(() => {
+    const infoUserFirmaImg = DocsFirmas.filter((firmas: any) => firmas.id_clerk === infoUserFirma?.id_clerk);
+    setInfoUserFirmaImg(infoUserFirmaImg[0]?.firma);
+    console.log({infoUserFirmaImg});
+    
+}, [infoUserFirma]);
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -234,7 +296,6 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
 
   };
 
-  console.log('Filtrados=', filtradoAplicado);
   //console.log(req);
 
   //if (allData[0]?.estado_formulario == 'Finalizar') return redirect('/dashoard-tvs')
@@ -600,10 +661,85 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario }: any) => {
           </Card>
         )}
 
-        {selectedButton === 'inicial' && (
+        {selectedButton === 'inicial' && (infoUserFirma === null) && (
           <Card className="mx-3 mt-3 col-span-3">
-            {/* Código del componente cuando el botón "Aceptados" está seleccionado */}
+            
+
+            <h3 className='mx-auto mt-5 text-xl'>Firma</h3>
+
+            {allFirma.map((element: any, index: any) => (
+              <div className="grid grid-cols-3 col-span-3 gap-3" key={index + 500}>
+                <Card key={index + 2} className="p-4 my-3 text-center">
+                  <div>{element.fecha}</div>
+                </Card>
+                <Card key={index + index} className="p-4 my-3 text-center">
+                  <div>{element.username} ({element.id_clerk})</div>
+                </Card>
+
+                <button key={index + index} onClick={() => handleButtonInfoFirma(element)}>
+                      <Card className="p-4 my-3 cursor-pointer text-center">
+                        <div className='text-center  text-xl'>Informacion</div>
+                      </Card>
+                    </button>
+              </div>
+            ))}
+
           </Card>
+        )}
+
+        {((selectedButton === 'inicial') && (infoUserFirma)) && (
+          <Card className="mx-3 mt-3 col-span-3">
+          <div className="grid gap-3">
+
+            <Button onClick={() => handleButtonInfoBackFirma()} className="w-3 absolute right-0 top-0" color="danger">
+              <p>◀</p>
+            </Button>
+            <Card className="mx-auto mt-5">
+              <CardBody className="">
+
+                <p>Informacion de la firma</p>
+
+              </CardBody>
+            </Card>
+            <div className="grid grid-cols-2 gap-5 place-items-center">
+
+<div className='col-span-2'>
+
+            <Image
+                  width={300}
+                  height={150}
+                  alt="NextUI hero Image"
+                  src={infoUserFirmaImg}
+                  />
+                  </div>
+
+
+              <div className="col-span-2">
+                <Checkbox
+                  defaultSelected={isChecked}
+                  radius='sm'
+                  onChange={handleCheckboxChange}
+                >
+                  Confirmo que el usuario a firmado correctamente
+                </Checkbox>
+                <div className="grid grid-cols-2 items-center">
+
+
+                  <Button
+                    className="mx-auto mt-3"
+                    onClick={handleClickFirma}
+                    isDisabled={!isChecked}
+                    color='primary'
+                  >
+                    Enviar
+                  </Button>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </Card>
         )}
 
         {selectedButton === 'retiroInicial' && (

@@ -25,7 +25,11 @@ const handler = async (req, res) => {
           aprobacion_tvs: false,
           aprobacion_final: false,
           rechazo_yummy: false,
-          rechazo_tvs : false
+          rechazo_tvs : false,
+          aprobacion_firma: false,
+  firma_mandada :  false,
+  pago_movil: '',
+  unidad_retirar : '',
         }
       })
       return res.status(200).json({ success: true })

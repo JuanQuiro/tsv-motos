@@ -40,6 +40,10 @@ model clerk {
   aprobacion_final Boolean
   rechazo_yummy Boolean
   rechazo_tvs Boolean
+  aprobacion_firma Boolean
+  firma_mandada Boolean
+  pago_movil String
+  unidad_retirar String
 }
 
 model documentos {
