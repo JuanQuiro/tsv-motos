@@ -408,7 +408,7 @@ export default function App({ allData, documento, imagenes, firma, DocsFirmas }:
 
 
                     <><p>
-                      Realize el siguiente pago Movil y dale a 'Reportar' =
+                      Realize el siguiente pago Movil y dale a Reportar =
                     </p><Card className="mx-auto p-3">
                         0412-456.96.58<br></br>
                         J-605012533<br></br>
