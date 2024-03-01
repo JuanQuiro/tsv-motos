@@ -220,11 +220,14 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
       //console.log('aceptacion',userAceptacion);
 
       onClose()
-      toast('Aceptacion Creada')
+      toast('Aceptacion Creada - Re');
+      
+      router.refresh()
     }
     if (status === 400) {
       onClose()
       toast('Error al crear aceptacion')
+      router.refresh()
     }
 
 
@@ -252,10 +255,12 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
       onClose()
       toast('Firma Aceptada')
+      router.refresh()
     }
     if (status === 400) {
       onClose()
       toast('Error al crear aceptacion de firma')
+      router.refresh()
     }
 
 
@@ -319,10 +324,12 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
       if (status === 200) {
         onClose()
         toast('Rechazo Creado')
+        router.refresh()
       }
       if (status === 400) {
         onClose()
         toast('Error al crear rechazo')
+        router.refresh()
       }
 
 
@@ -358,10 +365,12 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
     if (status2 === 200) {
       onClose()
       toast('Pago Creado')
+      router.refresh();
     }
     if (status2 === 400) {
       onClose()
       toast('Error al crear pago')
+      router.refresh()
     }
 
 
