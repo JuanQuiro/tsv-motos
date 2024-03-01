@@ -43,6 +43,14 @@ model clerk {
   aprobacion_firma Boolean
   firma_mandada Boolean
   pago_movil String
+
+  //cita
+
+  dirrecion_cita String
+  monto_pagar String
+  hora_pagar String
+  fecha_pagar String
+
   unidad_retirar String
 }
 

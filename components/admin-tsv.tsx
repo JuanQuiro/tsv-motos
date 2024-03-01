@@ -3,8 +3,8 @@ import { PrismaClient } from '@prisma/client';
 //import Formulario from "../../components/formario-documentos";
 import { redirect, useRouter } from 'next/navigation';
 import { auth } from '@clerk/nextjs';
-import { Card, CardHeader, CardBody, CardFooter, Avatar, Button, useDisclosure, Checkbox, Modal, Image } from "@nextui-org/react";
-import { useEffect, useState } from 'react';
+import { Card, CardHeader, CardBody, CardFooter, Avatar, Button, useDisclosure, Checkbox, Modal, Image, Input } from "@nextui-org/react";
+import { useEffect } from 'react';
 import { toast, Toaster } from 'sonner';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
@@ -15,10 +15,22 @@ import { MuiFileInput } from "mui-file-input";
 import { Controller, useForm } from "react-hook-form";
 
 
+import { useState } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
+
+
 
 const { getMonitor } = require("consulta-dolar-venezuela");
 
 
+const schema = z.object({
+  dirrecionCita: z.string().min(2, 'El teléfono emisor es requerido'),
+  fechaPago: z.string().min(1, 'La fecha de pago es requerida'),
+  montoPagar: z.string().min(1, 'La fecha de pago es requerida'),
+  horaCita: z.string().min(1, 'La fecha de pago es requerida'),
+});
 
 const prisma = new PrismaClient()
 
@@ -31,11 +43,27 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
   const [infoUser, setInfoUser] = useState({}) as any;
   const [infoUserFirma, setInfoUserFirma] = useState(null) as any;
   const [infoUserFirmaImg, setInfoUserFirmaImg] = useState(null) as any;
+
+  const [infoUserRetiro, setinfoUserRetiro] = useState(null) as any;
+
   const [formulario, setFormulario] = useState({}) as any;
   const [isChecked, setIsChecked] = useState(false)
   const [isAplicacion, setIsAplicacion] = useState(false)
   const [id_users, setIdUsers] = useState('') as any
 
+
+  type Inputs = z.infer<typeof schema>
+
+  const {
+    register: register2,
+    handleSubmit: handleSubmit2,
+    watch,
+    reset,
+    trigger,
+    formState: { errors }
+  } = useForm<Inputs>({
+    resolver: zodResolver(schema)
+  })
 
   function buscarAlldata(Iniciado: any[], Alldata: any[]) {
     const correosIniciado = Iniciado.map((data: { gmail: any; }) => data.gmail);
@@ -67,7 +95,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
   const totalAprobados = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'aplicantes').length;
   const totalProceso = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Proceso').length;
   const totalGarantia = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Garantia').length;
-  const totalFinalizado = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Finalizados').length;
+  const totalFinalizado = filtradoAplicado.filter(aplicante => aplicante.estado_proceso === 'Finalizados').length; // infoUserRetiro
 
 
   const aprobadoYummys = allData.filter((aplicante: any) => aplicante.aprobacion_yummy === true);
@@ -140,6 +168,14 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
   };
 
+  
+
+
+  const handleButtonInfoRetiro = (estado: any) => {
+    const usuario = estado;
+    setinfoUserRetiro(usuario)
+  };
+
   const handleButtonInfoBack = () => {
 
     setSelectedButtonInfo(null);
@@ -149,6 +185,10 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
   const handleButtonInfoBackFirma = () => {
     setInfoUserFirma(null)
+  };
+
+  const handleButtonInfoBackPago = () => {
+    setinfoUserRetiro(null)
   };
 
   function buscarAceptacionYummy(array: any, id_clerk: any) {
@@ -203,7 +243,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
     const result = await response.json();
     const status = result?.status
 
-    console.log({status},{result});
+    console.log({ status }, { result });
 
 
     if (status === 200) {
@@ -243,9 +283,9 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
   useEffect(() => {
     const infoUserFirmaImg = DocsFirmas.filter((firmas: any) => firmas.id_clerk === infoUserFirma?.id_clerk);
     setInfoUserFirmaImg(infoUserFirmaImg[0]?.firma);
-    console.log({infoUserFirmaImg});
-    
-}, [infoUserFirma]);
+    console.log({ infoUserFirmaImg });
+
+  }, [infoUserFirma]);
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -296,6 +336,37 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
   };
 
+  const onSubmit2 = async (data: any) => {
+    data.user = infoUserRetiro.id_clerk
+    //console.log({data});
+    const currentDateTime = data.fechaPago.toLocaleString()
+
+    console.log({ currentDateTime });
+    data.fechaPago = currentDateTime
+
+    const fetchResponse2 = await fetch('/api/pago-cita', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+
+    const result2 = await fetchResponse2.json();
+    const status2 = result2.status
+
+    console.log(status2);
+
+
+    if (status2 === 200) {
+      onClose()
+      toast('Pago Creado')
+    }
+    if (status2 === 400) {
+      onClose()
+      toast('Error al crear pago')
+    }
+
+
+
+  };
   //console.log(req);
 
   //if (allData[0]?.estado_formulario == 'Finalizar') return redirect('/dashoard-tvs')
@@ -332,66 +403,66 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
               </CardBody>
             </Button>
 
-            
-              <><Button
-                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'aprobados' ? 'bg-black text-white' : ''}`}
-                onClick={() => handleButtonClick('aprobados')}
-              >
+
+            <><Button
+              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'aprobados' ? 'bg-black text-white' : ''}`}
+              onClick={() => handleButtonClick('aprobados')}
+            >
+              <CardBody>
+                <p className="mx-auto">Aprobados</p>
+              </CardBody>
+            </Button><Button
+              className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'inicial' ? 'bg-black text-white' : ''}`}
+              onClick={() => handleButtonClick('inicial')}
+            >
                 <CardBody>
-                  <p className="mx-auto">Aprobados</p>
+                  <p className="mx-auto">Firmas de Contrato</p>
                 </CardBody>
               </Button><Button
-                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'inicial' ? 'bg-black text-white' : ''}`}
-                onClick={() => handleButtonClick('inicial')}
+                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'retiroInicial' ? 'bg-black text-white' : ''}`}
+                onClick={() => handleButtonClick('retiroInicial')}
               >
-                  <CardBody>
-                    <p className="mx-auto">Firmas de Contrato</p>
-                  </CardBody>
-                </Button><Button
-                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'retiroInicial' ? 'bg-black text-white' : ''}`}
-                  onClick={() => handleButtonClick('retiroInicial')}
-                >
-                  <CardBody>
-                    <p className="mx-auto">Pago de Inicial</p>
-                  </CardBody>
-                </Button><Button
-                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'retiroUnidad' ? 'bg-black text-white' : ''}`}
-                  onClick={() => handleButtonClick('retiroUnidad')}
-                >
-                  <CardBody>
-                    <p className="mx-auto">Registro de Unidad</p>
-                  </CardBody>
-                </Button><Button
-                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'historialPagos' ? 'bg-black text-white' : ''}`}
-                  onClick={() => handleButtonClick('historialPagos')}
-                >
-                  <CardBody>
-                    <p className="mx-auto">Retiro de Unidades</p>
-                  </CardBody>
-                </Button><Button
-                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'citasTaller' ? 'bg-black text-white' : ''}`}
-                  onClick={() => handleButtonClick('citasTaller')}
-                >
-                  <CardBody>
-                    <p className="mx-auto">Citas de Taller</p>
-                  </CardBody>
-                </Button><Button
-                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'atencionCliente' ? 'bg-black text-white' : ''}`}
-                  onClick={() => handleButtonClick('atencionCliente')}
-                >
-                  <CardBody>
-                    <p className="mx-auto">Atencion al Cliente</p>
-                  </CardBody>
-                </Button><Button
-                  className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'shopRepuestos' ? 'bg-black text-white' : ''}`}
-                  onClick={() => handleButtonClick('shopRepuestos')}
-                >
-                  <CardBody>
-                    <p className="mx-auto">Shop / Respuestos</p>
-                  </CardBody>
-                </Button></>
+                <CardBody>
+                  <p className="mx-auto">Pago de Inicial</p>
+                </CardBody>
+              </Button><Button
+                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'retiroUnidad' ? 'bg-black text-white' : ''}`}
+                onClick={() => handleButtonClick('retiroUnidad')}
+              >
+                <CardBody>
+                  <p className="mx-auto">Registro de Unidad</p>
+                </CardBody>
+              </Button><Button
+                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'historialPagos' ? 'bg-black text-white' : ''}`}
+                onClick={() => handleButtonClick('historialPagos')}
+              >
+                <CardBody>
+                  <p className="mx-auto">Retiro de Unidades</p>
+                </CardBody>
+              </Button><Button
+                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'citasTaller' ? 'bg-black text-white' : ''}`}
+                onClick={() => handleButtonClick('citasTaller')}
+              >
+                <CardBody>
+                  <p className="mx-auto">Citas de Taller</p>
+                </CardBody>
+              </Button><Button
+                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'atencionCliente' ? 'bg-black text-white' : ''}`}
+                onClick={() => handleButtonClick('atencionCliente')}
+              >
+                <CardBody>
+                  <p className="mx-auto">Atencion al Cliente</p>
+                </CardBody>
+              </Button><Button
+                className={`m-4 my-0 mt-5 text-center col-span-2  ${selectedButton === 'shopRepuestos' ? 'bg-black text-white' : ''}`}
+                onClick={() => handleButtonClick('shopRepuestos')}
+              >
+                <CardBody>
+                  <p className="mx-auto">Shop / Respuestos</p>
+                </CardBody>
+              </Button></>
 
-            
+
 
           </div>
           <CardFooter>
@@ -545,7 +616,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
           <Card className="mx-3 mt-3 col-span-3">
             <div className="grid gap-3">
 
-              <Button onClick={() => handleButtonInfoBack()} className="w-3 absolute right-0 top-0" color="danger">
+              <Button onClick={() => handleButtonInfoBackPago()} className="w-3 absolute right-0 top-0" color="danger">
                 <p>◀</p>
               </Button>
               <Card className="mx-auto mt-5">
@@ -640,7 +711,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
             <h3 className='mx-auto mt-5 text-xl'>Aprobados</h3>
 
-            {allAprobados.map((element: any, index: any) => (
+            {allFirma.map((element: any, index: any) => (
               <div className="grid grid-cols-3 col-span-3 gap-3" key={index + 500}>
                 <Card key={index + 2} className="p-4 my-3 text-center">
                   <div>{element.fecha}</div>
@@ -663,7 +734,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
         {selectedButton === 'inicial' && (infoUserFirma === null) && (
           <Card className="mx-3 mt-3 col-span-3">
-            
+
 
             <h3 className='mx-auto mt-5 text-xl'>Firma</h3>
 
@@ -677,10 +748,10 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
                 </Card>
 
                 <button key={index + index} onClick={() => handleButtonInfoFirma(element)}>
-                      <Card className="p-4 my-3 cursor-pointer text-center">
-                        <div className='text-center  text-xl'>Informacion</div>
-                      </Card>
-                    </button>
+                  <Card className="p-4 my-3 cursor-pointer text-center">
+                    <div className='text-center  text-xl'>Informacion</div>
+                  </Card>
+                </button>
               </div>
             ))}
 
@@ -689,62 +760,197 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
         {((selectedButton === 'inicial') && (infoUserFirma)) && (
           <Card className="mx-3 mt-3 col-span-3">
-          <div className="grid gap-3">
+            <div className="grid gap-3">
 
-            <Button onClick={() => handleButtonInfoBackFirma()} className="w-3 absolute right-0 top-0" color="danger">
-              <p>◀</p>
-            </Button>
-            <Card className="mx-auto mt-5">
-              <CardBody className="">
+              <Button onClick={() => handleButtonInfoBackFirma()} className="w-3 absolute right-0 top-0" color="danger">
+                <p>◀</p>
+              </Button>
+              <Card className="mx-auto mt-5">
+                <CardBody className="">
 
-                <p>Informacion de la firma</p>
+                  <p>Informacion de la firma</p>
 
-              </CardBody>
-            </Card>
-            <div className="grid grid-cols-2 gap-5 place-items-center">
+                </CardBody>
+              </Card>
+              <div className="grid grid-cols-2 gap-5 place-items-center">
 
-<div className='col-span-2'>
+                <div className='col-span-2'>
 
-            <Image
-                  width={300}
-                  height={150}
-                  alt="NextUI hero Image"
-                  src={infoUserFirmaImg}
+                  <Image
+                    width={300}
+                    height={150}
+                    alt="NextUI hero Image"
+                    src={infoUserFirmaImg}
                   />
+                </div>
+
+
+                <div className="col-span-2">
+                  <Checkbox
+                    defaultSelected={isChecked}
+                    radius='sm'
+                    onChange={handleCheckboxChange}
+                  >
+                    Confirmo que el usuario a firmado correctamente
+                  </Checkbox>
+                  <div className="grid grid-cols-2 items-center">
+
+
+                    <Button
+                      className="mx-auto mt-3"
+                      onClick={handleClickFirma}
+                      isDisabled={!isChecked}
+                      color='primary'
+                    >
+                      Enviar
+                    </Button>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {selectedButton === 'retiroInicial' && (infoUserRetiro) && (
+          <Card className="mx-3 mt-3 col-span-3">
+            <div className="grid gap-3">
+
+              <Button onClick={() => handleButtonInfoBackFirma()} className="w-3 absolute right-0 top-0" color="danger">
+                <p>◀</p>
+              </Button>
+              <Card className="mx-auto mt-5">
+                <CardBody className="">
+
+                  <p>Informacion del pago Inicial</p>
+
+                </CardBody>
+              </Card>
+              <div className='mx-auto'>
+                <span>Por favor, ingrese los datos para agendar la cita</span>
+              </div>
+              <div className="grid gap-5 place-items-center">
+
+                <form className='gap-3 grid' onSubmit={handleSubmit2(onSubmit2)}>
+
+                  <div>
+                    <Input
+                      classNames={{
+                        label: "border-none",
+                        input: [
+                          "border-none",
+                        ],
+                        innerWrapper: "border-none",
+                        inputWrapper: [
+                          "border-none",
+                        ],
+                      }}
+                      label='Dirrecion de la cita'
+                      id="dirrecionCita"
+                      type="text"
+                      {...register2("dirrecionCita")}
+                    />
+                    {errors.dirrecionCita && <span>{errors.dirrecionCita.message}</span>}
+                  </div>
+
+                  <div>
+                    <Input
+                      classNames={{
+                        label: "border-none",
+                        input: [
+                          "border-none",
+                        ],
+                        innerWrapper: "border-none",
+                        inputWrapper: [
+                          "border-none",
+                        ],
+                      }}
+                      label='Monto a pagar'
+                      id="montoPagar"
+                      type="text"
+                      {...register2("montoPagar")}
+                    />
+                    {errors.montoPagar && <span>{errors.montoPagar.message}</span>}
                   </div>
 
 
-              <div className="col-span-2">
-                <Checkbox
-                  defaultSelected={isChecked}
-                  radius='sm'
-                  onChange={handleCheckboxChange}
-                >
-                  Confirmo que el usuario a firmado correctamente
-                </Checkbox>
-                <div className="grid grid-cols-2 items-center">
+                  <div>
+                    <Input
+                      classNames={{
+                        label: "border-none",
+                        input: [
+                          "border-none",
+                        ],
+                        innerWrapper: "border-none",
+                        inputWrapper: [
+                          "border-none",
+                        ],
+                      }}
+                      label='Hora para la cita'
+                      id="horaCita"
+                      type="text"
+                      {...register2("horaCita")}
+                    />
+                    {errors.horaCita && <span>{errors.horaCita.message}</span>}
+                  </div>
 
 
-                  <Button
-                    className="mx-auto mt-3"
-                    onClick={handleClickFirma}
-                    isDisabled={!isChecked}
-                    color='primary'
-                  >
-                    Enviar
-                  </Button>
+                  <div>
+                    <Input
+                      classNames={{
+                        label: "border-none",
+                        input: [
+                          "border-none",
+                        ],
+                        innerWrapper: "border-none",
+                        inputWrapper: [
+                          "border-none",
+                        ],
+                      }}
+                      id="fechaPago"
+                      type="date"
+                      {...register2("fechaPago")}
+                    />
+                    {errors.fechaPago && <span>{errors.fechaPago.message}</span>}
+                  </div>
 
-                </div>
+                  <div className="pt-5 grid place-items-center">
+
+                    <Button className=" bg-black text-white" type="submit">
+                      Enviar
+                    </Button>
+                  </div>
+                </form>
+
               </div>
 
             </div>
-          </div>
-        </Card>
+          </Card>
         )}
 
-        {selectedButton === 'retiroInicial' && (
+        {selectedButton === 'retiroInicial' && (infoUserRetiro === null) && (
           <Card className="mx-3 mt-3 col-span-3">
-            {/* Código del componente cuando el botón "Aceptados" está seleccionado */}
+            
+
+            <h3 className='mx-auto flex mt-5 text-xl'>Pago Inicial</h3>
+              {allFirma.map((element: any, index: any) => (
+                <div className="grid grid-cols-3 col-span-3 gap-3" key={index + 500}>
+                  <Card key={index + 2} className="p-4 my-3 text-center">
+                    <div>{element.fecha}</div>
+                  </Card>
+                  <Card key={index + index} className="p-4 my-3 text-center">
+                    <div>{element.username} ({element.id_clerk})</div>
+                  </Card>
+
+                  <button key={index + index} onClick={() => handleButtonInfoRetiro(element)}>
+                      <Card className="p-4 my-3 cursor-pointer text-center">
+                        <div className='text-center  text-xl'>Informacion</div>
+                      </Card>
+                    </button>
+                </div>
+              ))}
+
           </Card>
         )}
 
@@ -753,6 +959,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
             {/* Código del componente cuando el botón "Aceptados" está seleccionado */}
           </Card>
         )}
+
 
 
 

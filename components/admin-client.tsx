@@ -79,7 +79,7 @@ const Home = ({userId} : any) => {
               <label htmlFor="pass" className="block text-gray-700">Token:</label>
               <input
                 id="pass"
-                type="text"
+                type="password"
                 {...register("pass")}
                 className={`w-full px-4 py-2 border ${errors.pass ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring focus:ring-blue-200`}
               />

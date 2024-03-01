@@ -58,10 +58,14 @@ export default function App({ allData, documento, imagenes, firma, DocsFirmas }:
   const [isRegistrar, setIsRegistrar] = useState(false);
   const [pasoActual, setpasoActual] = useState(1);
 
-  if (pasoActual === 1 && allData.firma_mandada) {
+  const [ejecutado, setEjecutado] = useState(false);
+
+  if (!ejecutado && pasoActual === 1 && allData.firma_mandada) {
     setpasoActual(3);
-  } else if (allData.aprobacion_final && pasoActual !== 3) {
+    setEjecutado(true);
+  } else if (!ejecutado && allData.aprobacion_final && pasoActual !== 3) {
     setpasoActual(2);
+    setEjecutado(true);
   }
 
   const signatureRef = useRef();
@@ -376,19 +380,7 @@ export default function App({ allData, documento, imagenes, firma, DocsFirmas }:
               </Card><div>
 
                   <div className="col-span-2 grid place-items-center">
-                    <p className="text-center text-lg underline font-semibold mx-auto mb-5">
-                      Pago Movil =
-                    </p>
-                    <span className="text-center">Seleccione el metodo de tu preferencia</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-5 place-content-around mt-5">
-
-                    <Button color="primary" onPress={onOpen} variant="ghost">
-                      Pago Movil
-                    </Button>
-                    <Button color="primary" variant="ghost">
-                      Efectivo
-                    </Button>
+                    <p>Por favor, esperé a que sea asignada su cita para cancelar el primer pago.</p>
                   </div>
 
                 </div></>
