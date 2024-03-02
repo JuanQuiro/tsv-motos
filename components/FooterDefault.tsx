@@ -10,8 +10,8 @@ const MotosSection = () => {
     <p> © 2024 ASISTO, C.A - Todos los derechos reservados</p>
   </aside> 
   <nav className="grid-flow-col sm:grid hidden gap-4 md:place-self-center md:justify-self-end">
-  <Link href="/somos" underline="hover">Quienes Somos</Link>
-  <a>Contacto</a>
+  <a className="link link-hover" href="/somos" >Quienes Somos</a>
+  <a className="link link-hover" href="/contacto" >Contacto</a>
   </nav>
 </footer>
   )

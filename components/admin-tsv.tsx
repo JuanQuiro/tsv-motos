@@ -1,6 +1,8 @@
 'use client'
 import { PrismaClient } from '@prisma/client';
 //import Formulario from "../../components/formario-documentos";
+import { revalidatePath } from "next/cache";
+
 import { redirect, useRouter } from 'next/navigation';
 import { auth } from '@clerk/nextjs';
 import { Card, CardHeader, CardBody, CardFooter, Avatar, Button, useDisclosure, Checkbox, Modal, Image, Input } from "@nextui-org/react";
@@ -43,6 +45,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
   const [infoUser, setInfoUser] = useState({}) as any;
   const [infoUserFirma, setInfoUserFirma] = useState(null) as any;
   const [infoUserFirmaImg, setInfoUserFirmaImg] = useState(null) as any;
+  const [completeRetiro, setCompleteRetiro] = useState(null) as any;
 
   const [infoUserRetiro, setinfoUserRetiro] = useState(null) as any;
 
@@ -168,7 +171,7 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
   };
 
-  
+
 
 
   const handleButtonInfoRetiro = (estado: any) => {
@@ -220,8 +223,8 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
       //console.log('aceptacion',userAceptacion);
 
       onClose()
-      toast('Aceptacion Creada - Re');
-      
+      toast('Aceptacion Creada');
+
       router.refresh()
     }
     if (status === 400) {
@@ -365,12 +368,12 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
     if (status2 === 200) {
       onClose()
       toast('Pago Creado')
-      router.refresh();
+      setCompleteRetiro(true)
     }
     if (status2 === 400) {
       onClose()
       toast('Error al crear pago')
-      router.refresh()
+
     }
 
 
@@ -836,102 +839,101 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
                 </CardBody>
               </Card>
-              <div className='mx-auto'>
-                <span>Por favor, ingrese los datos para agendar la cita</span>
-              </div>
+
+              <div className='mx-auto'> <span>{completeRetiro === null ? 'Por favor, ingrese los datos para agendar la cita' : 'Datos ya agregados. Porfavor recargue la pagina'}</span> </div>
               <div className="grid gap-5 place-items-center">
+                {completeRetiro === null ? (
+                  <form className='gap-3 grid' onSubmit={handleSubmit2(onSubmit2)}>
+                    <div>
+                      <Input
+                        classNames={{
+                          label: "border-none",
+                          input: [
+                            "border-none",
+                          ],
+                          innerWrapper: "border-none",
+                          inputWrapper: [
+                            "border-none",
+                          ],
+                        }}
+                        label='Dirrecion de la cita'
+                        id="dirrecionCita"
+                        type="text"
+                        {...register2("dirrecionCita")}
+                      />
+                      {errors.dirrecionCita && <span>{errors.dirrecionCita.message}</span>}
+                    </div>
 
-                <form className='gap-3 grid' onSubmit={handleSubmit2(onSubmit2)}>
+                    <div>
+                      <Input
+                        classNames={{
+                          label: "border-none",
+                          input: [
+                            "border-none",
+                          ],
+                          innerWrapper: "border-none",
+                          inputWrapper: [
+                            "border-none",
+                          ],
+                        }}
+                        label='Monto a pagar'
+                        id="montoPagar"
+                        type="text"
+                        {...register2("montoPagar")}
+                      />
+                      {errors.montoPagar && <span>{errors.montoPagar.message}</span>}
+                    </div>
 
+                    <div>
+                      <Input
+                        classNames={{
+                          label: "border-none",
+                          input: [
+                            "border-none",
+                          ],
+                          innerWrapper: "border-none",
+                          inputWrapper: [
+                            "border-none",
+                          ],
+                        }}
+                        label='Hora para la cita'
+                        id="horaCita"
+                        type="text"
+                        {...register2("horaCita")}
+                      />
+                      {errors.horaCita && <span>{errors.horaCita.message}</span>}
+                    </div>
+
+                    <div>
+                      <Input
+                        classNames={{
+                          label: "border-none",
+                          input: [
+                            "border-none",
+                          ],
+                          innerWrapper: "border-none",
+                          inputWrapper: [
+                            "border-none",
+                          ],
+                        }}
+                        id="fechaPago"
+                        type="date"
+                        {...register2("fechaPago")}
+                      />
+                      {errors.fechaPago && <span>{errors.fechaPago.message}</span>}
+                    </div>
+
+                    <div className="pt-5 grid place-items-center">
+                      <Button className=" bg-black text-white" type="submit">
+                        Enviar
+                      </Button>
+                    </div>
+                  </form>
+                ) : (
                   <div>
-                    <Input
-                      classNames={{
-                        label: "border-none",
-                        input: [
-                          "border-none",
-                        ],
-                        innerWrapper: "border-none",
-                        inputWrapper: [
-                          "border-none",
-                        ],
-                      }}
-                      label='Dirrecion de la cita'
-                      id="dirrecionCita"
-                      type="text"
-                      {...register2("dirrecionCita")}
-                    />
-                    {errors.dirrecionCita && <span>{errors.dirrecionCita.message}</span>}
+                    {/* Contenido alternativo si no se cumple la condición */}
                   </div>
-
-                  <div>
-                    <Input
-                      classNames={{
-                        label: "border-none",
-                        input: [
-                          "border-none",
-                        ],
-                        innerWrapper: "border-none",
-                        inputWrapper: [
-                          "border-none",
-                        ],
-                      }}
-                      label='Monto a pagar'
-                      id="montoPagar"
-                      type="text"
-                      {...register2("montoPagar")}
-                    />
-                    {errors.montoPagar && <span>{errors.montoPagar.message}</span>}
-                  </div>
-
-
-                  <div>
-                    <Input
-                      classNames={{
-                        label: "border-none",
-                        input: [
-                          "border-none",
-                        ],
-                        innerWrapper: "border-none",
-                        inputWrapper: [
-                          "border-none",
-                        ],
-                      }}
-                      label='Hora para la cita'
-                      id="horaCita"
-                      type="text"
-                      {...register2("horaCita")}
-                    />
-                    {errors.horaCita && <span>{errors.horaCita.message}</span>}
-                  </div>
-
-
-                  <div>
-                    <Input
-                      classNames={{
-                        label: "border-none",
-                        input: [
-                          "border-none",
-                        ],
-                        innerWrapper: "border-none",
-                        inputWrapper: [
-                          "border-none",
-                        ],
-                      }}
-                      id="fechaPago"
-                      type="date"
-                      {...register2("fechaPago")}
-                    />
-                    {errors.fechaPago && <span>{errors.fechaPago.message}</span>}
-                  </div>
-
-                  <div className="pt-5 grid place-items-center">
-
-                    <Button className=" bg-black text-white" type="submit">
-                      Enviar
-                    </Button>
-                  </div>
-                </form>
-
+                )}
               </div>
 
             </div>
@@ -940,25 +942,25 @@ const App = ({ allData, price, imagenes, Iniciados, dataFormulario, DocsFirmas }
 
         {selectedButton === 'retiroInicial' && (infoUserRetiro === null) && (
           <Card className="mx-3 mt-3 col-span-3">
-            
+
 
             <h3 className='mx-auto flex mt-5 text-xl'>Pago Inicial</h3>
-              {allFirma.map((element: any, index: any) => (
-                <div className="grid grid-cols-3 col-span-3 gap-3" key={index + 500}>
-                  <Card key={index + 2} className="p-4 my-3 text-center">
-                    <div>{element.fecha}</div>
-                  </Card>
-                  <Card key={index + index} className="p-4 my-3 text-center">
-                    <div>{element.username} ({element.id_clerk})</div>
-                  </Card>
+            {allFirma.map((element: any, index: any) => (
+              <div className="grid grid-cols-3 col-span-3 gap-3" key={index + 500}>
+                <Card key={index + 2} className="p-4 my-3 text-center">
+                  <div>{element.fecha}</div>
+                </Card>
+                <Card key={index + index} className="p-4 my-3 text-center">
+                  <div>{element.username} ({element.id_clerk})</div>
+                </Card>
 
-                  <button key={index + index} onClick={() => handleButtonInfoRetiro(element)}>
-                      <Card className="p-4 my-3 cursor-pointer text-center">
-                        <div className='text-center  text-xl'>Informacion</div>
-                      </Card>
-                    </button>
-                </div>
-              ))}
+                <button key={index + index} onClick={() => handleButtonInfoRetiro(element)}>
+                  <Card className="p-4 my-3 cursor-pointer text-center">
+                    <div className='text-center  text-xl'>Informacion</div>
+                  </Card>
+                </button>
+              </div>
+            ))}
 
           </Card>
         )}

@@ -2,12 +2,13 @@ import Form from '@/components/form'
 import { PrismaClient } from '@prisma/client';
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation'
+import { toast,Toaster } from 'sonner';
 
 
 
 const prisma: PrismaClient = new PrismaClient();
 
-export default async function Home() {
+export default async function Home({alldata}: any) {
   const { userId } : { userId: string | null } = auth();
 
   const allData = await prisma.clerk.findFirst({
@@ -23,13 +24,19 @@ export default async function Home() {
   //else return redirect('/')
 
   
+
+
+
   
 
   return (
+    <>
+          <Toaster />
     <section className='py-24'>
       <div className='container'>
         <Form />
       </div>
     </section>
+    </>
   )
 }

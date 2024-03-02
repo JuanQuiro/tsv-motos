@@ -1,7 +1,8 @@
 import Inicio from "@/components/page/Inicio";
 import { currentUser } from '@clerk/nextjs';
 import { PrismaClient } from "@prisma/client";
-
+import { auth } from '@clerk/nextjs';
+import { redirect } from "next/navigation";
 
 
 
@@ -13,8 +14,13 @@ export default async function Home() {
   const currentDate = new Date()
   const currentDateTime = currentDate.toLocaleString()
 
-  console.log('data: ',clerk);
-  
+  const { userId } : { userId: string | null } = auth();
+
+  const allData = await prisma.clerk.findFirst({
+    where: { id_clerk: userId || 'ERROR' },
+  })
+
+  if(allData?.estado_formulario === 'Finalizar') return redirect('/dashoard-admin')  
   
   try {
 
@@ -31,10 +37,15 @@ export default async function Home() {
   } catch (error) {
     console.error('Usuario ya creado o error al crearlo');
   }
+
+  console.log({allData});
+  
+
+  
  
 
 
   return (
-    <Inicio />
+    <Inicio alldata={allData} />
   )
 }

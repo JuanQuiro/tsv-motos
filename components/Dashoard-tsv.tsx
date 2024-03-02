@@ -60,12 +60,19 @@ export default function App({ allData, documento, imagenes, firma, DocsFirmas }:
 
   const [ejecutado, setEjecutado] = useState(false);
 
-  if (!ejecutado && pasoActual === 1 && allData.firma_mandada) {
-    setpasoActual(3);
-    setEjecutado(true);
-  } else if (!ejecutado && allData.aprobacion_final && pasoActual !== 3) {
-    setpasoActual(2);
-    setEjecutado(true);
+  if (!ejecutado) {
+    if (pasoActual === 1 && allData.firma_mandada) {
+      setpasoActual(3);
+      setEjecutado(true);
+    } else if (allData.aprobacion_final && pasoActual !== 3) {
+      setpasoActual(2);
+      setEjecutado(true);
+    } else if (allData.monto_pagar && allData.hora_pagar && allData.fecha_pagar && pasoActual !== 3) {
+      setpasoActual(4);
+      setEjecutado(true);
+    }
+    console.log(pasoActual);
+    
   }
 
   const signatureRef = useRef();

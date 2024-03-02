@@ -4,7 +4,10 @@ const isOnlyLetters = (str: string) => /^[A-Za-z]+$/.test(str);
 
 
 export const FormDataSchema = z.object({
-  Ingresos: z.string().min(1, 'Ingreso es requerido'),
+  Ingresos: z.string().min(1, 'Ingreso es requerido').refine((value) => ((value !== 'Inferior a 300$/mes') && (value !== '')), {
+    message: 'No se permite',
+    path: ['Ingresos'],
+  }),
   Yummy: z.boolean().refine(async value => value === true, {
     message: 'Yummy debe ser true',
     path: ['Yummy'],
