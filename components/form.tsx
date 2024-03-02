@@ -504,7 +504,7 @@ export default function Form() {
               </Heading>
 
               <div className='mt-1 grid grid-cols-1 gap-x-2 gap-y-2'>
-              <p className='mb-2'> Haga clic en el botón "Enviar" para finalizar el formulario. </p> <p className='mb-2'> Su información será recibida y nuestro equipo la revisará. A continuación, se le solicitarán documentos relevantes. </p>
+              <p className='mb-2'> Haga clic en el botón Enviar para finalizar el formulario. </p> <p className='mb-2'> Su información será recibida y nuestro equipo la revisará. A continuación, se le solicitarán documentos relevantes. </p>
                 
                 <Button
                   color='primary'
