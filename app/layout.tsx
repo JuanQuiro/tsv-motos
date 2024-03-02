@@ -4,6 +4,7 @@ import './globals.css'
 import NavBar from '@/components/navbar'
 import { ClerkProvider } from '@clerk/nextjs'
 import Footer from '@/components/FooterPage'
+import { esES } from "@clerk/localizations";
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider localization={esES}>
         <html className=' scrollbar-thumb-[#243984] scrollbar-track-black scrollbar-thin h-32 overflow-y-scroll' lang='es' suppressHydrationWarning={true}>
           <body className={inter.className}>
             <NavBar />

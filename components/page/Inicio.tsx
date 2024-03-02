@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import MotosSection from '@/components/page/MotosSection'
 import CondicionesSection from '@/components/page/CondicionesSection'
 import BeneficiosSection from '@/components/page/BeneficiosSection'
-import { Button, Card, CardBody, CardHeader, Image } from '@nextui-org/react'
+import { Button, ButtonGroup, Card, CardBody, CardHeader, Image } from '@nextui-org/react'
 import TvsTrank from '@/components/TvsTrank'
 import NextImage from 'next/image'
 import { signIn } from 'next-auth/react'
@@ -75,41 +75,66 @@ const App = ({ alldata }: any) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1 text-center">¡Bienvenido al proceso de aplicación para el servicio de MotoStudio!</ModalHeader>
-              <ModalBody>
-                <div className="flex flex-col items-center">
-                  <h1 className="text-2xl font-bold mb-4">¡Bienvenido al proceso de aplicación para el servicio de MotoStudio! 😄</h1>
-                  <p className="text-lg mb-4">Estamos emocionados de que estés aquí y deseamos facilitarte el proceso de solicitud de financiamiento. Para que puedas completar el formulario con éxito, aquí te dejamos algunas recomendaciones importantes:</p>
+              <ModalBody className='text-xs lg:text-lg'>
+                <div className="flex flex-col items-center ">
+                  <h1 className="text-lg font-bold mb-4 text-center">¡Bienvenido al proceso de aplicación para el servicio de MotoStudio! 😄</h1>
+                  <p className="text-lg hidden lg:flex mb-4">Estamos emocionados de que estés aquí y deseamos facilitarte el proceso de solicitud de financiamiento. Para que puedas completar el formulario con éxito, aquí te dejamos algunas recomendaciones importantes:</p>
 
-                  <div className="mb-4">
-                    <h2 className="text-lg font-bold">Documentos necesarios:</h2>
-                    <p>- Asegúrate de tener a la mano tu documento de identidad original. Debe estar vigente y contar con al menos 6 meses de validez restante. 📄</p>
+                  <div className="mb-4 hidden lg:flex">
+                    <h2 className="text-lg hidden lg:flex font-bold">Documentos necesarios:</h2>
+                    <p className='hidden lg:flex'>- Asegúrate de tener a la mano tu documento de identidad original. Debe estar vigente y contar con al menos 6 meses de validez restante. 📄</p>
                   </div>
 
-                  <div className="mb-4">
-                    <h2 className="text-lg font-bold">Captura de pantalla de ingresos:</h2>
-                    <p>- Prepara una captura de pantalla del tablero de la aplicación de delivery para la que trabajas. Asegúrate de que los ingresos sean claramente visibles. 📸</p>
+                  <div className="mb-4 hidden lg:flex">
+                    <h2 className="text-lg hidden lg:flex font-bold">Captura de pantalla de ingresos:</h2>
+                    <p className='hidden lg:flex'>- Prepara una captura de pantalla del tablero de la aplicación de delivery para la que trabajas. Asegúrate de que los ingresos sean claramente visibles. 📸</p>
                   </div>
 
-                  <div className="mb-4">
-                    <h2 className="text-lg font-bold">Verificación de identidad:</h2>
-                    <p>- Tendrás que proporcionar tu nombre completo, número de identificación y una foto clara de tu documento de identidad. También necesitaremos un selfie tuyo sosteniendo tu identificación al lado de tu rostro. 📸👤</p>
+                  <div className="mb-4 hidden lg:flex">
+                    <h2 className="text-lg hidden lg:flex font-bold">Verificación de identidad:</h2>
+                    <p className='hidden lg:flex'>- Tendrás que proporcionar tu nombre completo, número de identificación y una foto clara de tu documento de identidad. También necesitaremos un selfie tuyo sosteniendo tu identificación al lado de tu rostro. 📸👤</p>
                   </div>
 
-                  <div className="mb-4">
-                    <h2 className="text-lg font-bold">Verificación de domicilio:</h2>
-                    <p>- Ten a mano la dirección completa donde resides y el número de RIF. Este último documento debe mostrar claramente tu dirección actual. 🏠</p>
+                  <div className="mb-4 hidden lg:flex">
+                    <h2 className="text-lg hidden lg:flex font-bold">Verificación de domicilio:</h2>
+                    <p className='hidden lg:flex'>- Ten a mano la dirección completa donde resides y el número de RIF. Este último documento debe mostrar claramente tu dirección actual. 🏠</p>
                   </div>
 
-                  <div className="mb-4">
-                    <h2 className="text-lg font-bold">Aceptación de términos y condiciones:</h2>
-                    <p>- Por último, asegúrate de revisar detenidamente nuestros términos y condiciones y estar de acuerdo con ellos antes de enviar tu solicitud. ✅</p>
+                  <div className="mb-4 hidden lg:flex">
+                    <h2 className="text-lg hidden lg:flex font-bold">Aceptación de términos y condiciones:</h2>
+                    <p className='hidden lg:flex'>- Por último, asegúrate de revisar detenidamente nuestros términos y condiciones y estar de acuerdo con ellos antes de enviar tu solicitud. ✅</p>
                   </div>
 
-                  
+                  <div className="p-4 block lg:hidden bg-gray-100">
+                    <p className="mb-2 text-lg font-bold">Este proceso consta de dos procesos</p>
+                    <p className="flex items-center mb-2">
+                      <span className="mr-2 text-2xl">👤</span>
+                      <span>Uno: Se refire a los datos personales</span>
+                    </p>
+                    <p className="flex items-center">
+                      <span className="mr-2 text-2xl">📄</span>
+                      <span>Dos: Se refire a los documentos requeridos</span>
+                    </p>
+                  </div>
+
+                  <div className='lg:hidden grid'>
+
+                    <ButtonGroup >
+                      <Button color="danger" variant="light" onPress={onClose}>
+                        Cerrar
+                      </Button>
+                      <Button href='/credito' as={LinkNext} color="primary" >
+                        Continuar
+                      </Button>
+                    </ButtonGroup>
+
+                  </div>
+                 
+
+
                 </div>
               </ModalBody>
-              <ModalFooter>
+              <ModalFooter className=' block text-xs lg:text-lg'>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cerrar
                 </Button>

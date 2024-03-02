@@ -105,9 +105,10 @@ const App = ({userId} : any) => {
   };
 
   return (
-    <div className="grid pt-44 items-center">
+    <div className="grid pt-2 items-center">
+      <h3 className="grid text-center text-xl">Ingreso de Documentos</h3>
 
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="my-5" onSubmit={handleSubmit(onSubmit)}>
         <h3>Inserte la cedula de identidad</h3>
       <Controller
         control={control}

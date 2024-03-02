@@ -67,7 +67,7 @@ const steps = [
   },
   {
     id: 'Paso 4',
-    name: 'Terminos y Condiciones',
+    name: 'Culminacion de Formulario',
     fields: ['CloseToHome']
   }
 ]
@@ -227,6 +227,7 @@ export default function Form() {
   type FieldName = keyof Inputs
 
   const next = async () => {
+    
     const fields = steps[currentStep].fields
     const output = await trigger(fields as FieldName[], { shouldFocus: true })
     console.log('Form errors: ', errors)
@@ -276,6 +277,11 @@ export default function Form() {
 
     // Scroll to the top of the page
     window.scrollTo(0, 0)
+
+    if (currentStep === 2) {
+      console.log('asas');
+      
+    }
   }
 
   const prev = () => {
@@ -297,8 +303,10 @@ export default function Form() {
   return (
     <>
       <Toaster />
-      <section className='absolute inset-0 mt-36 flex flex-col  p-12'>
+        <h3 className='grid text-center text-xl'>Formulario de Ingreso</h3>
+      <section className='absolute inset-0 mt-40 flex flex-col  p-12'>
         {/* steps */}
+
         <nav aria-label='Progress'>
           <ol role='list' className='space-y-4 md:flex md:space-x-8 md:space-y-0'>
             {steps.map((step, index) => (
@@ -388,7 +396,7 @@ export default function Form() {
                 />
 
                 <Card>
-                  <span className='mx-3'>Nombres completos</span>
+                  <span className='mx-auto'>Nombres completos</span>
                   <CardBody>
 
 
@@ -411,7 +419,7 @@ export default function Form() {
                 </Card>
 
                 <Card>
-                  <span className='mx-3'>Apellidos completos</span>
+                  <span className='mx-auto'>Apellidos completos</span>
                   <CardBody>
 
                     <Input
@@ -480,6 +488,7 @@ export default function Form() {
                   register={register}
                   error={errors.Extranjero?.message}
                 />
+                
               </div>
             </motion.div>
           )}
@@ -490,42 +499,14 @@ export default function Form() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <Heading title='Terminos y condiciones'>
-                Lee los terminos y condiciones
+              <Heading title='Culminacion de Formulario'>
+                Ya esta listo
               </Heading>
 
               <div className='mt-1 grid grid-cols-1 gap-x-2 gap-y-2'>
-                <p className='mb-2'>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-                  consequat, risus id lacinia scelerisque, arcu urna ultrices
-                  urna, vitae convallis dolor arcu a eros. Sed eleifend purus in
-                  pharetra euismod. Duis vitae magna sed ante vehicula consequat
-                  id non felis. Quisque euismod nec mauris ut efficitur.
-                </p>
-                <p className='mb-2'>
-                  Fusce pharetra, nibh at ultrices tristique, ipsum metus iaculis
-                  arcu, sed tristique sapien ante eu ex. Nulla facilisi. Ut
-                  fringilla, velit vitae facilisis ullamcorper, lacus dui sodales
-                  nunc, ut cursus lacus turpis at lacus. Fusce ac urna arcu. Nulla
-                  facilisi. Morbi fermentum lacinia tortor, eu congue libero
-                  venenatis ac.
-                </p>
-                <p className='mb-2'>
-                  Vestibulum ut pretium ipsum. Aliquam sagittis enim a dui semper,
-                  id pharetra nisi lobortis. Donec vitae tellus non nisi feugiat
-                  fringilla et non enim. Suspendisse potenti. Pellentesque
-                  habitant morbi tristique senectus et netus et malesuada fames ac
-                  turpis egestas.
-                </p>
-                <Checkbox
-                  defaultSelected={isChecked}
-                  radius='sm'
-                  onChange={handleCheckboxChange}
-                >
-                  Estoy de acuerdo con los términos y condiciones
-                </Checkbox>
+              <p className='mb-2'> Haga clic en el botón "Enviar" para finalizar el formulario. </p> <p className='mb-2'> Su información será recibida y nuestro equipo la revisará. A continuación, se le solicitarán documentos relevantes. </p>
+                
                 <Button
-                  isDisabled={!isChecked}
                   color='primary'
                   onClick={handleClick}
                   isLoading={isLoading}
@@ -535,6 +516,7 @@ export default function Form() {
               </div>
             </motion.div>
           )}
+
         </form>
 
         {/* Navigation */}
@@ -556,6 +538,7 @@ export default function Form() {
                 type='button'
                 color='primary'
                 onClick={next}
+                
                 disabled={currentStep === steps.length - 1}
                 className=' bg-white px-2 py-1 text-sm font-semibold text-sky-900 shadow-sm ring-1 ring-inset disabled:cursor-not-allowed disabled:opacity-50'
               >

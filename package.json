@@ -13,6 +13,7 @@
   "dependencies": {
     "@ark-ui/react": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
+    "@clerk/localizations": "^1.26.16",
     "@clerk/nextjs": "^4.29.7",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",

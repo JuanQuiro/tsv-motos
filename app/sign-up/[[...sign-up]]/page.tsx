@@ -1,9 +1,12 @@
-import { SignUp } from '@clerk/nextjs'
+import { Suspense } from 'react';
+import { SignUp } from '@clerk/nextjs';
 
 export default function Page() {
   return (
-    <div className='flex justify-center '>
-      <SignUp />
+    <div className='flex justify-center'>
+      <Suspense fallback={<div>Cargando...</div>}>
+        <SignUp />
+      </Suspense>
     </div>
-  )
+  );
 }
