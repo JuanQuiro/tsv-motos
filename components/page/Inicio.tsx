@@ -80,7 +80,7 @@ const App = ({ alldata }: any) => {
                   <h1 className="text-lg font-bold mb-4 text-center">¡Bienvenido al proceso de aplicación para el servicio de MotoStudio! 😄</h1>
                   <p className="text-lg hidden lg:flex mb-4">Estamos emocionados de que estés aquí y deseamos facilitarte el proceso de solicitud de financiamiento. Para que puedas completar el formulario con éxito, aquí te dejamos algunas recomendaciones importantes:</p>
 
-                  <table>
+                  <table className='hidden lg:block'>
   <tr>
     <td className="border border-gray-300 p-4">
       <h2 className="text-lg font-bold">Documentos necesarios:</h2>

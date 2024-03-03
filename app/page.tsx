@@ -20,7 +20,7 @@ export default async function Home() {
     where: { id_clerk: userId || 'ERROR' },
   })
 
-  if(allData?.estado_formulario === 'Finalizar') return redirect('/dashoard-admin')  
+  if(allData?.estado_formulario === 'Finalizar') return redirect('/dashoard-tvs')  
   
   try {
 

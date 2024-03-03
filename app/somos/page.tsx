@@ -1,31 +1,68 @@
+'use client'
 
-const QuienesSomos = async () => {
+import React, { useEffect, useRef } from 'react';
+import { useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
 
-  
-    return (
-      <div className="bg-gray-100">
-        <div className="container mx-auto py-8">
-          <h2 className="text-3xl font-bold text-center mb-4">Quiénes somos</h2>
-          <p className="text-lg text-center mb-8">
-            Somos una empresa dedicada a proporcionar créditos de motos a los venezolanos, brindando soluciones financieras accesibles y adaptadas a las necesidades de nuestros clientes.
-          </p>
-          <div className="grid grid-cols-2 gap-8">
-            <div className="p-4 bg-white rounded shadow">
-              <h3 className="text-xl font-semibold mb-2">Misión</h3>
-              <p className="text-base">
-                Nuestra misión es ayudar a los venezolanos a adquirir una motocicleta a través de créditos flexibles y accesibles, contribuyendo así a su movilidad y mejorando su calidad de vida.
-              </p>
-            </div>
-            <div className="p-4 bg-white rounded shadow">
-              <h3 className="text-xl font-semibold mb-2">Visión</h3>
-              <p className="text-base">
-                Nuestra visión es convertirnos en la empresa líder en la financiación de motos para venezolanos, ofreciendo un servicio de calidad y generando oportunidades de crecimiento para nuestros clientes.
-              </p>
-            </div>
-          </div>
-        </div>
+const App = () => {
+  return <div>
+    <PdfViewer pdfUrl='/terminos.pdf' />
+  </div>
+};
+
+// Establecer la URL del worker de PDF.js
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+interface PdfViewerProps {
+  pdfUrl: string;
+}
+
+const PdfViewer: React.FC<PdfViewerProps> = ({ pdfUrl }) => {
+  const [numPages, setNumPages] = useState<number | null>(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
+    setNumPages(numPages);
+  };
+
+  const changePage = (offset: number) => {
+    setPageNumber((prevPageNumber) => prevPageNumber + offset);
+  };
+
+  const previousPage = () => {
+    changePage(-1);
+  };
+
+  const nextPage = () => {
+    if (pageNumber < numPages!) {
+      changePage(1);
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        <button disabled={pageNumber <= 1} onClick={previousPage}>
+          Anterior
+        </button>
+        <button disabled={pageNumber >= numPages!} onClick={nextPage}>
+          Siguiente
+        </button>
       </div>
-    );
-  }
-  
-  export default QuienesSomos;
+      <div>
+        <Document
+          file={pdfUrl}
+          onLoadSuccess={onDocumentLoadSuccess}
+        >
+          {numPages && (
+            <Page pageNumber={pageNumber} />
+          )}
+        </Document>
+      </div>
+    </div>
+  );
+};
+
+
+
+export default App;
